@@ -10,6 +10,7 @@ const NewFavourForm = ({onCreatePressed})=>{
         text:'',
         receiver:'',
         award:'',
+        picture:'',
     });
     const CheckInput = (input)=>{
         const {award,text}=input;
@@ -22,7 +23,9 @@ const NewFavourForm = ({onCreatePressed})=>{
             return false
         }
         onCreatePressed(input);
-        setInputValue({text:'',award:''});
+        setInputValue({
+            ...inputValue,
+            text:'',award:''});
     }
     return(
         <FormContainer>

@@ -1,10 +1,61 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import { v1 as uuidv1 } from 'uuid';
+const mongoose = require('mongoose');
+const express = require('express');
+const cors = require('cors');
+const passport = require('passport');
+const cookieparser = require('cookie-parser');
+const session = require('express-session');
+var routes = require('./routes');
+const { db } = require('./userSchema');
+const MongoStore = require('connect-mongo')(session);
+const uuidv1 = require ('uuid').v1;
 
+// ----------------------------connect to MongoDB-------------------------------------------------------------
+const dbString = 'mongodb+srv://encore:nmjCf9Mf3SEAW9tc@cluster0.mp99a.mongodb.net/<dbname>?retryWrites=true&w=majority';
+const dbOptions = {
+    useNewUrlParser:true,
+    useUnifiedTopology:true
+};
+mongoose.connect(dbString,dbOptions,()=>{console.log("Mongoose is connected!");})
+const connection = mongoose.createConnection(dbString,dbOptions);
+
+const sessionStore = new MongoStore({
+  mongooseConnection:connection,
+  collection:'sessions',
+})
+
+// ----------------------------setup express-------------------------------------------------------------------
 const app=express();
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true
+}));
 
+// ------------------------------Configure Session and cookie-------------------------------------------------------------
+app.use(session({
+  secret:"secret",
+  resave: false,
+  saveUninitialized:true,
+  store:sessionStore,
+  cookie: {
+      maxAge:1000*60*60*1
+  }
+}))
+app.use(cookieparser('secret'));
+
+// ------------------------------Import Local strategy and initialize passport-------------------------------------
+require('./passportConfig')(passport);
+app.use(passport.initialize());
+app.use(passport.session());
+// ------------------------------Test------------------------------------------------------------------------------
+app.use((req,res,next)=>{
+  console.log(req.session);
+  console.log(req.user);
+  next();
+})
+
+// -----------------------------Built-in memory-----------------------------------------------------------------
 const today = Date.now();
 
 let favours = [
@@ -14,22 +65,16 @@ let favours = [
       award:'',
       text: 'Help with the window',
       createdAt: today,
-      isAccepted: false
+      isAccepted: false,
+      picture: ''
     }
   ]
   
 
+//-------------------------------Authentication APIs----------------------------------------------------------
+app.use(routes);
 
-
-var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', "*");
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-  };
-  
-  app.use(allowCrossDomain);
-
+// -----------------------------favour APIs-----------------------------------------------------------------
 
   app.get('/favours', (req, res) => {
     res.status(200).json(favours);
@@ -43,7 +88,9 @@ var allowCrossDomain = function(req, res, next) {
       text: favour.text,
       award: favour.award,
       createdAt: new Date(),
-      isAccepted: false
+      isAccepted: false,
+      publisher:favour.publisher,
+      picture:favour.picture,
     }
     favours.push(newFavour)
     res.status(200).json(newFavour);
@@ -66,6 +113,6 @@ var allowCrossDomain = function(req, res, next) {
   })
 
 
+// -----------------------------------Listener-----------------------------------------------------
 
-
-app.listen(8000,()=>console.log("Listening on port:8000"));
+app.listen(4000,()=>console.log("Listening on port:4000"));

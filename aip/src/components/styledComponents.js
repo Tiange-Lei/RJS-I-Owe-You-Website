@@ -18,6 +18,29 @@ export const NavItem = styled.li`
     line-height: 60px;
     display: inline-block;
     font-size: 20px;
+    cursor:pointer;
+`
+export const NavLogin = styled.div`
+    float: right;
+    width:100px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    display: inline-block;
+    font-size: 20px;
+    cursor:pointer;
+    background:green;
+`
+export const NavLogout = styled.div`
+    float: right;
+    width:100px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    display: inline-block;
+    font-size: 20px;
+    cursor:pointer;
+    background:red;
 `
 
 export const FormContainer = styled.div`
@@ -102,4 +125,27 @@ export const SelectorContainer = styled.div`
 `
 export const DefaultOption = styled.option`
     display:none;
+`
+
+export const FavourPublisher = styled.div`
+    color:blue;
+    float:left;
+    margin-left: 5px;
+`
+export const FavourTime = styled.div`
+    color:gray
+`
+export const FavourAward = styled.span`
+    color:orange
+`
+export const UserImage = styled.img`
+    float:left;
+    width:30px;
+    border-radius: 30px;
+`
+export const UserTitle = styled.div`
+    height: 40px;
+    text-align: left;
+    line-height: 40px;
+    display: inline-block;
 `
