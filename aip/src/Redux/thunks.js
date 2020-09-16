@@ -49,11 +49,11 @@ export const AddFavoursRequest =favour=>async dispatch=>{
 
 export const RemoveFavoursRequest = favour =>async dispatch=>{
     try {
-        const response = await fetch(`http://localhost:4000/favours/${favour.id}`,{
+        const response = await fetch(`http://localhost:4000/favours/${favour._id}`,{
             method:'delete',
         })
-        const removedFavour = await response.json();
-        dispatch(removeFavour(removedFavour));
+        const restFavour = await response.json();
+        dispatch(removeFavour(restFavour));
     } catch (e) {
         dispatch(DisplayAlert(e))
     }
@@ -61,7 +61,7 @@ export const RemoveFavoursRequest = favour =>async dispatch=>{
 
 export const AcceptFavourRequest = favour =>async dispatch =>{
     try {
-        const response = await fetch(`http://localhost:4000/favours/${favour.id}/accepted`,{
+        const response = await fetch(`http://localhost:4000/favours/${favour._id}/accepted`,{
             method:'post',
         })
         const updatedFavour = await response.json();

@@ -6,7 +6,7 @@ import {AddFavoursRequest} from '../Redux/thunks';
 
 const NewFavourForm = ({onCreatePressed})=>{
     const [inputValue,setInputValue] = useState({
-        publisher:'',
+        publisher:localStorage.username,
         text:'',
         receiver:'',
         award:'',

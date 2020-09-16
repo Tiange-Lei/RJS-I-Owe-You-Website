@@ -7,7 +7,7 @@ export const createFavour = favour =>({
 export const REMOVE_FAVOUR = 'REMOVE_FAVOUR';
 export const removeFavour = favour =>({
     type:REMOVE_FAVOUR,
-    payload:{favour},
+    payload:{favour}
 })
 
 export const ACCEPT_FAVOUR = 'ACCEPT_FAVOUR';

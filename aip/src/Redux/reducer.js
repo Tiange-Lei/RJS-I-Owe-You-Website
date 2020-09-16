@@ -23,7 +23,8 @@ export const favours = (state=initialState,action)=>{
             const {favour}=payload;
             return {
                 ...state,
-                data:state.data.filter(favourItem=>favourItem.id !==favour.id)}
+                data:favour,
+            }
         }
         case ACCEPT_FAVOUR:{
             const {favour}=payload;
@@ -40,7 +41,6 @@ export const favours = (state=initialState,action)=>{
         case LOAD_FAVOURS_SUCCESS:{
             const {favours}=payload;
             return {
-                ...favours,
                 isLoading: false,
                 data:favours};
         }

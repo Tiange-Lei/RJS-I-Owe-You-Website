@@ -2,8 +2,10 @@ const express = require('express');
 const router = require('express').Router();
 const passport = require('passport');
 const User = require('./userSchema');
+const Favour = require('./favourSchema');
 const bcrypt = require('bcryptjs');
 
+// ------------------------------Authentication APIs-------------------------------------------------
 router.post('/login',(req,res,next)=>{
     passport.authenticate("local",(err,user,info)=>{
       if(err) throw err;
@@ -38,4 +40,58 @@ router.get("/logout",(req,res)=>{
   res.send('logout')
 })
 
+// ------------------------------------Favours Operation--------------------------------------------
+
+// loading favours---------------------------
+
+router.get('/favours', (req, res) => {
+  Favour.find({},(err,Favour)=>{
+    if(err) throw err;
+    res.status(200).json(Favour);
+  })
+})
+
+// create favour-----------------------------
+router.post('/favours', async (req, res) => {
+  const { favour } = req.body;
+  const newFavour = new Favour({
+    publisher:favour.publisher,
+    text: favour.text,
+    award: favour.award,
+    createdAt: new Date(),
+    isAccepted: false,
+    receiver:'',
+    picture:favour.picture,
+  });
+  await newFavour.save();
+  res.status(200).json(newFavour);
+})
+
+//delete favour------------------------------
+router.delete('/favours/:_id', async (req, res) => {
+  const id = req.params._id;
+  console.log(`DELETE /favours/${id}`);
+  await Favour.deleteOne({_id:id},(err)=>{
+    if(err) throw err;
+    Favour.find({},(err,Favour)=>{
+      if(err) throw err;
+      res.status(200).json(Favour);
+    })
+  })
+})
+
+//accept favour--------------------------------
+router.post('/favours/:_id/accepted', async (req, res) => {
+  const id = req.params._id;
+  console.log(`POST /favours/${id}/accepted`);
+  await Favour.findByIdAndUpdate({_id:id},{isAccepted:true},{new:true},(err,updatedFavour)=>{
+    if(err) throw err;
+    res.status(200).json(updatedFavour);
+    console.log(updatedFavour);
+  })
+})
+
+
+
+//export routers------------------------------
   module.exports = router;

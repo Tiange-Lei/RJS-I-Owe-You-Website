@@ -22,6 +22,7 @@ const sessionStore = new MongoStore({
   mongooseConnection:connection,
   collection:'sessions',
 })
+mongoose.set('useFindAndModify', false);
 
 // ----------------------------setup express-------------------------------------------------------------------
 const app=express();
@@ -76,41 +77,41 @@ app.use(routes);
 
 // -----------------------------favour APIs-----------------------------------------------------------------
 
-  app.get('/favours', (req, res) => {
-    res.status(200).json(favours);
-  })
+  // app.get('/favours', (req, res) => {
+  //   res.status(200).json(favours);
+  // })
 
 
-  app.post('/favours', (req, res) => {
-    const { favour } = req.body;
-    const newFavour = {
-      id: uuidv1(),
-      text: favour.text,
-      award: favour.award,
-      createdAt: new Date(),
-      isAccepted: false,
-      publisher:favour.publisher,
-      picture:favour.picture,
-    }
-    favours.push(newFavour)
-    res.status(200).json(newFavour);
-  })
+  // app.post('/favours', (req, res) => {
+  //   const { favour } = req.body;
+  //   const newFavour = {
+  //     id: uuidv1(),
+  //     text: favour.text,
+  //     award: favour.award,
+  //     createdAt: new Date(),
+  //     isAccepted: false,
+  //     publisher:favour.publisher,
+  //     picture:favour.picture,
+  //   }
+  //   favours.push(newFavour)
+  //   res.status(200).json(newFavour);
+  // })
 
-  app.post('/favours/:id/accepted', (req, res) => {
-    const id = req.params.id;
-    console.log(`POST /favours/${id}/accepted`);
-    const favourIndex = favours.findIndex(favour => favour.id === id)
-    favours[favourIndex].isAccepted = true,
-    res.status(200).json(favours[favourIndex]);
-  })
+  // app.post('/favours/:id/accepted', (req, res) => {
+  //   const id = req.params.id;
+  //   console.log(`POST /favours/${id}/accepted`);
+  //   const favourIndex = favours.findIndex(favour => favour.id === id)
+  //   favours[favourIndex].isAccepted = true,
+  //   res.status(200).json(favours[favourIndex]);
+  // })
 
-  app.delete('/favours/:id', (req, res) => {
-    const id = req.params.id;
-    console.log(`DELETE /favours/${id}`);
-    const favourIndex = favours.findIndex(favour => favour.id === id)
-    const deletedFavour = favours.splice(favourIndex, 1);
-    res.status(200).json(deletedFavour[0]);
-  })
+  // app.delete('/favours/:id', (req, res) => {
+  //   const id = req.params.id;
+  //   console.log(`DELETE /favours/${id}`);
+  //   const favourIndex = favours.findIndex(favour => favour.id === id)
+  //   const deletedFavour = favours.splice(favourIndex, 1);
+  //   res.status(200).json(deletedFavour[0]);
+  // })
 
 
 // -----------------------------------Listener-----------------------------------------------------
