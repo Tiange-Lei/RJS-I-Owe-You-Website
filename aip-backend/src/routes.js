@@ -81,17 +81,16 @@ router.delete('/favours/:_id', async (req, res) => {
 })
 
 //accept favour--------------------------------
-router.post('/favours/:_id/accepted', async (req, res) => {
+router.post('/favours/:_id/:receiver/accepted', async (req, res) => {
   const id = req.params._id;
-  console.log(`POST /favours/${id}/accepted`);
-  await Favour.findByIdAndUpdate({_id:id},{isAccepted:true},{new:true},(err,updatedFavour)=>{
+  const receiver = req.params.receiver;
+  console.log(receiver);
+  await Favour.findByIdAndUpdate({_id:id},{isAccepted:true,receiver:receiver},{new:true},(err,updatedFavour)=>{
     if(err) throw err;
     res.status(200).json(updatedFavour);
     console.log(updatedFavour);
   })
 })
-
-
 
 //export routers------------------------------
   module.exports = router;

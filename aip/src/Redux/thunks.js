@@ -60,13 +60,19 @@ export const RemoveFavoursRequest = favour =>async dispatch=>{
 }
 
 export const AcceptFavourRequest = favour =>async dispatch =>{
-    try {
-        const response = await fetch(`http://localhost:4000/favours/${favour._id}/accepted`,{
-            method:'post',
-        })
-        const updatedFavour = await response.json();
-        dispatch(acceptFavour(updatedFavour));
-    } catch (e) {
-        dispatch(DisplayAlert(e))
+    let receiver = localStorage.username;
+    if(receiver===''){
+        alert('Please login fisrt')
+    }
+    else{
+        try {
+            const response = await fetch(`http://localhost:4000/favours/${favour._id}/${receiver}/accepted`,{
+                method:'post',
+            })
+            const updatedFavour = await response.json();
+            dispatch(acceptFavour(updatedFavour));
+        } catch (e) {
+            dispatch(DisplayAlert(e))
+        }
     }
 }

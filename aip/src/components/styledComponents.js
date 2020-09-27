@@ -149,3 +149,6 @@ export const UserTitle = styled.div`
     line-height: 40px;
     display: inline-block;
 `
+export const FavourReceiver = styled.span`
+    color:green
+`

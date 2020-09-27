@@ -15,7 +15,10 @@ const LogoutButton = () => {
     })
   }
   return (
-    <NavLogout onClick={() => logout()}>
+    <NavLogout onClick={() => {
+      logout();
+      localStorage.username='';
+    }}>
       Log out
     </NavLogout>
   );
