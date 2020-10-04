@@ -4,6 +4,7 @@ import {loadFavoursInProgress,
         createFavour,
         removeFavour,
         acceptFavour,
+        addComment,
     } from './action';
 
 
@@ -75,4 +76,23 @@ export const AcceptFavourRequest = favour =>async dispatch =>{
             dispatch(DisplayAlert(e))
         }
     }
+}
+// ------------------------comments thunk--------------------------
+
+export const AddCommentRequest =comment=>async dispatch=>{
+    try {
+        const body = JSON.stringify({comment})
+        const response = await fetch(`http://localhost:4000/addcomment/${comment.favourID}`,{
+            headers:{
+            'Content-Type':'Application/json',
+            },
+            method:'post',
+            body,
+        });
+        const commentItem = await response.json();
+        dispatch(addComment(commentItem));
+    } catch (e) {
+        dispatch(DisplayAlert(e))
+    }
+
 }

@@ -31,3 +31,10 @@ export const LOAD_FAVOURS_FAILURE = 'LOAD_FAVOURS_FAILURE';
 export const loadFavoursFailure = ()=>({
     type:LOAD_FAVOURS_FAILURE
 })
+
+// ---------------------comments actions----------------------------
+export const ADD_COMMENT = 'ADD_COMMENT';
+export const addComment = comment =>({
+    type:ADD_COMMENT,
+    payload:{comment},
+});

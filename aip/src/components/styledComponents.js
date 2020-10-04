@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import {showUP,fadeIn} from './keyframes';
 
 export const Container = styled.div`
     background: #2AAEF0;
@@ -12,6 +13,7 @@ export const NavUL = styled.ul`
 `
 export const NavItem = styled.li`
     float: left;
+    color: white;
     width:100px;
     height: 60px;
     text-align: center;
@@ -19,6 +21,10 @@ export const NavItem = styled.li`
     display: inline-block;
     font-size: 20px;
     cursor:pointer;
+    &:hover{
+        background-color:purple;
+        color: white
+    }
 `
 export const NavLogin = styled.div`
     float: right;
@@ -51,6 +57,7 @@ export const FormContainer = styled.div`
     position: relative;
     max-width: 700px;
     margin: auto;  
+    animation: ${showUP} 1.5s backwards, ${fadeIn} .8s;
 `
 export const NewFavourInput = styled.textarea`
     font-size: 16px;
@@ -84,7 +91,21 @@ export const FavourItemContainer = styled.div`
     padding: 16px;
     position: relative;
     box-shadow: 0 4px 8px grey;
-    border-bottom:
+`
+export const ValidFavour = styled.div`
+    background: #fff;
+    position: relative;
+    animation: ${showUP} 1.5s 0.3s backwards, ${fadeIn} .8s;
+`
+export const InvalidFavour = styled.div`
+    background: #fff;
+    position: relative;
+    animation: ${showUP} 1.5s 0.5s backwards, ${fadeIn} .8s;
+`
+export const UserAcceptedFavour = styled.div`
+    background: #fff;
+    position: relative;
+    animation: ${showUP} 1.5s 0.7s backwards, ${fadeIn} .8s;
 `
 export const ButtonContainer = styled.div`
     position: absolute;
@@ -111,6 +132,24 @@ export const RemoveButton = styled.button`
     cursor: pointer;
     display: inline-block;
     background-color: #ee2222;
+    &:hover{
+        background-color: red;
+        transform: scale(1.2);
+    }
+`
+export const CommentButton = styled.button`
+    font-size: 16px;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    display: inline-block;
+    background-color: orange;
+    &:hover{
+        background-color: orange;
+        transform: scale(1.2);
+    }
 `
 export const SelectorContainer = styled.div`
     font-size: 16px;
@@ -151,4 +190,7 @@ export const UserTitle = styled.div`
 `
 export const FavourReceiver = styled.span`
     color:green
+`
+export const BarTitle = styled.span`
+    color:white
 `

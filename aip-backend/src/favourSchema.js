@@ -8,5 +8,6 @@ const favour = new mongoose.Schema({
     isAccepted: Boolean,
     receiver: String,
     picture: String,
+    comments: Array,
 })
 module.exports = mongoose.model('Favour',favour);

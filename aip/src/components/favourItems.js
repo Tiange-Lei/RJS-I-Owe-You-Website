@@ -1,6 +1,13 @@
-import React from 'react';
-import {FavourItemContainer,ButtonContainer,AcceptButton,RemoveButton,FavourPublisher,FavourTime,FavourAward,UserTitle,FavourReceiver} from './styledComponents';
-const FavourItems = ({favour,onRemovePressed,onAcceptPressed,})=>(
+import React,{useState} from 'react';
+import {FavourItemContainer,ButtonContainer,AcceptButton,RemoveButton,FavourPublisher,FavourTime,FavourAward,UserTitle,FavourReceiver,CommentButton} from './styledComponents';
+import AddCommentsForm from './addCommentsForm';
+import CommentList from './commentsList';
+
+
+const FavourItems = ({favour,onRemovePressed,onAcceptPressed,onAddCommentPressed})=>{
+    const [isDisplaying, setDisplaying] = useState(false);
+    return(
+    <div>
     <FavourItemContainer>
         <UserTitle>
             <FavourPublisher>{favour.publisher}</FavourPublisher>  
@@ -16,8 +23,12 @@ const FavourItems = ({favour,onRemovePressed,onAcceptPressed,})=>(
         <ButtonContainer>
             {favour.isAccepted ||favour.publisher===localStorage.username? null:<AcceptButton onClick={()=>onAcceptPressed(favour)}>Accept</AcceptButton>}
             {favour.publisher===localStorage.username?<RemoveButton onClick={()=>onRemovePressed(favour)}>Remove</RemoveButton>:null}
+            <CommentButton onClick={()=>setDisplaying(!isDisplaying)}>comments</CommentButton>
         </ButtonContainer>
-
     </FavourItemContainer>
+    {isDisplaying?<FavourItemContainer><CommentList coms={favour.comments}/><AddCommentsForm favourID={favour._id} onAddCommentPressed={onAddCommentPressed}/></FavourItemContainer>:null}
+    </div>
 )
+}
+
 export default FavourItems;

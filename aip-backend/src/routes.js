@@ -69,7 +69,7 @@ router.post('/favours', async (req, res) => {
 
 //delete favour------------------------------
 router.delete('/favours/:_id', async (req, res) => {
-  const id = req.params._id;
+  let id = req.params._id;
   console.log(`DELETE /favours/${id}`);
   await Favour.deleteOne({_id:id},(err)=>{
     if(err) throw err;
@@ -82,13 +82,33 @@ router.delete('/favours/:_id', async (req, res) => {
 
 //accept favour--------------------------------
 router.post('/favours/:_id/:receiver/accepted', async (req, res) => {
-  const id = req.params._id;
+  let id = req.params._id;
   const receiver = req.params.receiver;
   console.log(receiver);
   await Favour.findByIdAndUpdate({_id:id},{isAccepted:true,receiver:receiver},{new:true},(err,updatedFavour)=>{
     if(err) throw err;
     res.status(200).json(updatedFavour);
     console.log(updatedFavour);
+  })
+})
+
+// --------------------------------------Comments Operations-----------------------------------
+// -------add comment-------------------------
+router.post('/addcomment/:favourID',async (req,res)=>{
+  let favourid = req.params.favourID;
+  const {comment}=req.body;
+  const newComment = {
+    favourID: comment.favourID,
+    username: comment.username,
+    commentText: comment.commentText
+  }
+  await Favour.findById({_id:favourid},async (err,favour)=>{
+    if(err)throw err;
+    favour.comments = favour.comments.concat(newComment);
+    await Favour.findByIdAndUpdate({_id:favourid},{comments:favour.comments},(err)=>{
+      if (err) throw err;
+      res.status(200).json(newComment)
+    })
   })
 })
 

@@ -5,6 +5,7 @@ import {CREATE_FAVOUR,
     LOAD_FAVOURS_IN_PROGRESS,
     LOAD_FAVOURS_SUCCESS,
     LOAD_FAVOURS_FAILURE,
+    ADD_COMMENT,
 } from './action';
 
 
@@ -39,11 +40,30 @@ switch(type){
             }
         })}
     }
+    case ADD_COMMENT:{
+        const {comment}=payload;
+        return{
+            ...state,
+            data:state.data.map(favourItem=>{
+            if(favourItem._id===comment.favourID){
+                let newFavourItem = {
+                    ...favourItem,
+                    comments:favourItem.comments.concat(comment)
+                }
+                return newFavourItem
+            }else{
+                return favourItem;
+            }
+            })
+        }
+
+        }
     case LOAD_FAVOURS_SUCCESS:{
         const {favours}=payload;
         return {
             isLoading: false,
-            data:favours};
+            data:favours
+        };
     }
     case LOAD_FAVOURS_IN_PROGRESS:{
         return{
@@ -62,3 +82,4 @@ switch(type){
     }
 }
 }
+
