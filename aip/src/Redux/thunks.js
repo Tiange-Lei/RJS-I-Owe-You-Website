@@ -14,7 +14,7 @@ export const LoadFavours =()=>async(dispatch,getState)=>{
 
     try {
         dispatch(loadFavoursInProgress());
-        const response = await fetch('http://localhost:4000/favours');
+        const response = await fetch('http://localhost:4000/api/favours');
         const favours = await response.json();
     
         dispatch(loadFavoursSuccess(favours));
@@ -33,7 +33,7 @@ export const DisplayAlert=text=>()=>{
 export const AddFavoursRequest =favour=>async dispatch=>{
     try {
         const body = JSON.stringify({favour})
-        const response = await fetch('http://localhost:4000/favours',{
+        const response = await fetch('http://localhost:4000/api/favours',{
             headers:{
             'Content-Type':'Application/json',
             },
@@ -50,7 +50,7 @@ export const AddFavoursRequest =favour=>async dispatch=>{
 
 export const RemoveFavoursRequest = favour =>async dispatch=>{
     try {
-        const response = await fetch(`http://localhost:4000/favours/${favour._id}`,{
+        const response = await fetch(`http://localhost:4000/api/favours/${favour._id}`,{
             method:'delete',
         })
         const restFavour = await response.json();
@@ -67,7 +67,7 @@ export const AcceptFavourRequest = favour =>async dispatch =>{
     }
     else{
         try {
-            const response = await fetch(`http://localhost:4000/favours/${favour._id}/${receiver}/accepted`,{
+            const response = await fetch(`http://localhost:4000/api/favours/${favour._id}/${receiver}/accepted`,{
                 method:'post',
             })
             const updatedFavour = await response.json();
@@ -86,7 +86,7 @@ export const ProveFavourRequest = favour=>async dispatch=>{
 export const AddCommentRequest =comment=>async dispatch=>{
     try {
         const body = JSON.stringify({comment})
-        const response = await fetch(`http://localhost:4000/addcomment/${comment.favourID}`,{
+        const response = await fetch(`http://localhost:4000/api/comment/${comment.favourID}`,{
             headers:{
             'Content-Type':'Application/json',
             },
