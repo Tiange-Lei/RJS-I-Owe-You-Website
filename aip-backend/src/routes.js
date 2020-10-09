@@ -42,14 +42,14 @@ router.get("/api/logout",(req,res)=>{
 })
 //User Operation--------------------------------------------------------------
 //Load all users
-router.get('/api/loadUsers',(req,res)=>{
+router.get('/api/users',(req,res)=>{
   userInfo.find({},(err,User)=>{
     if(err) throw err;
     res.status(200).json(User);
   })
 })
 //Search User
-router.get('/api/searchUsers/:name',(req,res)=>{
+router.get('/api/users/:name',(req,res)=>{
   console.log(req);
   userInfo.find({username:req.params.name},(err,User)=>{
     if(err) throw err;
@@ -111,7 +111,7 @@ router.post('/api/favours/:_id/:receiver/accepted', async (req, res) => {
 
 // --------------------------------------Comments Operations-----------------------------------
 // -------add comment-------------------------
-router.post('/api/addcomment/:favourID',async (req,res)=>{
+router.post('/api/comment/:favourID',async (req,res)=>{
   let favourid = req.params.favourID;
   const {comment}=req.body;
   const newComment = {
@@ -130,7 +130,7 @@ router.post('/api/addcomment/:favourID',async (req,res)=>{
 })
 //Award operations
 //Create Award
-router.post('/api/createAwards', async (req,res)=>{
+router.post('/api/awards', async (req,res)=>{
   const { award } = req.body;
   const newAward = new awards({
     debtor: award.debtor,
@@ -139,15 +139,15 @@ router.post('/api/createAwards', async (req,res)=>{
   });
   await newAward.save();
   const count = 1;
-  userInfo.findOneAndUpdate({_id:req.body.creditor},{$inc:{numberOfAward: count}}, async(err,userInfo)=>{
+  await userInfo.findOneAndUpdate({_id:req.body.creditor},{$inc:{numberOfAward: count}}, async(err,userInfo)=>{
     if(err) throw err;
     res.status(200).json(userInfo);
   })
   res.status(200).json(newAward);
 })
 //Delete Award
-router.delete('/api/deleteAwards/:id', async (req,res)=>{
-  await awards.deleteOne({_id:req.params.id},(err)=>{
+router.delete('/api/awards/:id', async (req,res)=>{
+  awards.deleteOne({_id:req.params.id},(err)=>{
     if(err){
       console.log("Fail to detele this award");
     }else{
@@ -156,7 +156,7 @@ router.delete('/api/deleteAwards/:id', async (req,res)=>{
   })
 })
 //Load awards
-router.get('/api/loadAwards', async (req,res)=>{
+router.get('/api/awards', async (req,res)=>{
   awards.find({}, async (err,awards)=>{
     if(err) throw err;
     res.status(200).json(awards);
@@ -164,7 +164,7 @@ router.get('/api/loadAwards', async (req,res)=>{
 })
 
 //party detection
-router.get('/api/getParty', async (req,res,next) => {
+router.get('/api/party', async (req,res,next) => {
     awards.aggregate({
 
     })
