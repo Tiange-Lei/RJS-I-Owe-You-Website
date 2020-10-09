@@ -44,7 +44,7 @@ router.get("/logout",(req,res)=>{
 
 // loading favours---------------------------
 
-router.get('/favours', (req, res) => {
+router.get('/favours', async (req, res) => {
   Favour.find({},(err,Favour)=>{
     if(err) throw err;
     res.status(200).json(Favour);

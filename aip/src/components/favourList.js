@@ -43,6 +43,9 @@ const FavourList = ({validFavours,invalidFavours,isLoading,onRemovePressed,onAcc
 }; 
 
 const mapStateToProps = state =>({
+    // isLoading:state.favours.isLoading,
+    // validFavours:state.favours.data.filter(favour=>!favour.isAccepted),
+    // invalidFavours:state.favours.data.filter(favour=>favour.isAccepted),
     isLoading: getFavoursLoading(state),
     validFavours:getValidFavours(state),
     invalidFavours:getInvalidFavours(state),

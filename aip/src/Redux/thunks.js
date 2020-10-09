@@ -77,6 +77,10 @@ export const AcceptFavourRequest = favour =>async dispatch =>{
         }
     }
 }
+
+export const ProveFavourRequest = favour=>async dispatch=>{
+    alert("Proved")
+}
 // ------------------------comments thunk--------------------------
 
 export const AddCommentRequest =comment=>async dispatch=>{

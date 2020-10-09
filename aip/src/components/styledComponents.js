@@ -89,7 +89,9 @@ export const FavourItemContainer = styled.div`
     border-radius: 8px;
     margin-top: 8px;
     padding: 16px;
+    max-width: 700px;
     position: relative;
+    margin: auto;  
     box-shadow: 0 4px 8px grey;
 `
 export const ValidFavour = styled.div`
@@ -148,6 +150,19 @@ export const CommentButton = styled.button`
     background-color: orange;
     &:hover{
         background-color: orange;
+        transform: scale(1.2);
+    }
+`
+export const ProveButton = styled.button`
+    font-size: 16px;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    display: inline-block;
+    background-color: #22F7E4 ;
+    &:hover{
         transform: scale(1.2);
     }
 `
