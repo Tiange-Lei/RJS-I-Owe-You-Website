@@ -10,7 +10,7 @@ const MongoStore = require('connect-mongo')(session);
 const uuidv1 = require ('uuid').v1;
 
 // ----------------------------connect to MongoDB-------------------------------------------------------------
-const dbString = 'mongodb+srv://encore:nmjCf9Mf3SEAW9tc@cluster0.mp99a.mongodb.net/<dbname>?retryWrites=true&w=majority';
+const dbString = 'mongodb://fish:td4w6279Jxt8X31a@cluster0-shard-00-00.fakbj.mongodb.net:27017,cluster0-shard-00-01.fakbj.mongodb.net:27017,cluster0-shard-00-02.fakbj.mongodb.net:27017/assignment2aip?ssl=true&replicaSet=atlas-o7fgeu-shard-0&authSource=admin&retryWrites=true&w=majority';
 const dbOptions = {
     useNewUrlParser:true,
     useUnifiedTopology:true
