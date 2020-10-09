@@ -61,11 +61,7 @@ router.get('/api/users/:name',(req,res)=>{
 
 // loading favours---------------------------
 
-<<<<<<< HEAD
-router.get('/favours', async (req, res) => {
-=======
 router.get('/api/favours', (req, res) => {
->>>>>>> 10.5
   Favour.find({},(err,Favour)=>{
     if(err) throw err;
     res.status(200).json(Favour);
