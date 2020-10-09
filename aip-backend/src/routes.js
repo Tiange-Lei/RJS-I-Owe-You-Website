@@ -4,9 +4,10 @@ const passport = require('passport');
 const User = require('./userSchema');
 const Favour = require('./favourSchema');
 const bcrypt = require('bcryptjs');
-
+const userInfo = require('./userInfo');
+const awards = require('./favourAwards');
 // ------------------------------Authentication APIs-------------------------------------------------
-router.post('/login',(req,res,next)=>{
+router.post('/api/login',(req,res,next)=>{
     passport.authenticate("local",(err,user,info)=>{
       if(err) throw err;
       if(!user) res.send({error: 'No user exists'});
@@ -19,7 +20,7 @@ router.post('/login',(req,res,next)=>{
     })(req,res,next)
   });
 
-router.post("/register",(req,res)=>{
+router.post("/api/register",(req,res)=>{
     User.findOne({username:req.body.username},async (err,doc)=>{
       if (err) throw err;
       if (doc) res.send("Username already exists");
@@ -35,16 +36,36 @@ router.post("/register",(req,res)=>{
   })
   });
 
-router.get("/logout",(req,res)=>{
+router.get("/api/logout",(req,res)=>{
   req.logOut();
   res.send('logout')
+})
+//User Operation--------------------------------------------------------------
+//Load all users
+router.get('/api/users',(req,res)=>{
+  userInfo.find({},(err,User)=>{
+    if(err) throw err;
+    res.status(200).json(User);
+  })
+})
+//Search User
+router.get('/api/users/:name',(req,res)=>{
+  console.log(req);
+  userInfo.find({username:req.params.name},(err,User)=>{
+    if(err) throw err;
+    res.status(200).json(User);
+  })
 })
 
 // ------------------------------------Favours Operation--------------------------------------------
 
 // loading favours---------------------------
 
+<<<<<<< HEAD
 router.get('/favours', async (req, res) => {
+=======
+router.get('/api/favours', (req, res) => {
+>>>>>>> 10.5
   Favour.find({},(err,Favour)=>{
     if(err) throw err;
     res.status(200).json(Favour);
@@ -52,7 +73,7 @@ router.get('/favours', async (req, res) => {
 })
 
 // create favour-----------------------------
-router.post('/favours', async (req, res) => {
+router.post('/api/favours', async (req, res) => {
   const { favour } = req.body;
   const newFavour = new Favour({
     publisher:favour.publisher,
@@ -68,7 +89,7 @@ router.post('/favours', async (req, res) => {
 })
 
 //delete favour------------------------------
-router.delete('/favours/:_id', async (req, res) => {
+router.delete('/api/favours/:_id', async (req, res) => {
   let id = req.params._id;
   console.log(`DELETE /favours/${id}`);
   await Favour.deleteOne({_id:id},(err)=>{
@@ -81,7 +102,7 @@ router.delete('/favours/:_id', async (req, res) => {
 })
 
 //accept favour--------------------------------
-router.post('/favours/:_id/:receiver/accepted', async (req, res) => {
+router.post('/api/favours/:_id/:receiver/accepted', async (req, res) => {
   let id = req.params._id;
   const receiver = req.params.receiver;
   console.log(receiver);
@@ -94,7 +115,7 @@ router.post('/favours/:_id/:receiver/accepted', async (req, res) => {
 
 // --------------------------------------Comments Operations-----------------------------------
 // -------add comment-------------------------
-router.post('/addcomment/:favourID',async (req,res)=>{
+router.post('/api/comment/:favourID',async (req,res)=>{
   let favourid = req.params.favourID;
   const {comment}=req.body;
   const newComment = {
@@ -111,6 +132,48 @@ router.post('/addcomment/:favourID',async (req,res)=>{
     })
   })
 })
+//Award operations
+//Create Award
+router.post('/api/awards', async (req,res)=>{
+  const { award } = req.body;
+  const newAward = new awards({
+    debtor: award.debtor,
+    creditor: award.creditor,
+    award: award.award
+  });
+  await newAward.save();
+  const count = 1;
+  await userInfo.findOneAndUpdate({_id:req.body.creditor},{$inc:{numberOfAward: count}}, async(err,userInfo)=>{
+    if(err) throw err;
+    res.status(200).json(userInfo);
+  })
+  res.status(200).json(newAward);
+})
+//Delete Award
+router.delete('/api/awards/:id', async (req,res)=>{
+  awards.deleteOne({_id:req.params.id},(err)=>{
+    if(err){
+      console.log("Fail to detele this award");
+    }else{
+      res.status(200).send("Award delete successfully")
+    }
+  })
+})
+//Load awards
+router.get('/api/awards', async (req,res)=>{
+  awards.find({}, async (err,awards)=>{
+    if(err) throw err;
+    res.status(200).json(awards);
+  })
+})
+
+//party detection
+router.get('/api/party', async (req,res,next) => {
+    awards.aggregate({
+
+    })
+  }
+)
 
 //export routers------------------------------
   module.exports = router;
