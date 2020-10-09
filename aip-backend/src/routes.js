@@ -157,19 +157,71 @@ router.delete('/api/awards/:id', async (req,res)=>{
 })
 //Load awards
 router.get('/api/awards', async (req,res)=>{
-  awards.find({}, async (err,awards)=>{
-    if(err) throw err;
-    res.status(200).json(awards);
-  })
+  awards.aggregate([
+    {
+      $lookup:
+      {
+        from:"UserInfo",
+        let: {publisher:"$debitor", receiver:"$creditor"},
+        pipeline: [
+                { $match:
+                   { $expr:
+                      { $and:
+                         [
+                           { $eq: [ "$$publisher",  "$name" ] },
+                           { $eq: [ "$$receiver", "$name" ] }
+                         ]
+                      }
+                   }
+                },
+                { $project: { debitor: 1, creditor: 1,_id: 0,award:0 } }
+             ],
+             as: "published_favour"
+      }
+    }, async (err,awards)=>{
+      if(err) throw err;
+      res.status(200).json(awards);
+    }
+  ]) 
 })
-
+//load leaderboard
+router.get('/api/leadBoard',async(req,res)=>{
+  userInfo.find({},{name:1,numberOfAward:1,_id:0})
+          .sort({numberOfAward:-1})
+          .exec(async (err,userInfo)=>{
+            if(err) throw err;
+            res.status(200).json(userInfo);
+          })
+})
 //party detection
-router.get('/api/party', async (req,res,next) => {
-    awards.aggregate({
-
-    })
-  }
-)
+router.get('/api/party/:user', async (req,res,next) => {
+    awards.aggregate([
+      { $match: {"debitor":req.params.user}},
+      { $graphLookup:
+        {
+          from:"Awards",
+          startWith:"$creditor", 
+          connctFromField:"creditor",
+          conncetToField:"debitor",
+          maxDepth: 7, //depth start with 0;
+          depthField:"partyMembers",
+          as:"partyLoop"
+        }
+      },
+      { $project:
+        {
+          debitor:1,
+          creditor:0,
+          "whoInTheParty":"partyLoop.debitor"
+        }
+      },
+      async (err,party)=>{
+        if(err) throw err;
+        res.status(200).json(party);
+        next();
+      }
+    ])
+})
 
 //export routers------------------------------
   module.exports = router;
