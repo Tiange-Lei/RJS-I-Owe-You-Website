@@ -2,6 +2,8 @@ import React,{useState} from 'react';
 import {FavourItemContainer,FavourPublisher,FavourTime,FavourAward,UserTitle,FavourReceiver} from '../components/styledComponents';
 import {connect} from 'react-redux';
 import {SubmitProveRequest} from '../Redux/thunks';
+import UploadImageButton from './UploadImageButton';
+import {Button} from 'antd';
 
 const ProveFavour=  ({favour,onSubmitPressed}) =>{
     const [awardRelation, setAwardRelation] = useState({
@@ -26,8 +28,9 @@ const ProveFavour=  ({favour,onSubmitPressed}) =>{
             <FavourTime>Posted at:&nbsp;{(new Date(favour.createdAt)).toLocaleString("en-AU")}</FavourTime>
             <br></br>
             <div>Prove:</div>
-            <input type='file' id='images' accept='image/*'/>
-            <button onClick={()=>onSubmitPressed(awardRelation)}>Submit</button>
+            <UploadImageButton />
+            <img style={{width:'400px'}} src={require("../Images/postImg/healthcare.jpg")} />
+            <Button type="primary" onClick={()=>onSubmitPressed(awardRelation)}>Submit</Button>
 
         </FavourItemContainer>
     )

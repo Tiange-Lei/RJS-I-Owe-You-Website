@@ -7,7 +7,7 @@ import ProveFavourPage from './pages/proveFavourPage';
 import Navbar from './components/navbar';
 import {GlobalStyled} from './components/resetCss';
 import ProtectedRoute from './components/protected.route';
-
+import {Button} from 'antd';
 
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
             <ProtectedRoute path='/users' component={UserPage}/>
             <Route path='/login' component={LoginPage}/>
             <Route path='/prove' component={ProveFavourPage}/>
-          </Switch>
+          </Switch>          
       </div>
       </Router>
   );
