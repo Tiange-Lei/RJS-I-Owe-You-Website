@@ -1,11 +1,11 @@
 import React,{useEffect} from 'react';
 import FavourItems from './favourItems';
 import {getFavoursLoading,getValidFavours,getInvalidFavours} from '../Redux/selectors';
-import {LoadFavours,RemoveFavoursRequest,AcceptFavourRequest} from '../Redux/thunks';
+import {LoadFavours,RemoveFavoursRequest,AcceptFavourRequest,AddCommentRequest} from '../Redux/thunks';
 import {ListWrapper,ValidFavour,InvalidFavour,UserAcceptedFavour} from './styledComponents';
 import {connect} from 'react-redux';
 
-const MyList = ({validFavours,invalidFavours,isLoading,onRemovePressed,onAcceptPressed,onDisplayAlertClicker,startLoadingFavours})=>{
+const MyList = ({validFavours,invalidFavours,isLoading,onRemovePressed,onAcceptPressed,onDisplayAlertClicker,startLoadingFavours,onAddCommentPressed})=>{
     
     useEffect(()=>{
         startLoadingFavours();
@@ -24,6 +24,7 @@ const MyList = ({validFavours,invalidFavours,isLoading,onRemovePressed,onAcceptP
                                     onRemovePressed={onRemovePressed}
                                     onAcceptPressed={onAcceptPressed}
                                     onDisplayAlertClicker={onDisplayAlertClicker}
+                                    onAddCommentPressed={onAddCommentPressed}
                                 />)
                     }
                     else{
@@ -42,6 +43,7 @@ const MyList = ({validFavours,invalidFavours,isLoading,onRemovePressed,onAcceptP
                                     onRemovePressed={onRemovePressed}
                                     onAcceptPressed={onAcceptPressed}
                                     onDisplayAlertClicker={onDisplayAlertClicker}
+                                    onAddCommentPressed={onAddCommentPressed}
                                 />
                                 )
                     }
@@ -86,6 +88,7 @@ const mapDispatchToProps = dispatch =>({
     startLoadingFavours:()=>dispatch(LoadFavours()),
     onRemovePressed: favour=>dispatch(RemoveFavoursRequest(favour)),
     onAcceptPressed: favour=>dispatch(AcceptFavourRequest(favour)),
+    onAddCommentPressed: comment=>dispatch(AddCommentRequest(comment)),
 
 })
 

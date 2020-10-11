@@ -6,6 +6,7 @@ import {CREATE_FAVOUR,
     LOAD_FAVOURS_SUCCESS,
     LOAD_FAVOURS_FAILURE,
     ADD_COMMENT,
+    END_FAVOUR,
 } from './action';
 
 
@@ -33,6 +34,9 @@ switch(type){
         return {
             ...state,
             data:state.data.map(favourItem=>{
+            if(!favour){
+                return favourItem;
+            }
             if(favourItem._id===favour._id){
                 return favour;
             }else{
@@ -40,11 +44,30 @@ switch(type){
             }
         })}
     }
+    case END_FAVOUR:{
+        const {favour}=payload;
+        return{
+            ...state,
+            data:state.data.map(favourItem=>{
+            if(!favour){
+                return favourItem;
+            }
+            if(favourItem._id===favour._id){
+                return favour;
+            }else{
+                return favourItem;
+            }
+        })
+        }
+    }
     case ADD_COMMENT:{
         const {comment}=payload;
         return{
             ...state,
             data:state.data.map(favourItem=>{
+            if(!comment){
+                    return favourItem;
+                }
             if(favourItem._id===comment.favourID){
                 let newFavourItem = {
                     ...favourItem,

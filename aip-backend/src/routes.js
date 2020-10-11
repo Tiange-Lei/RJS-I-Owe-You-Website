@@ -5,7 +5,7 @@ const User = require('./userSchema');
 const Favour = require('./favourSchema');
 const bcrypt = require('bcryptjs');
 const userInfo = require('./userInfo');
-const awards = require('./favourAwards');
+const AwardRelation = require('./awardRelationSchema');
 // ------------------------------Authentication APIs-------------------------------------------------
 router.post('/api/login',(req,res,next)=>{
     passport.authenticate("local",(err,user,info)=>{
@@ -31,6 +31,11 @@ router.post("/api/register",(req,res)=>{
               password:hashedPassword
           });
           await newUser.save();
+          const newUserInfo = new userInfo({
+            username:req.body.username,
+            numberOfAward:0
+          })
+          await newUserInfo.save();
           res.send("Registered");
       }
   })
@@ -77,6 +82,7 @@ router.post('/api/favours', async (req, res) => {
     award: favour.award,
     createdAt: new Date(),
     isAccepted: false,
+    isFinished: false,
     receiver:'',
     picture:favour.picture,
   });
@@ -101,11 +107,9 @@ router.delete('/api/favours/:_id', async (req, res) => {
 router.post('/api/favours/:_id/:receiver/accepted', async (req, res) => {
   let id = req.params._id;
   const receiver = req.params.receiver;
-  console.log(receiver);
   await Favour.findByIdAndUpdate({_id:id},{isAccepted:true,receiver:receiver},{new:true},(err,updatedFavour)=>{
     if(err) throw err;
     res.status(200).json(updatedFavour);
-    console.log(updatedFavour);
   })
 })
 
@@ -121,29 +125,40 @@ router.post('/api/comment/:favourID',async (req,res)=>{
   }
   await Favour.findById({_id:favourid},async (err,favour)=>{
     if(err)throw err;
-    favour.comments = favour.comments.concat(newComment);
-    await Favour.findByIdAndUpdate({_id:favourid},{comments:favour.comments},(err)=>{
-      if (err) throw err;
-      res.status(200).json(newComment)
-    })
+    if(!favour){
+      res.status(200).json('');
+    }
+    else{
+      favour.comments = favour.comments.concat(newComment);
+      await Favour.findByIdAndUpdate({_id:favourid},{comments:favour.comments},(err)=>{
+        if (err) throw err;
+        res.status(200).json(newComment)
+      })
+    }
   })
 })
 //Award operations
 //Create Award
-router.post('/api/awards', async (req,res)=>{
-  const { award } = req.body;
-  const newAward = new awards({
-    debtor: award.debtor,
-    creditor: award.creditor,
-    award: award.award
-  });
-  await newAward.save();
-  const count = 1;
-  await userInfo.findOneAndUpdate({_id:req.body.creditor},{$inc:{numberOfAward: count}}, async(err,userInfo)=>{
-    if(err) throw err;
-    res.status(200).json(userInfo);
+router.post('/api/newAwardRelation/', async (req,res)=>{
+  const relation = req.body;
+  const newAwardRelation = new AwardRelation({
+    favourID:relation.favourID,
+    debtor:relation.debtor,
+    creditor:relation.creditor,
+    award:relation.award,
   })
-  res.status(200).json(newAward);
+  await newAwardRelation.save();
+  await userInfo.findOne({username:relation.creditor},async(err,Info)=>{
+    if(err) throw err;
+    Info.numberOfAward+=1;
+    await userInfo.findOneAndUpdate({username:relation.creditor},{numberOfAward:Info.numberOfAward},(err,doc)=>{
+      if(err)throw err;
+    });
+    await Favour.findByIdAndUpdate({_id:relation.favourID},{isFinished:true},{new:true},(err,updatedFavour)=>{
+      if(err) throw err;
+      res.status(200).json(updatedFavour);
+    })
+  })
 })
 //Delete Award
 router.delete('/api/awards/:id', async (req,res)=>{

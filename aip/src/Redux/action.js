@@ -16,6 +16,13 @@ export const acceptFavour = favour =>({
     payload:{favour}
 })
 
+export const END_FAVOUR = 'END_FAVOUR';
+export const endFavour = (favour)=>({
+    type:END_FAVOUR,
+    payload:{favour},
+})
+
+
 export const LOAD_FAVOURS_IN_PROGRESS = 'LOAD_FAVOURS_IN_PROGRESS';
 export const loadFavoursInProgress = ()=>({
     type:LOAD_FAVOURS_IN_PROGRESS,
@@ -31,6 +38,7 @@ export const LOAD_FAVOURS_FAILURE = 'LOAD_FAVOURS_FAILURE';
 export const loadFavoursFailure = ()=>({
     type:LOAD_FAVOURS_FAILURE
 })
+
 
 // ---------------------comments actions----------------------------
 export const ADD_COMMENT = 'ADD_COMMENT';

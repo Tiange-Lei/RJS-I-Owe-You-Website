@@ -5,6 +5,7 @@ import {loadFavoursInProgress,
         removeFavour,
         acceptFavour,
         addComment,
+        endFavour,
     } from './action';
 
 
@@ -71,6 +72,9 @@ export const AcceptFavourRequest = favour =>async dispatch =>{
                 method:'post',
             })
             const updatedFavour = await response.json();
+            if(!updatedFavour){
+                alert('This favour is no longer valid!')
+            }
             dispatch(acceptFavour(updatedFavour));
         } catch (e) {
             dispatch(DisplayAlert(e))
@@ -94,9 +98,32 @@ export const AddCommentRequest =comment=>async dispatch=>{
             body,
         });
         const commentItem = await response.json();
+        if(commentItem===''){
+            alert("This favour is no longer valid!")
+        }
         dispatch(addComment(commentItem));
     } catch (e) {
         dispatch(DisplayAlert(e))
     }
 
+}
+// --------------------------submit provement-----------------------------------
+export const SubmitProveRequest = awardRelation =>async dispatch=>{
+    try {
+        const body = JSON.stringify(awardRelation);
+        const response = await fetch(`http://localhost:4000/api/newAwardRelation`,{
+            headers:{
+                'Content-Type':'Application/json',
+                },
+                method:'post',
+                body,
+        })
+        const result = await response.json();
+        if (result){
+            alert("Successfully proved")
+        }
+        dispatch(endFavour(result));
+    } catch (e) {
+        dispatch(DisplayAlert(e))
+    }
 }

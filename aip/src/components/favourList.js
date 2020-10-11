@@ -2,7 +2,7 @@ import React,{useEffect} from 'react';
 import FavourItems from './favourItems';
 import {getFavoursLoading,getValidFavours,getInvalidFavours} from '../Redux/selectors';
 import {LoadFavours,RemoveFavoursRequest,AcceptFavourRequest,AddCommentRequest} from '../Redux/thunks';
-import {ListWrapper,ValidFavour,InvalidFavour} from './styledComponents';
+import {ListWrapper,ValidFavour} from './styledComponents';
 import {connect} from 'react-redux';
 
 const FavourList = ({validFavours,invalidFavours,isLoading,onRemovePressed,onAcceptPressed,onDisplayAlertClicker,startLoadingFavours,onAddCommentPressed})=>{
@@ -26,7 +26,7 @@ const FavourList = ({validFavours,invalidFavours,isLoading,onRemovePressed,onAcc
         />)}
         </ValidFavour>
         <br></br>
-        <InvalidFavour>
+        {/* <InvalidFavour>
             <h3>Invalid Favours:</h3>
             {invalidFavours.map((favour,key)=><FavourItems 
             favour={favour} 
@@ -36,7 +36,7 @@ const FavourList = ({validFavours,invalidFavours,isLoading,onRemovePressed,onAcc
             onDisplayAlertClicker={onDisplayAlertClicker}
             onAddCommentPressed={onAddCommentPressed}
             />)}
-        </InvalidFavour>
+        </InvalidFavour> */}
     </ListWrapper>
     )
     return isLoading?LoadingMessage:content;

@@ -29,6 +29,7 @@ const NewFavourForm = ({onCreatePressed})=>{
     }
     return(
         <FormContainer>
+            <div>Post a request:</div>
             <NewFavourInput type='text'
             placeholder='Input your new favour here...' 
             value={inputValue.text}

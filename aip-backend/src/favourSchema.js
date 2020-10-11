@@ -6,6 +6,7 @@ const favour = new mongoose.Schema({
     award: String,
     createdAt: String,
     isAccepted: Boolean,
+    isFinished: Boolean,
     receiver: String,
     picture: String,
     comments: Array,

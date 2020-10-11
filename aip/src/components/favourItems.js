@@ -25,7 +25,7 @@ const FavourItems = ({favour,onRemovePressed,onAcceptPressed,onAddCommentPressed
         <ButtonContainer>
             {favour.isAccepted ||favour.publisher===localStorage.username? null:<AcceptButton onClick={()=>onAcceptPressed(favour)}>Accept</AcceptButton>}
             {favour.publisher===localStorage.username?<RemoveButton onClick={()=>onRemovePressed(favour)}>Remove</RemoveButton>:null}
-            {favour.receiver===localStorage.username?<Link to={{pathname:'/prove',state:favour}} style={{textDecoration:'none'}}><ProveButton>prove</ProveButton></Link>:null}
+            {favour.receiver===localStorage.username?favour.isFinished?<div>Finished</div>:<Link to={{pathname:'/prove',state:favour}} style={{textDecoration:'none'}}><ProveButton>prove</ProveButton></Link>:null}
             <CommentButton onClick={()=>setDisplaying(!isDisplaying)}>comments</CommentButton>
         </ButtonContainer>
     </FavourItemContainer>
