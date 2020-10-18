@@ -137,7 +137,55 @@ router.post('/api/comment/:favourID',async (req,res)=>{
     }
   })
 })
+
+// add award to favour----------------------------
+router.post('/api/favours/:favourID/awardIncrement',async(req,res)=>{
+  let id = req.params.favourID;
+  const info=req.body;
+  const newFollower={
+    favourID:info.favourID,
+    name:info.followerName,
+    award:info.award,
+  }
+  await Favour.findById({_id:id},async (err,favour)=>{
+    if(err)throw err;
+    if(!favour){
+      res.status(200).json('');
+    }
+    else{
+      favour.follower = favour.follower.concat(newFollower);
+      await Favour.findByIdAndUpdate({_id:id},{follower:favour.follower},(err)=>{
+        if (err) throw err;
+        res.status(200).json(newFollower)
+      })
+    }
+  })
+
+
+})
 //Award operations
+
+//Load awards--------------------------------------------------
+router.get('/api/awards', (req, res) => {
+  AwardRelation.find({},(err,awards)=>{
+    if(err) throw err;
+    res.status(200).json(awards);
+  })
+})
+
+//Delete Award
+router.delete('/api/awards/:_id', async (req,res)=>{
+  let id = req.params._id;
+  await AwardRelation.deleteOne({_id:id},(err)=>{
+    if(err){
+      throw err;
+    }
+    AwardRelation.find({},(err,Awards)=>{
+      if(err) throw err;
+      res.status(200).json(Awards)
+    })
+  })
+})
 //Create Award
 router.post('/api/newAwardRelation/', async (req,res)=>{
   const relation = req.body;
@@ -180,74 +228,9 @@ router.post('/api/newAwardRelation/', async (req,res)=>{
       })
     }
     else{
-      res.status(200).json('')
+      res.status(200).json(newAwardRelation)
     }
   })
-})
-// add award to favour----------------------------
-router.post('/api/favours/:favourID/awardIncrement',async(req,res)=>{
-  let id = req.params.favourID;
-  const info=req.body;
-  const newFollower={
-    favourID:info.favourID,
-    name:info.followerName,
-    award:info.award,
-  }
-  await Favour.findById({_id:id},async (err,favour)=>{
-    if(err)throw err;
-    if(!favour){
-      res.status(200).json('');
-    }
-    else{
-      favour.follower = favour.follower.concat(newFollower);
-      await Favour.findByIdAndUpdate({_id:id},{follower:favour.follower},(err)=>{
-        if (err) throw err;
-        res.status(200).json(newFollower)
-      })
-    }
-  })
-
-
-})
-//Delete Award
-router.delete('/api/awards/:id', async (req,res)=>{
-  awards.deleteOne({_id:req.params.id},(err)=>{
-    if(err){
-      console.log("Fail to detele this award");
-    }else{
-      res.status(200).send("Award delete successfully")
-    }
-  })
-})
-
-//Load awards
-router.get('/api/awards', async (req,res)=>{
-  awards.aggregate([
-    {
-      $lookup:
-      {
-        from:"UserInfo",
-        let: {publisher:"$debitor", receiver:"$creditor"},
-        pipeline: [
-                { $match:
-                   { $expr:
-                      { $and:
-                         [
-                           { $eq: [ "$$publisher",  "$name" ] },
-                           { $eq: [ "$$receiver", "$name" ] }
-                         ]
-                      }
-                   }
-                },
-                { $project: { debitor: 1, creditor: 1,_id: 0,award:0 } }
-             ],
-             as: "published_favour"
-      }
-    }, async (err,awards)=>{
-      if(err) throw err;
-      res.status(200).json(awards);
-    }
-  ]) 
 })
 //load leaderboard
 router.get('/api/leadBoard',async(req,res)=>{

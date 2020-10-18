@@ -53,3 +53,34 @@ export const addAward = award =>({
     type:ADD_AWARD,
     payload:{award},
 })
+
+//-------------------load awards------------------------------
+export const LOAD_AWARDS_IN_PROGRESS = 'LOAD_AWARDS_IN_PROGRESS';
+export const loadAwardsInProgress = ()=>({
+    type:LOAD_AWARDS_IN_PROGRESS,
+})
+
+export const LOAD_AWARDS_SUCCESS = 'LOAD_AWARDS_SUCCESS';
+export const loadAwardsSuccess = awards=>({
+    type:LOAD_AWARDS_SUCCESS,
+    payload: {awards},
+})
+
+export const LOAD_AWARDS_FAILURE = 'LOAD_AWARDS_FAILURE';
+export const loadAwardsFailure = ()=>({
+    type:LOAD_AWARDS_FAILURE
+})
+// ----------------create award relation-------------------
+export const CREATE_AWARD_RELATION = 'CREATE_AWARD_RELATION';
+export const createAwardRelation = awardRelation=>({
+    type:CREATE_AWARD_RELATION,
+    payload:{awardRelation}
+}
+)
+// ----------------remove award relation------------------
+export const REMOVE_AWARD_RELATION = 'REMOVE_AWARD_RELATION';
+export const removeAwardRelation = restAward=>({
+    type:REMOVE_AWARD_RELATION,
+    payload:{restAward}
+}
+)

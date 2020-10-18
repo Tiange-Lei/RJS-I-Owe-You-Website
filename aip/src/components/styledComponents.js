@@ -83,6 +83,7 @@ export const NewFavourButton = styled.button`
 export const ListWrapper = styled.div`
     max-width: 700px;
     margin: auto;  
+    animation: ${showUP} 1.5s backwards, ${fadeIn} .8s;
 `
 
 export const FavourItemContainer = styled.div`
@@ -313,4 +314,17 @@ export const ProveContainer = styled.div`
     width: 500px;
     text-align:center;
     visibility: ${props=>(props.x.value?'visible':'hidden')};
+`
+
+
+export const AwardRelationContainer = styled.div`
+    background: #fff;
+    border-radius: 8px;
+    margin-top: 8px;
+    padding: 16px;
+    max-width: 700px;
+    position: relative;
+    margin: auto;  
+    box-shadow: 0 4px 8px grey;
+    animation: ${showUP} 1.5s backwards, ${fadeIn} .8s;
 `

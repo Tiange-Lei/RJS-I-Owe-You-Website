@@ -8,21 +8,28 @@ import {CREATE_FAVOUR,
     ADD_COMMENT,
     END_FAVOUR, 
     ADD_AWARD,
+    LOAD_AWARDS_IN_PROGRESS,
+    LOAD_AWARDS_FAILURE,
+    LOAD_AWARDS_SUCCESS, 
+    CREATE_AWARD_RELATION, 
+    REMOVE_AWARD_RELATION,
 } from './action';
 
+// ------create state for favours--------------------------------
 
+const initialFavourState = {isLoading:false,data:[]};
 
-const initialState = {isLoading:false,data:[]};
-
-export const favours = (state=initialState,action)=>{
+export const favours = (state=initialFavourState,action)=>{
 const {type,payload} = action;
 switch(type){
+// ---------create favour------------------------
     case CREATE_FAVOUR:{
         const {favour}=payload;
         return {
             ...state,
             data:state.data.concat(favour)};
     }
+// -----------remove favour---------------------
     case REMOVE_FAVOUR:{
         const {favour}=payload;
         return {
@@ -30,6 +37,7 @@ switch(type){
             data:favour,
         }
     }
+// -----------accept favour---------------------
     case ACCEPT_FAVOUR:{
         const {favour}=payload;
         return {
@@ -45,6 +53,7 @@ switch(type){
             }
         })}
     }
+// -----------end favour---------------------
     case END_FAVOUR:{
         const {favour}=payload;
         return{
@@ -61,6 +70,7 @@ switch(type){
         })
         }
     }
+// -----------add comment---------------------
     case ADD_COMMENT:{
         const {comment}=payload;
         return{
@@ -82,6 +92,7 @@ switch(type){
         }
 
         }
+// -----------add award---------------------
     case ADD_AWARD:{
         const{award}=payload;
         return{
@@ -102,6 +113,7 @@ switch(type){
             })
         }
     }
+// -----------load favour---------------------
     case LOAD_FAVOURS_SUCCESS:{
         const {favours}=payload;
         return {
@@ -126,4 +138,51 @@ switch(type){
     }
 }
 }
+// -----------create state for award relation---------------------
+const initialAwardState = {isLoading:false,data:[]};
+export const awards = (state=initialAwardState,action)=>{
+    const {type,payload} = action;
+    switch(type){
+        case CREATE_AWARD_RELATION:{
+            const {awardRelation}=payload;
+            return{
+                ...state,
+                data:state.data.concat(awardRelation),
+            }
+        }
+// -------remove award relation------------------------
+        case REMOVE_AWARD_RELATION:{
+            const {restAward}=payload;
+            return{
+                ...state,
+                data:restAward
+            }
+        }
+// -----------load award relation---------------------
+        case LOAD_AWARDS_SUCCESS:{
+            const {awards}=payload;
+            return {
+                isLoading: false,
+                data:awards
+            };
+        }
+        case LOAD_AWARDS_IN_PROGRESS:{
+            return{
+                ...state,
+                isLoading:true,
+            }
+        }
+        case LOAD_AWARDS_FAILURE:{
+            return{
+                ...state,
+                isLoading:false
+            }
+        }
+        default:{
+            return state;
+        }
+    }
+}
+
+
 

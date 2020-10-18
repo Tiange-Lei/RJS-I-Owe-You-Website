@@ -7,11 +7,16 @@ import {loadFavoursInProgress,
         addComment,
         endFavour,
         addAward,
+        loadAwardsFailure,
+        loadAwardsInProgress,
+        loadAwardsSuccess,
+        createAwardRelation,
+        removeAwardRelation,
     } from './action';
 
 
 
-
+// ---------------------load favours-------------------------------
 export const LoadFavours =()=>async(dispatch,getState)=>{
 
     try {
@@ -31,7 +36,7 @@ export const LoadFavours =()=>async(dispatch,getState)=>{
 export const DisplayAlert=text=>()=>{
     alert(text)
 }
-
+// -------------------creat favour-------------------------------
 export const AddFavoursRequest =favour=>async dispatch=>{
     try {
         const body = JSON.stringify({favour})
@@ -49,7 +54,7 @@ export const AddFavoursRequest =favour=>async dispatch=>{
     }
 
 }
-
+// ------------------remove favour-------------------------------
 export const RemoveFavoursRequest = favour =>async dispatch=>{
     try {
         const response = await fetch(`http://localhost:4000/api/favours/${favour._id}`,{
@@ -61,7 +66,7 @@ export const RemoveFavoursRequest = favour =>async dispatch=>{
         dispatch(DisplayAlert(e))
     }
 }
-
+// ------------accept favour------------------------------
 export const AcceptFavourRequest = favour =>async dispatch =>{
     let receiver = localStorage.username;
     if(receiver===''){
@@ -152,8 +157,8 @@ export const SubmitProveRequest = awardRelation =>async dispatch=>{
         const result = await response.json();
         if (result){
             alert("Successfully proved")
+            dispatch(endFavour(result));
         }
-        dispatch(endFavour(result));
     } catch (e) {
         dispatch(DisplayAlert(e))
     }
@@ -170,10 +175,41 @@ export const SubmitAwardRecord = awardInfo =>async dispatch=>{
                 body,
         })
         const result = await response.json();
-        if (result===''){
-            alert("Successfully recorded")
+        if (result){
+            alert("Successfully recorded");
+            dispatch(createAwardRelation(result));
         }
+
         dispatch(endFavour(result));
+    } catch (e) {
+        dispatch(DisplayAlert(e))
+    }
+}
+
+// ---------------Load award relation---------------------------------------------
+export const LoadAwards =()=>async(dispatch,getState)=>{
+
+    try {
+        dispatch(loadAwardsInProgress());
+        const response = await fetch('http://localhost:4000/api/awards');
+        const awards = await response.json();
+    
+        dispatch(loadAwardsSuccess(awards));
+    } catch (e) {
+        dispatch(loadAwardsFailure());
+        dispatch(DisplayAlert(e))
+    }
+
+}
+
+// --------------Delete award relation------------------------------------------------
+export const RemoveAwardRequest = award => async dispatch=>{
+    try {
+        const response = await fetch(`http://localhost:4000/api/awards/${award._id}`,{
+            method:'delete',
+        })
+        const restAwards = await response.json();
+        dispatch(removeAwardRelation(restAwards));
     } catch (e) {
         dispatch(DisplayAlert(e))
     }
