@@ -6,7 +6,8 @@ import {CREATE_FAVOUR,
     LOAD_FAVOURS_SUCCESS,
     LOAD_FAVOURS_FAILURE,
     ADD_COMMENT,
-    END_FAVOUR,
+    END_FAVOUR, 
+    ADD_AWARD,
 } from './action';
 
 
@@ -81,6 +82,26 @@ switch(type){
         }
 
         }
+    case ADD_AWARD:{
+        const{award}=payload;
+        return{
+            ...state,
+            data:state.data.map(favourItem=>{
+            if(!award){
+                    return favourItem;
+                }
+            if(favourItem._id===award.favourID){
+                let newFavourItem = {
+                    ...favourItem,
+                    follower:favourItem.follower.concat(award)
+                }
+                return newFavourItem
+            }else{
+                return favourItem;
+            }
+            })
+        }
+    }
     case LOAD_FAVOURS_SUCCESS:{
         const {favours}=payload;
         return {

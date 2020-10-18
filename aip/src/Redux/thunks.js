@@ -6,6 +6,7 @@ import {loadFavoursInProgress,
         acceptFavour,
         addComment,
         endFavour,
+        addAward,
     } from './action';
 
 
@@ -82,6 +83,36 @@ export const AcceptFavourRequest = favour =>async dispatch =>{
     }
 }
 
+// -----------------------AddAward Request------------------------------------------------
+export const AddAwardRequest = favour =>async dispatch =>{
+    let receiver = localStorage.username;
+    if(receiver===''){
+        alert('Please login fisrt')
+    }
+    else{
+        try {
+            const body = JSON.stringify(favour);
+            const response = await fetch(`http://localhost:4000/api/favours/${favour.favourID}/awardIncrement`,{
+                headers:{
+                'Content-Type':'Application/json',
+                },
+                method:'post',
+                body,
+            });
+            const awardItem = await response.json();
+            if(!awardItem){
+                alert('This favour is no longer valid!')
+            }
+            dispatch(addAward(awardItem));
+        } catch (e) {
+            dispatch(DisplayAlert(e))
+        }
+    }
+}
+
+
+
+// --------------Prove request(picture should be checked before approval)
 export const ProveFavourRequest = favour=>async dispatch=>{
     alert("Proved")
 }
@@ -121,6 +152,26 @@ export const SubmitProveRequest = awardRelation =>async dispatch=>{
         const result = await response.json();
         if (result){
             alert("Successfully proved")
+        }
+        dispatch(endFavour(result));
+    } catch (e) {
+        dispatch(DisplayAlert(e))
+    }
+}
+// --------------Submit award record----------------------------------------------------------------
+export const SubmitAwardRecord = awardInfo =>async dispatch=>{
+    try {
+        const body = JSON.stringify(awardInfo);
+        const response = await fetch(`http://localhost:4000/api/newAwardRelation`,{
+            headers:{
+                'Content-Type':'Application/json',
+                },
+                method:'post',
+                body,
+        })
+        const result = await response.json();
+        if (result===''){
+            alert("Successfully recorded")
         }
         dispatch(endFavour(result));
     } catch (e) {

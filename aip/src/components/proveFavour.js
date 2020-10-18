@@ -9,6 +9,7 @@ const ProveFavour=  ({favour,onSubmitPressed}) =>{
         debtor:favour.publisher,
         creditor:favour.receiver,
         award:favour.award,
+        follower:favour.follower,
         prove:'',
     })
         return(

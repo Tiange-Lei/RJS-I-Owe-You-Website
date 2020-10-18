@@ -46,3 +46,10 @@ export const addComment = comment =>({
     type:ADD_COMMENT,
     payload:{comment},
 });
+
+// ---------------------addaward action------------------------
+export const ADD_AWARD = 'ADD_AWARD';
+export const addAward = award =>({
+    type:ADD_AWARD,
+    payload:{award},
+})

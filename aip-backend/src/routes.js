@@ -154,11 +154,60 @@ router.post('/api/newAwardRelation/', async (req,res)=>{
     await userInfo.findOneAndUpdate({username:relation.creditor},{numberOfAward:Info.numberOfAward},(err,doc)=>{
       if(err)throw err;
     });
-    await Favour.findByIdAndUpdate({_id:relation.favourID},{isFinished:true},{new:true},(err,updatedFavour)=>{
-      if(err) throw err;
-      res.status(200).json(updatedFavour);
-    })
+    if(relation.follower){
+      let followers=relation.follower;
+      followers.map(async (follower,key)=>{
+        const newRelation=new AwardRelation({
+          favourID:follower.favourID,
+          debtor:follower.name,
+          creditor:relation.creditor,
+          award:follower.award
+        })
+        await newRelation.save();
+        await userInfo.findOne({username:relation.creditor},async(err,Info)=>{
+          if(err)throw err;
+          Info.numberOfAward+=1;
+          await userInfo.findOneAndUpdate({username:relation.creditor},{numberOfAward:Info.numberOfAward},(err,doc)=>{
+            if(err)throw err;
+          })
+        })
+      });
+    }
+    if(relation.favourID){
+      await Favour.findByIdAndUpdate({_id:relation.favourID},{isFinished:true},{new:true},(err,updatedFavour)=>{
+        if(err) throw err;
+        res.status(200).json(updatedFavour);
+      })
+    }
+    else{
+      res.status(200).json('')
+    }
   })
+})
+// add award to favour----------------------------
+router.post('/api/favours/:favourID/awardIncrement',async(req,res)=>{
+  let id = req.params.favourID;
+  const info=req.body;
+  const newFollower={
+    favourID:info.favourID,
+    name:info.followerName,
+    award:info.award,
+  }
+  await Favour.findById({_id:id},async (err,favour)=>{
+    if(err)throw err;
+    if(!favour){
+      res.status(200).json('');
+    }
+    else{
+      favour.follower = favour.follower.concat(newFollower);
+      await Favour.findByIdAndUpdate({_id:id},{follower:favour.follower},(err)=>{
+        if (err) throw err;
+        res.status(200).json(newFollower)
+      })
+    }
+  })
+
+
 })
 //Delete Award
 router.delete('/api/awards/:id', async (req,res)=>{
@@ -170,6 +219,7 @@ router.delete('/api/awards/:id', async (req,res)=>{
     }
   })
 })
+
 //Load awards
 router.get('/api/awards', async (req,res)=>{
   awards.aggregate([

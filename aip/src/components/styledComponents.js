@@ -166,6 +166,16 @@ export const ProveButton = styled.button`
         transform: scale(1.2);
     }
 `
+export const AddAwardButton = styled.button`
+    font-size: 16px;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    display: inline-block;
+    background-color: #138DF2;
+`
 export const SelectorContainer = styled.div`
     font-size: 16px;
     padding: 8px;
@@ -208,4 +218,98 @@ export const FavourReceiver = styled.span`
 `
 export const BarTitle = styled.span`
     color:white
+`
+
+export const SideBarContainer = styled.div`
+    float: left;
+    background: yellow;
+    width: 80px;
+    text-align: center;
+`
+export const SideUL = styled.ul`
+    list-style:none;
+    display: inline-block;
+`
+export const SideItem = styled.li`
+    color: white;
+    width: 80px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    display: inline-block;
+    font-size: 20px;
+    cursor:pointer;
+    &:hover{
+        background-color:orange;
+        color: white
+    }
+`
+
+export const DebtorContainer = styled.div`
+    float: left;
+    width: 200px;
+`
+export const DebtorDiv = styled.div`
+    float: left;
+
+`
+export const CreditorContainer = styled.div`
+    float: right;
+    width: 200px;
+`
+export const CreditorDiv = styled.div`
+    float: left;
+`
+export const IOUContainer = styled.div`
+    positon:absolute;
+    color: blue;
+    width: 400px;
+    margin: auto;
+    margin-top: 50px;
+    visibility: ${props=>(props.x.value?'hidden':'visible')};
+`
+export const UOIContainer = styled.div`
+    position:absolute;
+    color: blue;
+    width: 400px;
+    margin: auto;
+    visibility: ${props=>(props.x.value?'visible':'hidden')};
+`
+export const AwardSelector = styled.div`
+    font-size: 16px;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    width: 500px;
+    outline: none;
+    margin: auto;
+    margin-top: 10px;
+    text-align: center;
+`
+export const AwardFormContainer = styled.div`
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 4px 8px grey;
+    position: relative;
+    max-width: 700px;
+    margin: auto;  
+    postion:relative;
+    animation: ${showUP} 1.5s backwards, ${fadeIn} .8s;
+`
+export const SwitchContainer = styled.div`
+    position: relative;
+    width: 400px;
+    margin: auto;
+`
+
+export const UserNameInput = styled.input`
+    width: 80px;
+`
+export const ProveContainer = styled.div`
+    margin: auto;
+    margin-left: 125px;
+    width: 500px;
+    text-align:center;
+    visibility: ${props=>(props.x.value?'visible':'hidden')};
 `

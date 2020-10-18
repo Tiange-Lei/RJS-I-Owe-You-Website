@@ -10,5 +10,6 @@ const favour = new mongoose.Schema({
     receiver: String,
     picture: String,
     comments: Array,
+    follower: Array,
 })
 module.exports = mongoose.model('Favour',favour);
