@@ -6,7 +6,7 @@ const Favour = require('./favourSchema');
 const bcrypt = require('bcryptjs');
 const userInfo = require('./userInfo');
 const AwardRelation = require('./awardRelationSchema');
-const multer = require('multer')
+const multer = require('multer');
 const fs = require('fs');
 
 // ------------------------------Authentication APIs-------------------------------------------------
@@ -115,7 +115,7 @@ router.post('/api/favours/:_id/:receiver/accepted', async (req, res) => {
     res.status(200).json(updatedFavour);
   })
 })
-//accept favour--------------------------------
+//Upload prove--------------------------------
 const path = './public/uploads';
 if (!fs.existsSync(path)) {
   fs.mkdirSync(path, { recursive: true });
@@ -139,7 +139,6 @@ router.post('/api/upload', upload.single('file'), async (req, res) => {
       info: `/uploads/${req.file.filename}`,
   });
 });
-
 
 // --------------------------------------Comments Operations-----------------------------------
 // -------add comment-------------------------
