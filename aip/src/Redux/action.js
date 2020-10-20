@@ -84,3 +84,9 @@ export const removeAwardRelation = restAward=>({
     payload:{restAward}
 }
 )
+//-------------load leader board--------
+export const LOAD_LEADER_BOARD = 'LOAD_LEADER_BOARD';
+export const loadLeaderBoard = users =>({
+    type:LOAD_LEADER_BOARD,
+    payload:{users}
+})

@@ -13,6 +13,7 @@ import {CREATE_FAVOUR,
     LOAD_AWARDS_SUCCESS, 
     CREATE_AWARD_RELATION, 
     REMOVE_AWARD_RELATION,
+    LOAD_LEADER_BOARD
 } from './action';
 
 // ------create state for favours--------------------------------
@@ -184,5 +185,23 @@ export const awards = (state=initialAwardState,action)=>{
     }
 }
 
-
+//-------------create state for leader board---------
+const initialLeaderBoardState = {
+                                members:[]
+                                };
+export const leaders = (state = initialLeaderBoardState,action) =>{
+    const {type,payload} = action;
+    if(type === LOAD_LEADER_BOARD){
+        console.log(payload);
+        const {users} = payload;
+        console.log(users);
+        
+        return {
+            ...state,
+            members:users
+        };
+    }else{
+        return state;
+    }
+}
 

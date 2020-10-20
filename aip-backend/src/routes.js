@@ -230,11 +230,11 @@ router.post('/api/newAwardRelation/', async (req,res)=>{
     else{
       res.status(200).json(newAwardRelation)
     }
-  })
+  });
 })
 //load leaderboard
 router.get('/api/leadBoard',async(req,res)=>{
-  userInfo.find({},{name:1,numberOfAward:1,_id:0})
+  userInfo.find({},{username:1,numberOfAward:1,_id:0})
           .sort({numberOfAward:-1})
           .exec(async (err,userInfo)=>{
             if(err) throw err;
@@ -242,33 +242,30 @@ router.get('/api/leadBoard',async(req,res)=>{
           })
 })
 //party detection
-router.get('/api/party/:user', async (req,res,next) => {
-    awards.aggregate([
-      { $match: {"debitor":req.params.user}},
-      { $graphLookup:
-        {
-          from:"Awards",
-          startWith:"$creditor", 
-          connctFromField:"creditor",
-          conncetToField:"debitor",
-          maxDepth: 7, //depth start with 0;
-          depthField:"partyMembers",
-          as:"partyLoop"
+router.get('/api/party/:_user', async (req,res) => {
+    AwardRelation.aggregate([
+      {
+        $match: {
+          debtor: req.params._user
         }
-      },
-      { $project:
-        {
-          debitor:1,
-          creditor:0,
-          "whoInTheParty":"partyLoop.debitor"
+      }, {
+        $graphLookup: {
+          from: "awardrelations", 
+          startWith: "$debtor", 
+          connectFromField: "debtor", 
+          connectToField: "creditor", 
+          as: "party", 
+          depthField: "members"
         }
-      },
-      async (err,party)=>{
-        if(err) throw err;
-        res.status(200).json(party);
-        next();
+      }, {
+        $project: {
+          "WhoIsInTheParty": "$party.debtor"
+        }
       }
-    ])
+    ]).exec((err,party)=>{
+      if(err) throw err;
+      res.status(200).json(party);
+    })
 })
 
 //export routers------------------------------

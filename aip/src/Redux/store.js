@@ -1,10 +1,10 @@
 import {createStore, combineReducers,applyMiddleware} from 'redux';
-import {favours,awards} from './reducer';
+import {favours,awards,leaders} from './reducer';
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
 
-const reducers={favours,awards};
+const reducers={favours,awards,leaders};
 const rootReducer = combineReducers(reducers);
 
 export const configureStore = ()=> createStore(rootReducer,
