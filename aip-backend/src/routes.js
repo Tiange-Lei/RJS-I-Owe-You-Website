@@ -6,6 +6,9 @@ const Favour = require('./favourSchema');
 const bcrypt = require('bcryptjs');
 const userInfo = require('./userInfo');
 const AwardRelation = require('./awardRelationSchema');
+const multer = require('multer');
+const fs = require('fs');
+
 // ------------------------------Authentication APIs-------------------------------------------------
 router.post('/api/login',(req,res,next)=>{
     passport.authenticate("local",(err,user,info)=>{
@@ -112,6 +115,30 @@ router.post('/api/favours/:_id/:receiver/accepted', async (req, res) => {
     res.status(200).json(updatedFavour);
   })
 })
+//Upload prove--------------------------------
+const path = './public/uploads';
+if (!fs.existsSync(path)) {
+  fs.mkdirSync(path, { recursive: true });
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null, path);
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname)
+  }
+})
+
+const upload = multer({ storage });
+
+router.post('/api/upload', upload.single('file'), async (req, res) => {
+    res.json({
+      code: 200,
+      message: 'success',
+      info: `/uploads/${req.file.filename}`,
+  });
+});
 
 // --------------------------------------Comments Operations-----------------------------------
 // -------add comment-------------------------

@@ -3,6 +3,9 @@ import {getFavours} from '../Redux/selectors';
 import {FormContainer,NewFavourInput,NewFavourButton,SelectorContainer,DefaultOption} from './styledComponents';
 import {connect} from 'react-redux';
 import {AddFavoursRequest} from '../Redux/thunks';
+import {Input, Select} from 'antd';
+
+const  {TextArea} = Input;
 
 const NewFavourForm = ({onCreatePressed})=>{
     const [inputValue,setInputValue] = useState({
@@ -30,13 +33,17 @@ const NewFavourForm = ({onCreatePressed})=>{
     return(
         <FormContainer>
             <div>Post a request:</div>
-            <NewFavourInput type='text'
+            <TextArea
             placeholder='Input your new favour here...' 
+            showCount
+            maxLength={100}
             value={inputValue.text}
             onChange={e=>setInputValue(
                 {   ...inputValue,
                     text:e.target.value}
-            )}
+            )
+            }
+            
             />
             <SelectorContainer>
             Select award:&nbsp;&nbsp;&nbsp;
