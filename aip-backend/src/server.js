@@ -8,6 +8,7 @@ var routes = require('./routes');
 const { db } = require('./userSchema');
 const MongoStore = require('connect-mongo')(session);
 const uuidv1 = require ('uuid').v1;
+const path = require('path');
 
 // ----------------------------connect to MongoDB-------------------------------------------------------------
 const dbString = 'mongodb://fish:td4w6279Jxt8X31a@cluster0-shard-00-00.fakbj.mongodb.net:27017,cluster0-shard-00-01.fakbj.mongodb.net:27017,cluster0-shard-00-02.fakbj.mongodb.net:27017/assignment2aip?ssl=true&replicaSet=atlas-o7fgeu-shard-0&authSource=admin&retryWrites=true&w=majority';
@@ -32,6 +33,7 @@ app.use(cors({
     origin: "http://localhost:3000",
     credentials: true
 }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // ------------------------------Configure Session and cookie-------------------------------------------------------------
 app.use(session({

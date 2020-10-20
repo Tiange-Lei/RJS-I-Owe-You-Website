@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {FormContainer} from './styledComponents';
+import {Button, Input} from 'antd'
 
 const LoginForm = ()=>{
     const [registerUsername, setRegisterUsername]= useState('');
@@ -52,23 +53,23 @@ const LoginForm = ()=>{
             <div>
                 <h1>Register</h1>
                 <br></br>
-                <input placeholder='username' onChange={e=>setRegisterUsername(e.target.value)}/>
+                <Input placeholder='username' onChange={e=>setRegisterUsername(e.target.value)} style={{ width: '30%' }}/>
                 <br></br>
-                <input placeholder='password' onChange={e=>setRegisterPassword(e.target.value)}type='password'/>
+                <Input.Password placeholder='password' onChange={e=>setRegisterPassword(e.target.value)} style={{ width: '30%' }}/>
                 <br></br>
                 <br></br>
-                <button onClick={register}>submit</button>
+                <Button type="primary" onClick={register}>submit</Button>
             </div>
             <div>
             <br></br>
                 <h1>Login</h1>
                 <br></br>
-                <input placeholder='username' onChange={e=>setLoginUsername(e.target.value)}/>
+                <Input placeholder='username' onChange={e=>setLoginUsername(e.target.value)} style={{ width: '30%' }}/>
                 <br></br>
-                <input placeholder='password' onChange={e=>setLoginPassword(e.target.value)} type='password'/>
+                <Input.Password placeholder='password' onChange={e=>setLoginPassword(e.target.value)} style={{ width: '30%' }}/>
                 <br></br>
                 <br></br>
-                <button onClick={login}>login</button>
+                <Button type="primary" onClick={login}>login</Button>
                 <br></br>
             </div>
         </FormContainer>

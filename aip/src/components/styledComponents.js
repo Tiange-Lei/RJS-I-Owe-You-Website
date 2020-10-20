@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import {showUP,fadeIn} from './keyframes';
-// import 'antd/dist/antd.css';
+import 'antd/dist/antd.css';
 
 export const Container = styled.div`
     background: #2AAEF0;

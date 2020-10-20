@@ -144,15 +144,13 @@ export const AddCommentRequest =comment=>async dispatch=>{
 
 }
 // --------------------------submit provement-----------------------------------
-export const SubmitProveRequest = awardRelation =>async dispatch=>{
+export const SubmitProveRequest = file =>async dispatch=>{
     try {
-        const body = JSON.stringify(awardRelation);
-        const response = await fetch(`http://localhost:4000/api/newAwardRelation`,{
-            headers:{
-                'Content-Type':'Application/json',
-                },
-                method:'post',
-                body,
+        var body = new FormData();
+        body.append("file", file);
+        const response = await fetch(`http://localhost:4000/api/upload`,{
+            body,
+            method:'post',
         })
         const result = await response.json();
         if (result){

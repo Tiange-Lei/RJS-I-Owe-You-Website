@@ -19,7 +19,7 @@ const LogoutButton = () => {
       logout();
       localStorage.username='';
     }}>
-      Log out
+      {localStorage.username}
     </NavLogout>
   );
 };
