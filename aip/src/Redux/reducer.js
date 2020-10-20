@@ -13,7 +13,8 @@ import {CREATE_FAVOUR,
     LOAD_AWARDS_SUCCESS, 
     CREATE_AWARD_RELATION, 
     REMOVE_AWARD_RELATION,
-    LOAD_LEADER_BOARD
+    LOAD_LEADER_BOARD,
+    GET_PARTY
 } from './action';
 
 // ------create state for favours--------------------------------
@@ -192,10 +193,7 @@ const initialLeaderBoardState = {
 export const leaders = (state = initialLeaderBoardState,action) =>{
     const {type,payload} = action;
     if(type === LOAD_LEADER_BOARD){
-        console.log(payload);
         const {users} = payload;
-        console.log(users);
-        
         return {
             ...state,
             members:users
@@ -205,3 +203,19 @@ export const leaders = (state = initialLeaderBoardState,action) =>{
     }
 }
 
+//--------------create state for party detection----
+const initialPartyState = {
+                            users:[]
+                          };
+export const party = (state = initialPartyState,action) =>{
+    const {type,payload} = action;
+    if(type === GET_PARTY){
+        const {partyInfo} = payload;
+        return {
+            ...state,
+            users:partyInfo[0].WhoIsInTheParty
+            };
+    }else{
+        return state;
+    }
+}

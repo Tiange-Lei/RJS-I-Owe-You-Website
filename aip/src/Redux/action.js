@@ -90,3 +90,9 @@ export const loadLeaderBoard = users =>({
     type:LOAD_LEADER_BOARD,
     payload:{users}
 })
+//-------------party detection-------------
+export const GET_PARTY = 'GET_PARTY';
+export const getPartyDet = partyInfo =>({
+    type:GET_PARTY,
+    payload:{partyInfo}
+})

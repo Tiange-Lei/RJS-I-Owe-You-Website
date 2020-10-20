@@ -12,7 +12,8 @@ import {loadFavoursInProgress,
         loadAwardsSuccess,
         createAwardRelation,
         removeAwardRelation,
-        loadLeaderBoard
+        loadLeaderBoard,
+        getPartyDet
     } from './action';
 
 
@@ -214,11 +215,21 @@ export const RemoveAwardRequest = award => async dispatch=>{
     }
 }
 //----------------Get Party Members-------------------------------------------------
+export const getParty = user => async dispatch =>{
+    try {
+        const response = await fetch(`http://localhost:4000/api/party/${user}`);
+        const result = await response.json();
+        console.log(result);
+        dispatch(getPartyDet(result));
+    } catch (e) {
+        dispatch(DisplayAlert(e));
+    }
+}
 //----------------Get LeaderBoard---------------------------------------------------
 export const loadLeadBoard = () => async dispatch =>{
     try{
         const response = await fetch('http://localhost:4000/api/leadBoard');
-        console.log(response);
+
         const user = await response.json();
         dispatch(loadLeaderBoard(user));
     }catch(e){
