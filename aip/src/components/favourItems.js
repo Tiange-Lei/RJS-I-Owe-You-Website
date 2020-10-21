@@ -27,18 +27,6 @@ const FavourItems = ({favour,onRemovePressed,onAcceptPressed,onAddCommentPressed
         <div>
             follower:{favour.follower.map((follower,key)=><div key={key}>{follower.name}&nbsp;add a &nbsp;{follower.award}</div>)}
         </div>
-        <br></br>
-        {favour.receiver?<div>Accepted by:&nbsp;<FavourReceiver>{favour.receiver}</FavourReceiver></div>:null}
-        {favour.prove ? <div><img src={favour.prove} style={{width:'200px', height:'200px'}}/></div>:null}
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        {favour.picture ? <div><img src={favour.picture} style={{width:'200px', height:'200px', objectFit:"contain"}}/></div>:null}
-        <br></br>
         {favour.picture?
         <div>
             <div>
