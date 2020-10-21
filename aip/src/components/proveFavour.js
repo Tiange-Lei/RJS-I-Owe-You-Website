@@ -64,7 +64,6 @@ const ProveFavour=  ({favour,onSubmitPressed}) =>{
             <FavourTime>Posted at:&nbsp;{(new Date(favour.createdAt)).toLocaleString("en-AU")}</FavourTime>
             <br></br>
             <div>Prove:</div>
-            {/* <UploadImageButton /> */}
             <input type='file' id='images' accept='image/*' onChange={e=>loadHandler(e)}/>
             <img src={awardRelation.prove?awardRelation.prove:null} />
             <button onClick={()=>{submitHandler(awardRelation)}}>Submit</button>

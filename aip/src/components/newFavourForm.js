@@ -15,6 +15,34 @@ const NewFavourForm = ({onCreatePressed})=>{
         award:'',
         picture:'',
     });
+    const loadHandler=e=>{
+        const reader = new FileReader();
+        const file=  e.target.files[0];
+        if(file){
+                reader.readAsDataURL(file);
+                reader.onload=function(){
+                    const AllowImgFileSize = 1078702;
+                    const imageBase64=this.result;
+                    if(AllowImgFileSize!==0&&AllowImgFileSize<imageBase64.length){
+                        alert("The size of your uploaded image should be less than 2MB")
+                        return
+                    }
+                    else{
+                        setInputValue({
+                            ...inputValue,
+                            picture:imageBase64,
+                        })
+                    }
+
+                }
+        }
+        else{
+            setInputValue({
+                ...inputValue,
+                picture:''
+            })
+        }
+}
     const CheckInput = (input)=>{
         const {award,text}=input;
         if(award===''){
@@ -28,7 +56,10 @@ const NewFavourForm = ({onCreatePressed})=>{
         onCreatePressed(input);
         setInputValue({
             ...inputValue,
-            text:'',award:''});
+            text:'',
+            award:'',
+            picture:''
+        });
     }
     return(
         <FormContainer>
@@ -61,6 +92,10 @@ const NewFavourForm = ({onCreatePressed})=>{
             <option>Biscuit</option>
             </select>
             </SelectorContainer>
+            <div>Prove:</div>
+            {/* <UploadImageButton /> */}
+            <input type='file' id='images' accept='image/*' onChange={e=>loadHandler(e)}/>
+            <img src={inputValue.picture?inputValue.picture:null} />
             <NewFavourButton onClick={()=>CheckInput(inputValue)}>Post</NewFavourButton>
         </FormContainer>
     )
