@@ -62,7 +62,15 @@ app.use((req,res,next)=>{
 //-------------------------------Importing routes----------------------------------------------------------
 app.use(routes);
 
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static('../aip/build'));
 
+  app.get('*',(req,res) => {
+    res.sendFile(path.resolve(__dirname,'../aip','build','index.html'));
+  });
+}
+
+const port = process.env.PORT || 4000;
 // -----------------------------------Listener-----------------------------------------------------
 
-app.listen(4000,()=>console.log("Listening on port:4000"));
+app.listen(port,()=>console.log("Listening on port:4000"));
