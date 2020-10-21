@@ -14,7 +14,8 @@ import {CREATE_FAVOUR,
     CREATE_AWARD_RELATION, 
     REMOVE_AWARD_RELATION,
     LOAD_LEADER_BOARD,
-    GET_PARTY
+    GET_PARTY, 
+    SEARCH_FAVOUR,
 } from './action';
 
 // ------create state for favours--------------------------------
@@ -70,6 +71,14 @@ switch(type){
                 return favourItem;
             }
         })
+        }
+    }
+// -----------search favour-------------------
+    case SEARCH_FAVOUR:{
+        const {favour}=payload;
+        return{
+            ...state,
+            data:favour
         }
     }
 // -----------add comment---------------------

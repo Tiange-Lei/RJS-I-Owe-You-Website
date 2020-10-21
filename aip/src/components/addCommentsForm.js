@@ -7,6 +7,15 @@ const AddCommentsForm = ({favourID,onAddCommentPressed})=>{
         username:localStorage.username,
         commentText:"",
     });
+    const AddComment=input=>{
+        const regex = RegExp('^[a-zA-Z0-9,.!? ]*$');
+        const {commentText}=input;
+        if(!regex.test(commentText)){
+            alert("You input contains illegal characters,please try again")
+            return false
+        }
+        onAddCommentPressed(input)
+    }
     return (
             <FavourItemContainer>
                 <textarea rows="2" placeholder="comments:" value={inputValue.commentText} onChange={(e)=>{
@@ -14,7 +23,7 @@ const AddCommentsForm = ({favourID,onAddCommentPressed})=>{
                         ...inputValue,
                         commentText:e.target.value})
                         }}/>
-                <button onClick={()=>onAddCommentPressed(inputValue)}>Add comment</button>
+                <button onClick={()=>AddComment(inputValue)}>Add comment</button>
             </FavourItemContainer>
     )
 }

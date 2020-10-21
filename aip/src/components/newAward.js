@@ -4,22 +4,70 @@ import {connect} from 'react-redux';
 import {SubmitAwardRecord} from '../Redux/thunks';
 
 const NewAwardForm=({onSubmitPressed})=>{
-    const [x,setX]=useState({value:true});
-    const SwitchUser=()=>{
-        setX({value:!x.value});
-    }
+
     const [awardInfo,setAwardInfo]=useState({
         debtor:'',
         creditor:'',
         award:'',
         prove:''
     })
+    const [x,setX]=useState({value:true});
+    const SwitchUser=()=>{
+        if(x.value){
+            setAwardInfo({
+                ...awardInfo,
+                creditor:''
+            })
+        }
+        if(!x.value){
+            setAwardInfo({
+                ...awardInfo,
+                debtor:''
+            })
+        }
+        setX({value:!x.value});
+    }
+    const loadHandler=e=>{
+        const reader = new FileReader();
+        const file=  e.target.files[0];
+        if(file){
+                reader.readAsDataURL(file);
+                reader.onload=function(){
+                    const AllowImgFileSize = 1078702;
+                    const imageBase64=this.result;
+                    if(AllowImgFileSize!==0&&AllowImgFileSize<imageBase64.length){
+                        alert("The size of your uploaded image should be less than 2MB")
+                        return
+                    }
+                    else{
+                        setAwardInfo({
+                            ...awardInfo,
+                            prove:imageBase64
+                        })
+                    }
+
+                }
+        }
+        else{
+            setAwardInfo({
+                ...awardInfo,
+                prove:''
+            })
+        }
+    }
     const SubmitAward=(input)=>{
+        const regex = RegExp('^[A-Za-z0-9_.]+$');
+        const {creditor,debtor} =input;
+        if(!regex.test(creditor)||!regex.test(debtor)){
+            alert("You input contains illegal characters,please try again")
+            return false
+        }
         if(input.creditor===localStorage.username&&input.prove===''){
             alert("You need to upload a picture as prove before you make yourself a creditor")
             setAwardInfo({
                 ...awardInfo,
-                creditor:'',
+                debtor:'',
+                prove:'',
             })
             return false;
         }
@@ -94,8 +142,9 @@ return(
         </AwardSelector>
         <br></br>
         <ProveContainer x={x}>
-            Prove:
-            &nbsp;<input type='file' id='images' accept='image/*'/>
+            <div>Prove:</div>
+            <input type='file' id='images'accept='image/*' onChange={e=>loadHandler(e)}/>
+            {awardInfo.prove?<img src={awardInfo.prove} style={{width:'200px',height:'200px',objectFit:"contain"}}/>:null}
         </ProveContainer>
         <br></br>
         <div>

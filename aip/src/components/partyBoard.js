@@ -9,20 +9,19 @@ const PartyBoard = ({getMeeting,people}) => {
     getMeeting(localStorage.username)
     };
   },[getMeeting]);
-  console.log(localStorage.username);
-  console.log(people);
+  const unique=people.filter((v,i,a)=>a.indexOf(v)===i);
   const partyList = (
     <PBoardContainer>
       <BoardTitle>You Got A Party</BoardTitle>
       <ul>
-        {people.map((item,i)=>(
+        {unique.map((item,i)=>(
           <li key={i}>{item}</li>
         ))}
       </ul>
     </PBoardContainer>
   )
 
-  return (people.includes(localStorage.username)?partyList:null);
+  return (unique.includes(localStorage.username)?partyList:null);
 }
 
 const mapStateToProps = state => ({

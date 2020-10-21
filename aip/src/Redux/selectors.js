@@ -1,4 +1,5 @@
 import {createSelector} from 'reselect';
+import { favours } from './reducer';
 
 
 export const getFavours = state=>state.favours.data;
@@ -28,4 +29,9 @@ export const getIOUAwards = createSelector(
 export const getUOIAwards = createSelector(
     getRelatedAwards,
     (awards)=>awards.filter(award=>award.creditor===localStorage.username)
+)
+
+export const getSearchedFavours = createSelector(
+    getFavours,
+    (favours)=>favours.filter(favour=>favour.text.match(localStorage.keyword))
 )

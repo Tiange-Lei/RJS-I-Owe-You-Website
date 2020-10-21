@@ -22,6 +22,11 @@ export const endFavour = (favour)=>({
     payload:{favour},
 })
 
+export const SEARCH_FAVOUR = 'SEARCH_FAVOUR';
+export const searchFavour = (favour)=>({
+    type:SEARCH_FAVOUR,
+    payload:{favour},
+})
 
 export const LOAD_FAVOURS_IN_PROGRESS = 'LOAD_FAVOURS_IN_PROGRESS';
 export const loadFavoursInProgress = ()=>({

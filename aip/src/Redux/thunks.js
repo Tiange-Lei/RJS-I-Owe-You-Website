@@ -4,6 +4,7 @@ import {loadFavoursInProgress,
         createFavour,
         removeFavour,
         acceptFavour,
+        searchFavour,
         addComment,
         endFavour,
         addAward,
@@ -82,11 +83,22 @@ export const AcceptFavourRequest = favour =>async dispatch =>{
             const updatedFavour = await response.json();
             if(!updatedFavour){
                 alert('This favour is no longer valid!')
+                return
             }
             dispatch(acceptFavour(updatedFavour));
         } catch (e) {
             dispatch(DisplayAlert(e))
         }
+    }
+}
+// ---------------------Search Favour------------------------------------------------------
+export const SearchFavoursRequest = keyword =>async dispatch=>{
+    try {
+        const response = await fetch(`http://localhost:4000/api/favours/${keyword}`);
+        const matchedFavour = await response.json();
+        dispatch(searchFavour(matchedFavour));
+    } catch (e) {
+        dispatch(DisplayAlert(e))
     }
 }
 
@@ -146,13 +158,15 @@ export const AddCommentRequest =comment=>async dispatch=>{
 
 }
 // --------------------------submit provement-----------------------------------
-export const SubmitProveRequest = file =>async dispatch=>{
+export const SubmitProveRequest = awardRelation =>async dispatch=>{
     try {
-        var body = new FormData();
-        body.append("file", file);
-        const response = await fetch(`http://localhost:4000/api/upload`,{
-            body,
-            method:'post',
+        const body = JSON.stringify(awardRelation);
+        const response = await fetch(`http://localhost:4000/api/newAwardRelation`,{
+            headers:{
+                'Content-Type':'Application/json',
+                },
+                method:'post',
+                body,
         })
         const result = await response.json();
         if (result){
@@ -219,7 +233,6 @@ export const getParty = user => async dispatch =>{
     try {
         const response = await fetch(`http://localhost:4000/api/party/${user}`);
         const result = await response.json();
-        console.log(result);
         dispatch(getPartyDet(result));
     } catch (e) {
         dispatch(DisplayAlert(e));

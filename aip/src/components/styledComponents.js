@@ -3,14 +3,13 @@ import {showUP,fadeIn} from './keyframes';
 import 'antd/dist/antd.css';
 
 export const Container = styled.div`
-    background: #2AAEF0;
+    background: #34495E;
     height: 60px;
     text-align: center;
 `
 
 export const NavUL = styled.ul`
     list-style:none;
-    display: inline-block;
 `
 export const NavItem = styled.li`
     float: left;
@@ -19,7 +18,6 @@ export const NavItem = styled.li`
     height: 60px;
     text-align: center;
     line-height: 60px;
-    display: inline-block;
     font-size: 20px;
     cursor:pointer;
     &:hover{
@@ -375,20 +373,59 @@ export const RightSideBar = styled.div`
     float:right;
 `
 export const SearchFrame = styled.div`
-    margin-left:200px;
+    margin-right:10%;
     margin-top:20px;
-    float:left;
+    float:right;
 `
 export const SearchInput = styled.input`
     border-radius:4px;
     border: none;
-`
-export const SearchButton = styled.input`
-    margin-left:3px;
-    border:none;
     font-family:Arial;
-    color:#fff;
-    background:#1A5276;
-    border-radius:4px;
+`
+export const SearchButton = styled.button`
+    border-radius:2px;
     padding:3px;
+    background:#2980B9;
+    color:#FFF;
+    font-family:Arial;
+    border: none;
+    margin: 2px;
+`
+export const LOGOContainer = styled.div`
+    float:left;
+    width:100px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    font-size: 20px;
+    margin-right:35%
+`
+export const LOGO_I = styled.span`
+    font-family:Arial;
+    font-weight:bold;
+    margin:3px;
+    font-size: 30px;
+    color:white;
+`
+export const LOGO_O = styled.span`
+    font-family:Arial;
+    font-weight:bold;
+    margin:3px;
+    font-size: 30px;
+    color:white;
+`
+export const LOGO_U = styled.span`
+    font-family:Arial;
+    font-weight:bold;
+    margin:3px;
+    font-size: 30px;
+    color:white;
+`
+export const Greeting = styled.div`
+    float:left;
+    text-align: center;
+    line-height: 60px;
+    font-size: 20px;
+    color:yellow;
+    margin-left: -30%;
 `

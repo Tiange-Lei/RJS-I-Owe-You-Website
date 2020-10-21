@@ -30,6 +30,22 @@ const FavourItems = ({favour,onRemovePressed,onAcceptPressed,onAddCommentPressed
         <br></br>
         {favour.receiver?<div>Accepted by:&nbsp;<FavourReceiver>{favour.receiver}</FavourReceiver></div>:null}
         <br></br>
+        {favour.picture?
+        <div>
+            <div>
+            Picture:
+            </div>
+            {favour.picture?<img src={favour.picture} style={{width:'200px',height:'200px',objectFit:"contain"}}/>:null}           
+        </div>
+        :null}
+        {favour.isFinished?
+        <div>
+            <div>
+            Prove:
+            </div>
+            {favour.prove?<img src={favour.prove} style={{width:'200px',height:'200px',objectFit:"contain"}}/>:null}
+        </div>
+        :null}
         <FavourTime>Posted at:&nbsp;{(new Date(favour.createdAt)).toLocaleString("en-AU")}</FavourTime>
         <ButtonContainer>
             {favour.isAccepted ||favour.publisher===localStorage.username||isParticipated? null:<AcceptButton onClick={()=>onAcceptPressed(favour)}>Accept</AcceptButton>}

@@ -1,9 +1,9 @@
 import React,{useState}from 'react';
 import {getFavours} from '../Redux/selectors';
-import {FormContainer,NewFavourInput,NewFavourButton,SelectorContainer,DefaultOption} from './styledComponents';
+import {FormContainer,NewFavourButton,SelectorContainer,DefaultOption} from './styledComponents';
 import {connect} from 'react-redux';
 import {AddFavoursRequest} from '../Redux/thunks';
-import {Input, Select} from 'antd';
+import {Input} from 'antd';
 
 const  {TextArea} = Input;
 
@@ -15,8 +15,41 @@ const NewFavourForm = ({onCreatePressed})=>{
         award:'',
         picture:'',
     });
+    const loadHandler=e=>{
+        const reader = new FileReader();
+        const file=  e.target.files[0];
+        if(file){
+                reader.readAsDataURL(file);
+                reader.onload=function(){
+                    const AllowImgFileSize = 1078702;
+                    const imageBase64=this.result;
+                    if(AllowImgFileSize!==0&&AllowImgFileSize<imageBase64.length){
+                        alert("The size of your uploaded image should be less than 2MB")
+                        return
+                    }
+                    else{
+                        setInputValue({
+                            ...inputValue,
+                            picture:imageBase64,
+                        })
+                    }
+
+                }
+        }
+        else{
+            setInputValue({
+                ...inputValue,
+                picture:''
+            })
+        }
+}
     const CheckInput = (input)=>{
+        const regex = RegExp('^[a-zA-Z0-9,.!? ]*$');
         const {award,text}=input;
+        if(!regex.test(text)){
+            alert("You input contains illegal characters,please try again")
+            return false
+        }
         if(award===''){
             alert('Please choose an award!')
             return false
@@ -28,7 +61,10 @@ const NewFavourForm = ({onCreatePressed})=>{
         onCreatePressed(input);
         setInputValue({
             ...inputValue,
-            text:'',award:''});
+            text:'',
+            award:'',
+            picture:''
+        });
     }
     return(
         <FormContainer>
@@ -61,6 +97,10 @@ const NewFavourForm = ({onCreatePressed})=>{
             <option>Biscuit</option>
             </select>
             </SelectorContainer>
+            <div>Prove:</div>
+            {/* <UploadImageButton /> */}
+            <input type='file' id='images' accept='image/*' onChange={e=>loadHandler(e)}/>
+            <img src={inputValue.picture?inputValue.picture:null} />
             <NewFavourButton onClick={()=>CheckInput(inputValue)}>Post</NewFavourButton>
         </FormContainer>
     )

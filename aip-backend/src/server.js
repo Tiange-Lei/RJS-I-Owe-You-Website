@@ -27,8 +27,10 @@ mongoose.set('useFindAndModify', false);
 
 // ----------------------------setup express-------------------------------------------------------------------
 const app=express();
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.json({limit:'2mb'}));
+app.use(express.urlencoded({extended:true,limit:'2mb'}));
+// app.use(express.json({limit:'2mb'}));
+// app.use(express.urlencoded({limit:'2mb'}));
 app.use(cors({
     origin: "http://localhost:3000",
     credentials: true
@@ -53,8 +55,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 // ------------------------------Test------------------------------------------------------------------------------
 app.use((req,res,next)=>{
-  console.log(req.session);
-  console.log(req.user);
   next();
 })
 

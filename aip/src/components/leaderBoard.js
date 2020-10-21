@@ -8,7 +8,6 @@ const LeaderBoard = ({loadingLeaders,users}) => {
     useEffect(()=>{
         loadingLeaders();
     },[loadingLeaders]);
-    console.log(users);
     const list = (
         <BoardContainer>
             <ul>
