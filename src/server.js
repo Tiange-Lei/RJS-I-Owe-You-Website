@@ -16,7 +16,8 @@ const dbOptions = {
     useNewUrlParser:true,
     useUnifiedTopology:true
 };
-mongoose.connect(dbString,dbOptions,()=>{console.log("Mongoose is connected!");})
+let url = process.env.MONGODB_URI || 'mongodb://localhost/trip';
+mongoose.connect(url,dbOptions,()=>{console.log("Mongoose is connected!");})
 const connection = mongoose.createConnection(dbString,dbOptions);
 
 const sessionStore = new MongoStore({
@@ -32,7 +33,7 @@ app.use(express.urlencoded({extended:true,limit:'2mb'}));
 // app.use(express.json({limit:'2mb'}));
 // app.use(express.urlencoded({limit:'2mb'}));
 app.use(cors({
-    origin: "https://boiling-headland-64673.herokuapp.com/",
+    origin: "https://localhost:3000/",
     credentials: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
