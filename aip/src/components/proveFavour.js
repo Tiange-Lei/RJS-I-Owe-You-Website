@@ -66,7 +66,7 @@ const ProveFavour=  ({favour,onSubmitPressed}) =>{
             <div>Prove:</div>
             {/* <UploadImageButton /> */}
             <input type='file' id='images' accept='image/*' onChange={e=>loadHandler(e)}/>
-            {awardRelation.prove?<img src={awardRelation.prove} style={{width:'200px',height:'200px',objectFit:"contain"}}/>:null}
+            {awardRelation.prove?<img src={awardRelation.prove} alt={'img'} style={{width:'200px',height:'200px',objectFit:"contain"}}/>:null}
             <button onClick={()=>{submitHandler(awardRelation)}}>Submit</button>
 
         </FavourItemContainer>
