@@ -24,7 +24,7 @@ export const LoadFavours =(page = 1, size = 5)=>async(dispatch,getState)=>{
 
     try {
         dispatch(loadFavoursInProgress());
-        const response = await fetch('http://localhost:4000/api/favours?page=' + page + '&size' + size);
+        const response = await fetch('https://localhost:4000/api/favours?page=' + page + '&size' + size);
         const favours = await response.json();
     
         dispatch(loadFavoursSuccess(favours));
@@ -232,7 +232,7 @@ export const RemoveAwardRequest = award => async dispatch=>{
 export const getParty = user => async dispatch =>{
     console.log(user)
     try {
-        const response = await fetch(`http://localhost:4000/api/party/${user}`);
+        const response = await fetch(`https://localhost:4000/api/party/${user}`);
         const result = await response.json();
         dispatch(getPartyDet(result));
     } catch (e) {
@@ -242,7 +242,7 @@ export const getParty = user => async dispatch =>{
 //----------------Get LeaderBoard---------------------------------------------------
 export const loadLeadBoard = () => async dispatch =>{
     try{
-        const response = await fetch('http://localhost:4000/api/leadBoard');
+        const response = await fetch('https://localhost:4000/api/leadBoard');
 
         const user = await response.json();
         dispatch(loadLeaderBoard(user));
