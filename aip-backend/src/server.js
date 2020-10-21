@@ -8,9 +8,10 @@ var routes = require('./routes');
 const { db } = require('./userSchema');
 const MongoStore = require('connect-mongo')(session);
 const uuidv1 = require ('uuid').v1;
+const path = require('path');
 
 // ----------------------------connect to MongoDB-------------------------------------------------------------
-const dbString = 'mongodb+srv://encore:nmjCf9Mf3SEAW9tc@cluster0.mp99a.mongodb.net/<dbname>?retryWrites=true&w=majority';
+const dbString = 'mongodb://fish:td4w6279Jxt8X31a@cluster0-shard-00-00.fakbj.mongodb.net:27017,cluster0-shard-00-01.fakbj.mongodb.net:27017,cluster0-shard-00-02.fakbj.mongodb.net:27017/assignment2aip?ssl=true&replicaSet=atlas-o7fgeu-shard-0&authSource=admin&retryWrites=true&w=majority';
 const dbOptions = {
     useNewUrlParser:true,
     useUnifiedTopology:true
@@ -22,15 +23,19 @@ const sessionStore = new MongoStore({
   mongooseConnection:connection,
   collection:'sessions',
 })
+mongoose.set('useFindAndModify', false);
 
 // ----------------------------setup express-------------------------------------------------------------------
 const app=express();
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.json({limit:'2mb'}));
+app.use(express.urlencoded({extended:true,limit:'2mb'}));
+// app.use(express.json({limit:'2mb'}));
+// app.use(express.urlencoded({limit:'2mb'}));
 app.use(cors({
     origin: "http://localhost:3000",
     credentials: true
 }));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // ------------------------------Configure Session and cookie-------------------------------------------------------------
 app.use(session({
@@ -50,67 +55,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 // ------------------------------Test------------------------------------------------------------------------------
 app.use((req,res,next)=>{
-  console.log(req.session);
-  console.log(req.user);
   next();
 })
 
-// -----------------------------Built-in memory-----------------------------------------------------------------
-const today = Date.now();
 
-let favours = [
-    {
-      id: uuidv1(),
-      publisher:'',
-      award:'',
-      text: 'Help with the window',
-      createdAt: today,
-      isAccepted: false,
-      picture: ''
-    }
-  ]
-  
-
-//-------------------------------Authentication APIs----------------------------------------------------------
+//-------------------------------Importing routes----------------------------------------------------------
 app.use(routes);
-
-// -----------------------------favour APIs-----------------------------------------------------------------
-
-  app.get('/favours', (req, res) => {
-    res.status(200).json(favours);
-  })
-
-
-  app.post('/favours', (req, res) => {
-    const { favour } = req.body;
-    const newFavour = {
-      id: uuidv1(),
-      text: favour.text,
-      award: favour.award,
-      createdAt: new Date(),
-      isAccepted: false,
-      publisher:favour.publisher,
-      picture:favour.picture,
-    }
-    favours.push(newFavour)
-    res.status(200).json(newFavour);
-  })
-
-  app.post('/favours/:id/accepted', (req, res) => {
-    const id = req.params.id;
-    console.log(`POST /favours/${id}/accepted`);
-    const favourIndex = favours.findIndex(favour => favour.id === id)
-    favours[favourIndex].isAccepted = true,
-    res.status(200).json(favours[favourIndex]);
-  })
-
-  app.delete('/favours/:id', (req, res) => {
-    const id = req.params.id;
-    console.log(`DELETE /favours/${id}`);
-    const favourIndex = favours.findIndex(favour => favour.id === id)
-    const deletedFavour = favours.splice(favourIndex, 1);
-    res.status(200).json(deletedFavour[0]);
-  })
 
 
 // -----------------------------------Listener-----------------------------------------------------

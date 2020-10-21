@@ -1,22 +1,33 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Container, NavUL,NavItem} from './styledComponents';
+import {Container, NavUL,NavItem,BarTitle,LOGOContainer,LOGO_I,LOGO_O,LOGO_U,Greeting} from './styledComponents';
 import LogoutButton from './logoutButton';
+import SearchFavour from './searchFavour';
+
 const Navbar = ()=>{
     return(
         <Container>
             <nav>
                 <NavUL>
+                    <LOGOContainer>
+                        <LOGO_I>I</LOGO_I>
+                        <LOGO_O>O</LOGO_O>
+                        <LOGO_U>U</LOGO_U>
+                    </LOGOContainer>
+                    <Greeting>
+                        {localStorage.username?<div>Hi,{localStorage.username}</div>:null}
+                    </Greeting>
                     <NavItem>
-                    <Link to='/' style={{textDecoration:'none'}}><span>Home</span></Link>
+                        <Link to='/' style={{textDecoration:'none'}}><BarTitle>Home</BarTitle></Link>
                     </NavItem>
                     <NavItem>
-                        <Link to='/users' style={{textDecoration:'none'}}><span>My Page</span></Link>
+                        <Link to='/users' style={{textDecoration:'none'}}><BarTitle>My Page</BarTitle></Link>
                     </NavItem>
                     <NavItem>
-    {localStorage.user_id? <LogoutButton />:<Link to='/login' style={{textDecoration:'none'}}><span>Login</span></Link>}                
+                        {localStorage.user_id? <LogoutButton />:<Link to='/login' style={{textDecoration:'none'}}><BarTitle>Login</BarTitle></Link>}                
                     </NavItem>
-                </NavUL>     
+                    <SearchFavour />   
+                </NavUL>  
             </nav> 
         </Container>
     )

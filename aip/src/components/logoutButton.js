@@ -7,7 +7,7 @@ const LogoutButton = () => {
     axios({
       method:"GET",
       withCredentials:true,
-      url:"http://localhost:4000/logout",
+      url:"http://localhost:4000/api/logout",
     }).then((res)=>{
       localStorage.removeItem('user_id')
       console.log(res);
@@ -15,8 +15,11 @@ const LogoutButton = () => {
     })
   }
   return (
-    <NavLogout onClick={() => logout()}>
-      Log out
+    <NavLogout onClick={() => {
+      logout();
+      localStorage.username='';
+    }}>
+      Logout
     </NavLogout>
   );
 };

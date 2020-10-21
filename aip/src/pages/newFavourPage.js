@@ -1,14 +1,12 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NewFavourForm from '../components/newFavourForm';
-import NewAwardForm from '../components/newAward';
-import Mylist from '../components/myfavourlist';
 import Sidebar from '../components/sidebar';
+import Mylist from '../components/myfavourlist';
 import PartyBoard from '../components/partyBoard';
 import {RightSideBar} from '../components/styledComponents'
 import LeaderBoard from '../components/leaderBoard';
 
-const UserPage = ()=>(
+const NewFavourPage =()=>(
     <div>
         <RightSideBar>
             <LeaderBoard />
@@ -20,4 +18,4 @@ const UserPage = ()=>(
     </div>
 
 )
-export default UserPage;
+export default NewFavourPage;
