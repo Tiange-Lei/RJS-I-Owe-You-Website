@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import { loadLeadBoard } from '../Redux/thunks';
+import { BoardContainer,BoardTitle } from '../components/styledComponents';
 
 
 const LeaderBoard = ({loadingLeaders,users}) => {
@@ -9,14 +10,15 @@ const LeaderBoard = ({loadingLeaders,users}) => {
     },[loadingLeaders]);
     console.log(users);
     const list = (
-        <div>
+        <BoardContainer>
             <ul>
-                <div>LeaderBoard</div>
+                <BoardTitle>LeaderBoard</BoardTitle>
+                <div> </div>
                 {users.slice(0,5).map((item,i)=>(
                     <li key={i}>{item.username} : {item.numberOfAward}</li>
                 ))}
             </ul>
-        </div>
+        </BoardContainer>
     );
     return list;
 }

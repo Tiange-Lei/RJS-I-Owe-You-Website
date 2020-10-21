@@ -328,3 +328,49 @@ export const AwardRelationContainer = styled.div`
     box-shadow: 0 4px 8px grey;
     animation: ${showUP} 1.5s backwards, ${fadeIn} .8s;
 `
+
+export const BoardContainer = styled.div`
+    background: #fff;
+    font-family:Arial;
+    font-size:20px;
+    margin-top:20px;
+    margin-right:20px;
+    float:right;
+    border-radius: 8px;
+    padding:15px;
+    width: 200px;
+    position: relative; 
+    box-shadow: 0 4px 8px grey;
+    animation: ${showUP} 1.5s backwards, ${fadeIn} .8s;
+`
+export const BoardTitle = styled.div`
+    font-size:24px;
+    font-family:Arial;
+    font-style:bold;
+    color: #2E86C1;
+    text-shadow: 0.2em 0.1em 0.1em #BDC3C7;
+    margin-bottom:10px;
+`
+
+export const PBoardContainer = styled.div`
+    flex-direction:column;
+    background: #fff;
+    font-family:Arial;
+    top:200px;
+    right:20px;
+    font-size:20px;
+    margin-top:20px;
+    float:right;
+    border-radius: 8px;
+    padding:15px;
+    width: 200px;
+    position: absolut; 
+    box-shadow: 0 4px 8px grey;
+    animation: ${showUP} 1.5s backwards, ${fadeIn} .8s;
+`
+
+export const RightSideBar = styled.div`
+    display:flex;
+    flex-direction:column;
+    float:right;
+`
