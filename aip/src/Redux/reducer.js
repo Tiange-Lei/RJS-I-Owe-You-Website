@@ -211,10 +211,14 @@ export const party = (state = initialPartyState,action) =>{
     const {type,payload} = action;
     if(type === GET_PARTY){
         const {partyInfo} = payload;
+        if(partyInfo.length !== 0){
         return {
             ...state,
             users:partyInfo[0].WhoIsInTheParty
             };
+        }else{
+            return state;
+        }
     }else{
         return state;
     }

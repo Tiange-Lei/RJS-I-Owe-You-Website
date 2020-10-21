@@ -21,7 +21,7 @@ const PartyBoard = ({getMeeting,people}) => {
       </ul>
     </PBoardContainer>
   )
-  //return partyList;
+
   return (people.includes(localStorage.username)?partyList:null);
 }
 
