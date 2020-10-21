@@ -20,11 +20,11 @@ import {loadFavoursInProgress,
 
 
 // ---------------------load favours-------------------------------
-export const LoadFavours =()=>async(dispatch,getState)=>{
+export const LoadFavours =(page = 1, size = 5)=>async(dispatch,getState)=>{
 
     try {
         dispatch(loadFavoursInProgress());
-        const response = await fetch('http://localhost:4000/api/favours');
+        const response = await fetch('http://localhost:4000/api/favours?page=' + page + '&size' + size);
         const favours = await response.json();
     
         dispatch(loadFavoursSuccess(favours));
@@ -230,6 +230,7 @@ export const RemoveAwardRequest = award => async dispatch=>{
 }
 //----------------Get Party Members-------------------------------------------------
 export const getParty = user => async dispatch =>{
+    console.log(user)
     try {
         const response = await fetch(`http://localhost:4000/api/party/${user}`);
         const result = await response.json();

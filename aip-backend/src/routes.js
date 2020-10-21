@@ -69,11 +69,26 @@ router.get('/api/users/:name',(req,res)=>{
 
 // loading favours---------------------------
 
-router.get('/api/favours', (req, res) => {
-  Favour.find({},(err,Favour)=>{
-    if(err) throw err;
-    res.status(200).json(Favour);
-  })
+router.get('/api/favours', async (req, res) => {
+  try {
+    const { page = 1, size = 5 } = req.query;
+    console.log('page:', page, 'size:', size)
+    const tmpList = await Favour.find({}, {}, { sort: { _id: -1 }, limit: Number(size), skip: (Number(page) - 1) * Number(size) })
+    const total = await Favour.count({});
+    const info = { page, size, total, totalPage: Math.ceil(total / Number(size)) };
+
+    const list = JSON.parse(JSON.stringify(tmpList));
+    if (tmpList.length > 0) {
+      list[0].__Condition__ = info;
+    } else {
+      list.push({ __Condition__: info })
+    }
+    console.log('----query complete---');
+    res.json(list);
+  } catch (ex) {
+    console.log(ex);
+    res.status(400).json({ msg: ex.message, code: 400 })
+  }
 })
 
 // create favour-----------------------------

@@ -29,6 +29,15 @@ const FavourItems = ({favour,onRemovePressed,onAcceptPressed,onAddCommentPressed
         </div>
         <br></br>
         {favour.receiver?<div>Accepted by:&nbsp;<FavourReceiver>{favour.receiver}</FavourReceiver></div>:null}
+        {favour.prove ? <div><img src={favour.prove} style={{width:'200px', height:'200px'}}/></div>:null}
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        <br></br>
+        {favour.picture ? <div><img src={favour.picture} style={{width:'200px', height:'200px', objectFit:"contain"}}/></div>:null}
         <br></br>
         {favour.picture?
         <div>
@@ -47,6 +56,8 @@ const FavourItems = ({favour,onRemovePressed,onAcceptPressed,onAddCommentPressed
         </div>
         :null}
         <FavourTime>Posted at:&nbsp;{(new Date(favour.createdAt)).toLocaleString("en-AU")}</FavourTime>
+        
+        
         <ButtonContainer>
             {favour.isAccepted ||favour.publisher===localStorage.username||isParticipated? null:<AcceptButton onClick={()=>onAcceptPressed(favour)}>Accept</AcceptButton>}
             {favour.isAccepted ||favour.publisher===localStorage.username||!localStorage.username? null:<AddAwardButton onClick={()=>setAddAwardDisplaying(!isAddAwardDisplaying)}>Add award</AddAwardButton>}
