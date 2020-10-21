@@ -146,13 +146,15 @@ export const AddCommentRequest =comment=>async dispatch=>{
 
 }
 // --------------------------submit provement-----------------------------------
-export const SubmitProveRequest = file =>async dispatch=>{
+export const SubmitProveRequest = awardRelation =>async dispatch=>{
     try {
-        var body = new FormData();
-        body.append("file", file);
-        const response = await fetch(`http://localhost:4000/api/upload`,{
-            body,
-            method:'post',
+        const body = JSON.stringify(awardRelation);
+        const response = await fetch(`http://localhost:4000/api/newAwardRelation`,{
+            headers:{
+                'Content-Type':'Application/json',
+                },
+                method:'post',
+                body,
         })
         const result = await response.json();
         if (result){
@@ -216,6 +218,7 @@ export const RemoveAwardRequest = award => async dispatch=>{
 }
 //----------------Get Party Members-------------------------------------------------
 export const getParty = user => async dispatch =>{
+    console.log(user)
     try {
         const response = await fetch(`http://localhost:4000/api/party/${user}`);
         const result = await response.json();

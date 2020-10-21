@@ -115,30 +115,30 @@ router.post('/api/favours/:_id/:receiver/accepted', async (req, res) => {
     res.status(200).json(updatedFavour);
   })
 })
-//Upload prove--------------------------------
-const path = './public/uploads';
-if (!fs.existsSync(path)) {
-  fs.mkdirSync(path, { recursive: true });
-}
+// //Upload prove--------------------------------
+// const path = './public/uploads';
+// if (!fs.existsSync(path)) {
+//   fs.mkdirSync(path, { recursive: true });
+// }
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-      cb(null, path);
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname)
-  }
-})
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//       cb(null, path);
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, file.originalname)
+//   }
+// })
 
-const upload = multer({ storage });
+// const upload = multer({ storage });
 
-router.post('/api/upload', upload.single('file'), async (req, res) => {
-    res.json({
-      code: 200,
-      message: 'success',
-      info: `/uploads/${req.file.filename}`,
-  });
-});
+// router.post('/api/upload', upload.single('file'), async (req, res) => {
+//     res.json({
+//       code: 200,
+//       message: 'success',
+//       info: `/uploads/${req.file.filename}`,
+//   });
+// });
 
 // --------------------------------------Comments Operations-----------------------------------
 // -------add comment-------------------------
@@ -249,7 +249,7 @@ router.post('/api/newAwardRelation/', async (req,res)=>{
       });
     }
     if(relation.favourID){
-      await Favour.findByIdAndUpdate({_id:relation.favourID},{isFinished:true},{new:true},(err,updatedFavour)=>{
+      await Favour.findByIdAndUpdate({_id:relation.favourID},{isFinished:true,prove:relation.prove},{new:true},(err,updatedFavour)=>{
         if(err) throw err;
         res.status(200).json(updatedFavour);
       })
