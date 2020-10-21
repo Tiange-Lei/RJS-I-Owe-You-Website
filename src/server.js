@@ -31,10 +31,10 @@ app.use(express.json({limit:'2mb'}));
 app.use(express.urlencoded({extended:true,limit:'2mb'}));
 // app.use(express.json({limit:'2mb'}));
 // app.use(express.urlencoded({limit:'2mb'}));
-app.use(cors({
-    origin: "https://boiling-headland-64673.herokuapp.com/",
-    credentials: true
-}));
+// app.use(cors({
+//     origin: "https://boiling-headland-64673.herokuapp.com/",
+//     credentials: true
+// }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ------------------------------Configure Session and cookie-------------------------------------------------------------
