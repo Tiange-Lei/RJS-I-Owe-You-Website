@@ -5,7 +5,9 @@ import {PBoardContainer,BoardTitle} from '../components/styledComponents';
 
 const PartyBoard = ({getMeeting,people}) => {
   useEffect(()=>{
-    getMeeting(localStorage.username);
+    if(localStorage.username){
+    getMeeting(localStorage.username)
+    };
   },[getMeeting]);
   console.log(localStorage.username);
   console.log(people);
@@ -19,8 +21,8 @@ const PartyBoard = ({getMeeting,people}) => {
       </ul>
     </PBoardContainer>
   )
-  return partyList;
-  //return (people.includes(localStorage.username)?partyList:null);
+  //return partyList;
+  return (people.includes(localStorage.username)?partyList:null);
 }
 
 const mapStateToProps = state => ({

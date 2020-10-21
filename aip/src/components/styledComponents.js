@@ -374,3 +374,21 @@ export const RightSideBar = styled.div`
     flex-direction:column;
     float:right;
 `
+export const SearchFrame = styled.div`
+    margin-left:200px;
+    margin-top:20px;
+    float:left;
+`
+export const SearchInput = styled.input`
+    border-radius:4px;
+    border: none;
+`
+export const SearchButton = styled.input`
+    margin-left:3px;
+    border:none;
+    font-family:Arial;
+    color:#fff;
+    background:#1A5276;
+    border-radius:4px;
+    padding:3px;
+`

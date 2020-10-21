@@ -13,7 +13,6 @@ const LeaderBoard = ({loadingLeaders,users}) => {
         <BoardContainer>
             <ul>
                 <BoardTitle>LeaderBoard</BoardTitle>
-                <div> </div>
                 {users.slice(0,5).map((item,i)=>(
                     <li key={i}>{item.username} : {item.numberOfAward}</li>
                 ))}
