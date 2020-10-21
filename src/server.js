@@ -62,13 +62,13 @@ app.use((req,res,next)=>{
 //-------------------------------Importing routes----------------------------------------------------------
 app.use(routes);
 
-if(process.env.NODE_ENV === 'production'){
-  app.use(express.static('aip/build'));
+// if(process.env.NODE_ENV === 'production'){
+//   app.use(express.static('aip/build'));
 
-  app.get('*',(req,res) => {
-    res.sendFile(path.resolve(__dirname,'aip','build','index.html'));
-  });
-}
+//   app.get('*',(req,res) => {
+//     res.sendFile(path.resolve(__dirname,'aip','build','index.html'));
+//   });
+// }
 
 const port = process.env.PORT || 4000;
 // -----------------------------------Listener-----------------------------------------------------
