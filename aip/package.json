@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "node server",
-    "heroku-postbuild": "cd aip/ && npm install && npm start",
+    "heroku-postbuild": "cd aip/ && npm install && npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
