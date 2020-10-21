@@ -17,7 +17,7 @@ const dbOptions = {
     useUnifiedTopology:true
 };
 let url = process.env.MONGODB_URI || dbString;
-mongoose.connect(dbString,dbOptions,()=>{console.log("Mongoose is connected!");})
+mongoose.connect(url,dbOptions,()=>{console.log("Mongoose is connected!");})
 const connection = mongoose.createConnection(url,dbOptions);
 
 const sessionStore = new MongoStore({
