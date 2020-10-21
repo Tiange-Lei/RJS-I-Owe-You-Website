@@ -169,6 +169,7 @@ export const ProveButton = styled.button`
         transform: scale(1.2);
     }
     margin:2px;
+    color: black;
 `
 export const AddAwardButton = styled.button`
     font-size: 16px;
