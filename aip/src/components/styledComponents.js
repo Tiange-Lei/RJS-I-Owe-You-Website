@@ -124,6 +124,9 @@ export const AcceptButton = styled.button`
     cursor: pointer;
     display: inline-block;
     background-color: #22ee22;
+    &:hover{
+        transform: scale(1.2);
+    }
 `
 export const RemoveButton = styled.button`
     font-size: 16px;
@@ -165,6 +168,7 @@ export const ProveButton = styled.button`
     &:hover{
         transform: scale(1.2);
     }
+    margin:2px;
 `
 export const AddAwardButton = styled.button`
     font-size: 16px;
@@ -175,6 +179,10 @@ export const AddAwardButton = styled.button`
     cursor: pointer;
     display: inline-block;
     background-color: #138DF2;
+    &:hover{
+        transform: scale(1.2);
+    }
+    margin:2px;
 `
 export const SelectorContainer = styled.div`
     font-size: 16px;
