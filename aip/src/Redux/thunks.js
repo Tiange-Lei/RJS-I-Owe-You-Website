@@ -24,7 +24,7 @@ export const LoadFavours =(page = 1, size = 5)=>async(dispatch,getState)=>{
 
     try {
         dispatch(loadFavoursInProgress());
-        const response = await fetch('https://localhost:4000/api/favours?page=' + page + '&size' + size);
+        const response = await fetch('https://boiling-headland-64673.herokuapp.com/api/favours?page=' + page + '&size' + size);
         const favours = await response.json();
     
         dispatch(loadFavoursSuccess(favours));
@@ -111,7 +111,7 @@ export const AddAwardRequest = favour =>async dispatch =>{
     else{
         try {
             const body = JSON.stringify(favour);
-            const response = await fetch(`http://localhost:4000/api/favours/${favour.favourID}/awardIncrement`,{
+            const response = await fetch(`https://boiling-headland-64673.herokuapp.com/api/favours/${favour.favourID}/awardIncrement`,{
                 headers:{
                 'Content-Type':'Application/json',
                 },
