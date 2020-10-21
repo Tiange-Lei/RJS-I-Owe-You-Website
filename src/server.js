@@ -31,10 +31,10 @@ app.use(express.json({limit:'2mb'}));
 app.use(express.urlencoded({extended:true,limit:'2mb'}));
 // app.use(express.json({limit:'2mb'}));
 // app.use(express.urlencoded({limit:'2mb'}));
-// app.use(cors({
-//     origin: "https://boiling-headland-64673.herokuapp.com/",
-//     credentials: true
-// }));
+app.use(cors({
+    origin: "https://boiling-headland-64673.herokuapp.com/",
+    credentials: true
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ------------------------------Configure Session and cookie-------------------------------------------------------------
@@ -62,13 +62,13 @@ app.use((req,res,next)=>{
 //-------------------------------Importing routes----------------------------------------------------------
 app.use(routes);
 
-// if(process.env.NODE_ENV === 'production'){
-//   app.use(express.static('aip/build'));
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static('aip/build'));
 
-//   app.get('*',(req,res) => {
-//     res.sendFile(path.resolve(__dirname,'aip','build','index.html'));
-//   });
-// }
+  app.get('*',(req,res) => {
+    res.sendFile(path.resolve(__dirname,'aip','build','index.html'));
+  });
+}
 
 const port = process.env.PORT || 4000;
 // -----------------------------------Listener-----------------------------------------------------
