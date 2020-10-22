@@ -92,7 +92,7 @@ const LoginForm = ()=>{
           if (res.data._id){
             localStorage.setItem('user_id',res.data._id);
             localStorage.setItem('username',res.data.username);
-            window.location.href=`/users`;
+            window.location.href=`/`;
           }
           else{
             alert("Invalid username or password")
