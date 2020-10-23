@@ -24,7 +24,7 @@ export const LoadFavours =(page = 1, size = 5)=>async(dispatch,getState)=>{
 
     try {
         dispatch(loadFavoursInProgress());
-        const response = await fetch('http://localhost:4000/api/favours?page=' + page + '&size' + size);
+        const response = await fetch('/api/favours?page=' + page + '&size' + size);
         const favours = await response.json();
     
         dispatch(loadFavoursSuccess(favours));
@@ -43,7 +43,7 @@ export const DisplayAlert=text=>()=>{
 export const AddFavoursRequest =favour=>async dispatch=>{
     try {
         const body = JSON.stringify({favour})
-        const response = await fetch('http://localhost:4000/api/favours',{
+        const response = await fetch('/api/favours',{
             headers:{
             'Content-Type':'Application/json',
             },
@@ -60,7 +60,7 @@ export const AddFavoursRequest =favour=>async dispatch=>{
 // ------------------remove favour-------------------------------
 export const RemoveFavoursRequest = favour =>async dispatch=>{
     try {
-        const response = await fetch(`http://localhost:4000/api/favours/${favour._id}`,{
+        const response = await fetch(`/api/favours/${favour._id}`,{
             method:'delete',
         })
         const restFavour = await response.json();
@@ -77,7 +77,7 @@ export const AcceptFavourRequest = favour =>async dispatch =>{
     }
     else{
         try {
-            const response = await fetch(`http://localhost:4000/api/favours/${favour._id}/${receiver}/accepted`,{
+            const response = await fetch(`/api/favours/${favour._id}/${receiver}/accepted`,{
                 method:'post',
             })
             const updatedFavour = await response.json();
@@ -94,7 +94,7 @@ export const AcceptFavourRequest = favour =>async dispatch =>{
 // ---------------------Search Favour------------------------------------------------------
 export const SearchFavoursRequest = keyword =>async dispatch=>{
     try {
-        const response = await fetch(`http://localhost:4000/api/favours/${keyword}`);
+        const response = await fetch(`/api/favours/${keyword}`);
         const matchedFavour = await response.json();
         dispatch(searchFavour(matchedFavour));
     } catch (e) {
@@ -111,7 +111,7 @@ export const AddAwardRequest = favour =>async dispatch =>{
     else{
         try {
             const body = JSON.stringify(favour);
-            const response = await fetch(`http://localhost:4000/api/favours/${favour.favourID}/awardIncrement`,{
+            const response = await fetch(`/api/favours/${favour.favourID}/awardIncrement`,{
                 headers:{
                 'Content-Type':'Application/json',
                 },
@@ -140,7 +140,7 @@ export const ProveFavourRequest = favour=>async dispatch=>{
 export const AddCommentRequest =comment=>async dispatch=>{
     try {
         const body = JSON.stringify({comment})
-        const response = await fetch(`http://localhost:4000/api/comment/${comment.favourID}`,{
+        const response = await fetch(`/api/comment/${comment.favourID}`,{
             headers:{
             'Content-Type':'Application/json',
             },
@@ -161,7 +161,7 @@ export const AddCommentRequest =comment=>async dispatch=>{
 export const SubmitProveRequest = awardRelation =>async dispatch=>{
     try {
         const body = JSON.stringify(awardRelation);
-        const response = await fetch(`http://localhost:4000/api/newAwardRelation`,{
+        const response = await fetch(`/api/newAwardRelation`,{
             headers:{
                 'Content-Type':'Application/json',
                 },
@@ -181,7 +181,7 @@ export const SubmitProveRequest = awardRelation =>async dispatch=>{
 export const SubmitAwardRecord = awardInfo =>async dispatch=>{
     try {
         const body = JSON.stringify(awardInfo);
-        const response = await fetch(`http://localhost:4000/api/newAwardRelation`,{
+        const response = await fetch(`/api/newAwardRelation`,{
             headers:{
                 'Content-Type':'Application/json',
                 },
@@ -205,7 +205,7 @@ export const LoadAwards =()=>async(dispatch,getState)=>{
 
     try {
         dispatch(loadAwardsInProgress());
-        const response = await fetch('http://localhost:4000/api/awards');
+        const response = await fetch('/api/awards');
         const awards = await response.json();
     
         dispatch(loadAwardsSuccess(awards));
@@ -219,7 +219,7 @@ export const LoadAwards =()=>async(dispatch,getState)=>{
 // --------------Delete award relation------------------------------------------------
 export const RemoveAwardRequest = award => async dispatch=>{
     try {
-        const response = await fetch(`http://localhost:4000/api/awards/${award._id}`,{
+        const response = await fetch(`/api/awards/${award._id}`,{
             method:'delete',
         })
         const restAwards = await response.json();
@@ -232,7 +232,7 @@ export const RemoveAwardRequest = award => async dispatch=>{
 export const getParty = user => async dispatch =>{
     console.log(user)
     try {
-        const response = await fetch(`http://localhost:4000/api/party/${user}`);
+        const response = await fetch(`/api/party/${user}`);
         const result = await response.json();
         dispatch(getPartyDet(result));
     } catch (e) {
@@ -242,7 +242,7 @@ export const getParty = user => async dispatch =>{
 //----------------Get LeaderBoard---------------------------------------------------
 export const loadLeadBoard = () => async dispatch =>{
     try{
-        const response = await fetch('http://localhost:4000/api/leadBoard');
+        const response = await fetch('/api/leadBoard');
 
         const user = await response.json();
         dispatch(loadLeaderBoard(user));
