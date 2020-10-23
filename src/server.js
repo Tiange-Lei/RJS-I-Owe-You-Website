@@ -16,15 +16,11 @@ const dbOptions = {
     useNewUrlParser:true,
     useUnifiedTopology:true
 };
-<<<<<<< HEAD
-let url = process.env.MONGODB_URI || 'mongodb://localhost/trip';
-mongoose.connect(url,dbOptions,()=>{console.log("Mongoose is connected!");})
-const connection = mongoose.createConnection(dbString,dbOptions);
-=======
+
 let url = process.env.MONGODB_URI || dbString;
 mongoose.connect(url,dbOptions,()=>{console.log("Mongoose is connected!");})
 const connection = mongoose.createConnection(url,dbOptions);
->>>>>>> main
+
 
 const sessionStore = new MongoStore({
   mongooseConnection:connection,
