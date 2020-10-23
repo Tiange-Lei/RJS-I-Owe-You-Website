@@ -60,7 +60,7 @@ const LoginForm = ()=>{
             password:registerPassword
           },
           withCredentials:true,
-          url: "http://localhost:4000/api/register",
+          url: "/api/register",
         }).then((res)=>{
           if(res.data==="Username already exists"){
             alert("Username alreday exists!");
@@ -87,12 +87,12 @@ const LoginForm = ()=>{
             password:loginPassword
           },
           withCredentials:true,
-          url: "http://localhost:4000/api/login",
+          url: "/api/login",
         }).then((res)=>{
           if (res.data._id){
             localStorage.setItem('user_id',res.data._id);
             localStorage.setItem('username',res.data.username);
-            window.location.href=`/users?${res.data.username}`;
+            window.location.href=`/`;
           }
           else{
             alert("Invalid username or password")

@@ -8,7 +8,7 @@ const AddCommentsForm = ({favourID,onAddCommentPressed})=>{
         commentText:"",
     });
     const AddComment=input=>{
-        const regex = RegExp('^[a-zA-Z0-9,.!? ]*$');
+        const regex = RegExp('^[a-zA-Z0-9\s.!?"-]+$');
         const {commentText}=input;
         if(!regex.test(commentText)){
             alert("You input contains illegal characters,please try again")
