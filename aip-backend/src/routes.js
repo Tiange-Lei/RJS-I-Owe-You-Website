@@ -77,7 +77,7 @@ router.get('/api/favours', async (req, res) => {
     if (publisher) {
       condition.publisher = { $ne: publisher};
     }
-    const tmpList = await Favour.find(condition, {}, { sort: { _id: -1 }, limit: Number(size), skip: (Number(page) - 1) * Number(size) })
+    const tmpList = await Favour.find(condition, {}, { sort: { isAccepted: 1, _id: -1}, limit: Number(size), skip: (Number(page) - 1) * Number(size) })
     const total = await Favour.count(condition);
     const info = { page, size, total, totalPage: Math.ceil(total / Number(size)) };
 
