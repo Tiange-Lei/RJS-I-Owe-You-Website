@@ -5,10 +5,10 @@ import {LoadFavours,RemoveFavoursRequest,AcceptFavourRequest,AddCommentRequest,A
 import {ListWrapper,ValidFavour,InvalidFavour} from './styledComponents';
 import {connect} from 'react-redux';
 
-const FavourList = ({page, validFavours,invalidFavours,isLoading,onRemovePressed,onAcceptPressed,onDisplayAlertClicker,startLoadingFavours,onAddCommentPressed,onAddAwardPressed})=>{
+const FavourList = ({page, size, options, validFavours,invalidFavours,isLoading,onRemovePressed,onAcceptPressed,onDisplayAlertClicker,startLoadingFavours,onAddCommentPressed,onAddAwardPressed})=>{
     useEffect(()=>{
-        startLoadingFavours(page);      
-    },[startLoadingFavours,page] );
+        startLoadingFavours(page, size, options,);      
+    },[startLoadingFavours, page, size] );
     const LoadingMessage = <div>Is loading...</div>
     const content= (
     <ListWrapper>
@@ -61,7 +61,7 @@ const mapStateToProps = state =>({
     invalidFavours:getInvalidFavours(state),
 });
 const mapDispatchToProps = dispatch =>({
-    startLoadingFavours:(page)=>dispatch(LoadFavours(page)),
+    startLoadingFavours:(page, size, options)=>dispatch(LoadFavours(page, size, options)),
     onRemovePressed: favour=>dispatch(RemoveFavoursRequest(favour)),
     onAcceptPressed: favour=>dispatch(AcceptFavourRequest(favour)),
     onAddCommentPressed: comment=>dispatch(AddCommentRequest(comment)),

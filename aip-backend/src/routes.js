@@ -71,10 +71,14 @@ router.get('/api/users/:name',(req,res)=>{
 
 router.get('/api/favours', async (req, res) => {
   try {
-    const { page = 1, size = 5 } = req.query;
+    const { page = 1, size = 5, publisher } = req.query;
     console.log('page:', page, 'size:', size)
-    const tmpList = await Favour.find({}, {}, { sort: { _id: -1 }, limit: Number(size), skip: (Number(page) - 1) * Number(size) })
-    const total = await Favour.count({});
+    const condition = {}
+    if (publisher) {
+      condition.publisher = { $ne: publisher};
+    }
+    const tmpList = await Favour.find(condition, {}, { sort: { _id: -1 }, limit: Number(size), skip: (Number(page) - 1) * Number(size) })
+    const total = await Favour.count(condition);
     const info = { page, size, total, totalPage: Math.ceil(total / Number(size)) };
 
     const list = JSON.parse(JSON.stringify(tmpList));
