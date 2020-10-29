@@ -1,9 +1,12 @@
 import React,{useState}from 'react';
 import {getFavours} from '../Redux/selectors';
-import {FormContainer,NewFavourButton,SelectorContainer,DefaultOption} from './styledComponents';
+import {FormContainer,NewFavourButton,PictureContainer} from './styledComponents';
 import {connect} from 'react-redux';
 import {AddFavoursRequest} from '../Redux/thunks';
 import {Input} from 'antd';
+import AwardSelectorModel from './awardSelector';
+import loadImageHandler from './loadImageHandler';
+// ----------------------------------------------------------------------------------------------------------------------
 
 const  {TextArea} = Input;
 
@@ -15,34 +18,6 @@ const NewFavourForm = ({onCreatePressed})=>{
         award:'',
         picture:'',
     });
-    const loadHandler=e=>{
-        const reader = new FileReader();
-        const file=  e.target.files[0];
-        if(file){
-                reader.readAsDataURL(file);
-                reader.onload=function(){
-                    const AllowImgFileSize = 1078702;
-                    const imageBase64=this.result;
-                    if(AllowImgFileSize!==0&&AllowImgFileSize<imageBase64.length){
-                        alert("The size of your uploaded image should be less than 2MB")
-                        return
-                    }
-                    else{
-                        setInputValue({
-                            ...inputValue,
-                            picture:imageBase64,
-                        })
-                    }
-
-                }
-        }
-        else{
-            setInputValue({
-                ...inputValue,
-                picture:''
-            })
-        }
-}
     const CheckInput = (input)=>{
         const regex = RegExp('^[a-zA-Z0-9,.!? ]*$');
         const {award,text}=input;
@@ -79,28 +54,15 @@ const NewFavourForm = ({onCreatePressed})=>{
                     text:e.target.value}
             )
             }
-            
             />
-            <SelectorContainer>
-            Select award:&nbsp;&nbsp;&nbsp;
-            <select
-            value={inputValue.award}
-            onChange={e=>setInputValue(
-                {   ...inputValue,
-                    award:e.target.value}
-            )}
-            >
-            <DefaultOption>Choose award below</DefaultOption>
-            <option>Coffee</option>
-            <option>Chocolate Bar</option>
-            <option>Coke</option>
-            <option>Biscuit</option>
-            </select>
-            </SelectorContainer>
-            <div>Prove:</div>
-            {/* <UploadImageButton /> */}
-            <input type='file' id='images' accept='image/*' onChange={e=>loadHandler(e)}/>
-            <img src={inputValue.picture?inputValue.picture:null} />
+            <AwardSelectorModel state={inputValue} setStateFunction={setInputValue}/>
+            <PictureContainer>
+                Picture:&nbsp;&nbsp;&nbsp;
+                <input type='file' id='images' accept='image/*' onChange={e=>loadImageHandler(e,inputValue,setInputValue,2)}/>
+            </PictureContainer>
+            <div>
+                <img src={inputValue.picture?inputValue.picture:null} alt={''}/>
+            </div>
             <NewFavourButton onClick={()=>CheckInput(inputValue)}>Post</NewFavourButton>
         </FormContainer>
     )

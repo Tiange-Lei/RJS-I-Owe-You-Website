@@ -1,9 +1,18 @@
 import React,{useState} from 'react';
-import {FavourItemContainer,FavourPublisher,FavourTime,FavourAward,UserTitle,FavourReceiver} from '../components/styledComponents';
 import {connect} from 'react-redux';
 import {SubmitProveRequest} from '../Redux/thunks';
+import loadImageHandler from './loadImageHandler';
+import {FavourItemContainer,
+    FavourPublisher,
+    FavourTime,
+    FavourAward,
+    UserTitle,
+    FavourReceiver,
+} from '../components/styledComponents';
+// ----------------------------------------------------------------------------------------------------------------------
 
 const ProveFavour=  ({favour,onSubmitPressed}) =>{
+    // -----state for creating new award relation-------------------
     const [awardRelation, setAwardRelation] = useState({
         favourID:favour._id,
         debtor:favour.publisher,
@@ -12,35 +21,7 @@ const ProveFavour=  ({favour,onSubmitPressed}) =>{
         follower:favour.follower,
         prove:'',
     });
-    const loadHandler=e=>{
-            const reader = new FileReader();
-            const file=  e.target.files[0];
-            if(file){
-                    reader.readAsDataURL(file);
-                    reader.onload=function(){
-                        const AllowImgFileSize = 1078702;
-                        const imageBase64=this.result;
-                        if(AllowImgFileSize!==0&&AllowImgFileSize<imageBase64.length){
-                            alert("The size of your uploaded image should be less than 2MB")
-                            return
-                        }
-                        else{
-                            setAwardRelation({
-                                ...awardRelation,
-                                prove:imageBase64,
-                            })
-                        }
-
-                    }
-            }
-            else{
-                setAwardRelation({
-                    ...awardRelation,
-                    prove:''
-                })
-            }
-    }
-
+    // ---------submit handler to check the input and connect to thunk----------------
     const submitHandler = (input)=>{
         if(input.prove===''){
             alert("You have to upload a picture as a proof!")
@@ -64,8 +45,7 @@ const ProveFavour=  ({favour,onSubmitPressed}) =>{
             <FavourTime>Posted at:&nbsp;{(new Date(favour.createdAt)).toLocaleString("en-AU")}</FavourTime>
             <br></br>
             <div>Prove:</div>
-            {/* <UploadImageButton /> */}
-            <input type='file' id='images' accept='image/*' onChange={e=>loadHandler(e)}/>
+            <input type='file' id='images' accept='image/*' onChange={e=>loadImageHandler(e,awardRelation, setAwardRelation,1)}/>
             {awardRelation.prove?<img src={awardRelation.prove} alt={'img'} style={{width:'200px',height:'200px',objectFit:"contain"}}/>:null}
             <button onClick={()=>{submitHandler(awardRelation)}}>Submit</button>
 

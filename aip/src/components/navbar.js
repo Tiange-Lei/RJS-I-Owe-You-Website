@@ -1,8 +1,18 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import {Container, NavUL,NavItem,BarTitle,LOGOContainer,LOGO_I,LOGO_O,LOGO_U,Greeting} from './styledComponents';
 import LogoutButton from './logoutButton';
 import SearchFavour from './searchFavour';
+import {Container, 
+    NavUL,
+    NavItem,
+    BarTitle,
+    LOGOContainer,
+    LOGO_I,
+    LOGO_O,
+    LOGO_U,
+    Greeting,
+} from './styledComponents';
+// ----------------------------------------------------------------------------------------------------------------------
 
 const Navbar = ()=>{
     return(

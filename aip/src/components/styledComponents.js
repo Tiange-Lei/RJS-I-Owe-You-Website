@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import {showUP,fadeIn} from './keyframes';
 import 'antd/dist/antd.css';
+// ----------------------------------------------------------------------------------------------------------------------
 
 export const Container = styled.div`
     background: #34495E;
@@ -57,6 +58,7 @@ export const FormContainer = styled.div`
     max-width: 700px;
     margin: auto;  
     animation: ${showUP} 1.5s backwards, ${fadeIn} .8s;
+    margin-bottom:10px;
 `
 export const NewFavourInput = styled.textarea`
     font-size: 16px;
@@ -76,7 +78,11 @@ export const NewFavourButton = styled.button`
     cursor: pointer;
     margin-left: 8px;
     width: 20%;
-    background-color: #F7A322;
+    background-color: #13F25A;
+    &:hover{
+        background-color: #13F25A;
+        transform: scale(1.2);
+    }
 `
 export const ListWrapper = styled.div`
     max-width: 700px;
@@ -87,12 +93,12 @@ export const ListWrapper = styled.div`
 export const FavourItemContainer = styled.div`
     background: #fff;
     border-radius: 8px;
-    margin-top: 8px;
     padding: 16px;
     max-width: 700px;
     position: relative;
     margin: auto;  
     box-shadow: 0 4px 8px grey;
+    margin-top: 10px;
 `
 export const ValidFavour = styled.div`
     background: #fff;
@@ -310,6 +316,7 @@ export const SwitchContainer = styled.div`
     position: relative;
     width: 400px;
     margin: auto;
+    margin-bottom: 100px;
 `
 
 export const UserNameInput = styled.input`
@@ -437,4 +444,49 @@ export const Greeting = styled.div`
     font-size: 20px;
     color:yellow;
     margin-left: -30%;
+`
+export const PictureContainer=styled.div`
+    margin:auto;
+    text-align: center;
+    margin-left:190px;
+    margin-bottom:5px;
+`
+export const ProvePictureContainer=styled.div`
+    margin:auto;
+    text-align: center;
+    margin-left:100px;
+    margin-bottom:5px;
+`
+
+export const SwitchButton = styled.button`
+    font-size: 16px;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    display: inline-block;
+    background-color: #9A7DED;
+    &:hover{
+        transform: scale(1.2);
+    }
+    margin:2px;
+`
+export const SubmitButton = styled.button`
+    font-size: 16px;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    display: inline-block;
+    background-color: #4FA3EE;
+    &:hover{
+        transform: scale(1.2);
+    }
+    margin:2px;
+`
+export const SubmitButtonContainer = styled.div`
+    margin:auto;
+    text-align: center;
 `

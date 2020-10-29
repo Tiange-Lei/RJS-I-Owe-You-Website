@@ -1,5 +1,7 @@
 import React,{useState} from 'react';
-import {FavourItemContainer,SelectorContainer,DefaultOption} from './styledComponents';
+import {FavourItemContainer,SubmitButton,SubmitButtonContainer} from './styledComponents';
+import AwardSelectorModel from './awardSelector';
+// ----------------------------------------------------------------------------------------------------------------------
 
 const AddAwardForm = ({favourID,onAddAwardPressed})=>{
     const [inputValue, setInputValue] = useState({
@@ -9,23 +11,10 @@ const AddAwardForm = ({favourID,onAddAwardPressed})=>{
     });
     return (
             <FavourItemContainer>
-                <SelectorContainer>
-                Select award:&nbsp;&nbsp;&nbsp;
-                <select
-                value={inputValue.award}
-                onChange={e=>setInputValue(
-                    {   ...inputValue,
-                        award:e.target.value}
-                )}
-                >
-                <DefaultOption>Choose award below</DefaultOption>
-                <option>Coffee</option>
-                <option>Chocolate Bar</option>
-                <option>Coke</option>
-                <option>Biscuit</option>
-                </select>
-                </SelectorContainer>
-                <button onClick={()=>onAddAwardPressed(inputValue)}>Submit</button>
+                <AwardSelectorModel state={inputValue} setStateFunction={setInputValue} />
+                <SubmitButtonContainer>
+                    <SubmitButton onClick={()=>onAddAwardPressed(inputValue)}>Submit</SubmitButton>
+                </SubmitButtonContainer>
             </FavourItemContainer>
     )
 }

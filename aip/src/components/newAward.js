@@ -1,10 +1,26 @@
 import React,{useState} from 'react';
-import {AwardFormContainer,AwardSelector,DefaultOption,DebtorContainer,DebtorDiv,CreditorContainer,CreditorDiv,IOUContainer,UOIContainer,SwitchContainer,UserNameInput,ProveContainer} from './styledComponents';
 import {connect} from 'react-redux';
 import {SubmitAwardRecord} from '../Redux/thunks';
+import loadImageHandler from './loadImageHandler';
+import AwardSelectorModel from './awardSelector';
+import {AwardFormContainer,
+    DebtorContainer,
+    DebtorDiv,
+    CreditorContainer,
+    CreditorDiv,
+    IOUContainer,
+    UOIContainer,
+    SwitchContainer,
+    UserNameInput,
+    ProveContainer,
+    ProvePictureContainer,
+    SwitchButton,
+    SubmitButton,
+} from './styledComponents';
+// ----------------------------------------------------------------------------------------------------------------------
 
 const NewAwardForm=({onSubmitPressed})=>{
-
+// --------------------state for award information, which will be sent to thunk----------------
     const [awardInfo,setAwardInfo]=useState({
         debtor:'',
         creditor:'',
@@ -12,6 +28,7 @@ const NewAwardForm=({onSubmitPressed})=>{
         prove:''
     })
     const [x,setX]=useState({value:true});
+    // ----------------logic for switching the role of debtor and creditor--------------------
     const SwitchUser=()=>{
         if(x.value){
             setAwardInfo({
@@ -26,34 +43,6 @@ const NewAwardForm=({onSubmitPressed})=>{
             })
         }
         setX({value:!x.value});
-    }
-    const loadHandler=e=>{
-        const reader = new FileReader();
-        const file=  e.target.files[0];
-        if(file){
-                reader.readAsDataURL(file);
-                reader.onload=function(){
-                    const AllowImgFileSize = 1078702;
-                    const imageBase64=this.result;
-                    if(AllowImgFileSize!==0&&AllowImgFileSize<imageBase64.length){
-                        alert("The size of your uploaded image should be less than 2MB")
-                        return
-                    }
-                    else{
-                        setAwardInfo({
-                            ...awardInfo,
-                            prove:imageBase64
-                        })
-                    }
-
-                }
-        }
-        else{
-            setAwardInfo({
-                ...awardInfo,
-                prove:''
-            })
-        }
     }
     const SubmitAward=(input)=>{
         const regex = RegExp('^[A-Za-z0-9_.]+$');
@@ -126,30 +115,17 @@ return(
                 </CreditorContainer>
             </UOIContainer>
         </SwitchContainer>
-        <br></br>
-        <AwardSelector>
-            Select award:&nbsp;&nbsp;&nbsp;
-            <select value={awardInfo.award} onChange={e=>setAwardInfo({
-                ...awardInfo,
-                award:e.target.value
-            })}>
-            <DefaultOption>Choose award below</DefaultOption>
-            <option>Coffee</option>
-            <option>Chocolate Bar</option>
-            <option>Coke</option>
-            <option>Biscuit</option>
-            </select>
-        </AwardSelector>
-        <br></br>
+            <AwardSelectorModel state={awardInfo} setStateFunction={setAwardInfo}/>
         <ProveContainer x={x}>
-            <div>Prove:</div>
-            <input type='file' id='images'accept='image/*' onChange={e=>loadHandler(e)}/>
-            {awardInfo.prove?<img src={awardInfo.prove} style={{width:'200px',height:'200px',objectFit:"contain"}}/>:null}
+        <ProvePictureContainer>
+            Prove:&nbsp;&nbsp;&nbsp;
+            <input type='file' id='images'accept='image/*' onChange={e=>loadImageHandler(e,awardInfo,setAwardInfo,1)}/>
+        </ProvePictureContainer>
+            {awardInfo.prove?<img src={awardInfo.prove} style={{width:'200px',height:'200px',objectFit:"contain"}} alt={''}/>:null}
         </ProveContainer>
-        <br></br>
         <div>
-            <button onClick={()=>SwitchUser()}>Switch</button>
-            <button onClick={()=>SubmitAward(awardInfo)}>Submit</button>
+            <SwitchButton onClick={()=>SwitchUser()}>Switch</SwitchButton>
+            <SubmitButton onClick={()=>SubmitAward(awardInfo)}>Submit</SubmitButton>
         </div>
     </AwardFormContainer>
 )

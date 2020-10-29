@@ -2,6 +2,7 @@ import React,{useEffect} from 'react';
 import { connect } from 'react-redux';
 import { getParty } from '../Redux/thunks';
 import {PBoardContainer,BoardTitle} from '../components/styledComponents';
+// ----------------------------------------------------------------------------------------------------------------------
 
 const PartyBoard = ({getMeeting,people}) => {
   useEffect(()=>{

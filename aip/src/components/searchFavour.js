@@ -2,6 +2,8 @@ import React,{useState}from 'react';
 import {SearchFrame,SearchInput,SearchButton} from './styledComponents';
 import {SearchFavoursRequest,LoadFavours} from '../Redux/thunks';
 import {connect} from 'react-redux';
+// ----------------------------------------------------------------------------------------------------------------------
+
 const SearchFavour = ({onSearchPressed,onClearPressed})=>{
     const[SearchValue, SetSearchValue]=useState('');
     const SubmitSearch=input=>{
@@ -9,13 +11,12 @@ const SearchFavour = ({onSearchPressed,onClearPressed})=>{
             onSearchPressed(input)
         }
         else{
-            alert('Invalid award')
+            alert('Please choose an award from "Coke","Coffee","Biscuit",and"Chocolate Bar"')
         }
     }
     const ClearSearch=()=>{
         SetSearchValue('');
         onClearPressed();
-
     }
     return(
     <div>

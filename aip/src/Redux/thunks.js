@@ -16,15 +16,14 @@ import {loadFavoursInProgress,
         loadLeaderBoard,
         getPartyDet
     } from './action';
-
-
+// ----------------------------------------------------------------------------------------------------------------------
 
 // ---------------------load favours-------------------------------
-export const LoadFavours =(page = 1, size = 5)=>async(dispatch,getState)=>{
+export const LoadFavours =()=>async(dispatch,getState)=>{
 
     try {
         dispatch(loadFavoursInProgress());
-        const response = await fetch('/api/favours?page=' + page + '&size' + size);
+        const response = await fetch('/api/favours');
         const favours = await response.json();
     
         dispatch(loadFavoursSuccess(favours));
@@ -230,7 +229,6 @@ export const RemoveAwardRequest = award => async dispatch=>{
 }
 //----------------Get Party Members-------------------------------------------------
 export const getParty = user => async dispatch =>{
-    console.log(user)
     try {
         const response = await fetch(`/api/party/${user}`);
         const result = await response.json();
