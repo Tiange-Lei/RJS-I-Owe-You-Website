@@ -4,6 +4,8 @@ import {getAwardsLoading,getIOUAwards,getUOIAwards} from '../Redux/selectors';
 import {LoadAwards,RemoveAwardRequest} from '../Redux/thunks';
 import {ListWrapper} from './styledComponents';
 import AwardRelationItem from './awardRelationItem';
+// ----------------------------------------------------------------------------------------------------------------------
+
 const AwardRelationList = ({startLoadingAwards,isLoading,IOUAwards,UOIAwards,onRemovePressed})=>{
     useEffect(()=>{
         startLoadingAwards();      

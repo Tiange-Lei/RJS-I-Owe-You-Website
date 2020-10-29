@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import { loadLeadBoard } from '../Redux/thunks';
 import { BoardContainer,BoardTitle } from '../components/styledComponents';
-
+// ----------------------------------------------------------------------------------------------------------------------
 
 const LeaderBoard = ({loadingLeaders,users}) => {
     useEffect(()=>{

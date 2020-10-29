@@ -16,8 +16,9 @@ const dbOptions = {
     useNewUrlParser:true,
     useUnifiedTopology:true
 };
-mongoose.connect(dbString,dbOptions,()=>{console.log("Mongoose is connected!");})
-const connection = mongoose.createConnection(dbString,dbOptions);
+let url = process.env.MONGODB_URI || dbString;
+mongoose.connect(url,dbOptions,()=>{console.log("Mongoose is connected!");})
+const connection = mongoose.createConnection(url,dbOptions);
 
 const sessionStore = new MongoStore({
   mongooseConnection:connection,
@@ -29,8 +30,6 @@ mongoose.set('useFindAndModify', false);
 const app=express();
 app.use(express.json({limit:'2mb'}));
 app.use(express.urlencoded({extended:true,limit:'2mb'}));
-// app.use(express.json({limit:'2mb'}));
-// app.use(express.urlencoded({limit:'2mb'}));
 app.use(cors({
     origin: "http://localhost:3000",
     credentials: true
@@ -61,8 +60,14 @@ app.use((req,res,next)=>{
 
 //-------------------------------Importing routes----------------------------------------------------------
 app.use(routes);
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static('aip/build'));
 
-
+  app.get('*',(req,res) => {
+    res.sendFile(path.resolve(__dirname,'aip','build','index.html'));
+  });
+}
+const port = process.env.PORT || 4000;
 // -----------------------------------Listener-----------------------------------------------------
 
-app.listen(4000,()=>console.log("Listening on port:4000"));
+app.listen(port,()=>console.log("Listening on port:4000"));

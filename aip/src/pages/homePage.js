@@ -2,13 +2,12 @@ import React, {useState} from 'react';
 import FavourList from '../components/favourList';
 import LeaderBoard from '../components/leaderBoard';
 import PartyBoard from '../components/partyBoard';
-import {RightSideBar} from '../components/styledComponents'
-
-import { connect } from 'react-redux';
-import { Pagination } from 'antd';
-
+import {RightSideBar} from '../components/styledComponents';
+import {Pagination} from 'antd';
+// ----------------------------------------------------------------------------------------------------------------------
 
 const HomePage=(props)=>{
+
     const [page, setPage] = useState(1);
     const [size, setSize] = useState(5);
     const { favours } = props;
@@ -37,10 +36,10 @@ const HomePage=(props)=>{
                 </div>
                 <div style={{ flex: 1 }}></div>
             </div>           
+        <FavourList index={'home'}/>  
+
     </div>
     )
 }
 
-const mapStateToProps = state => ({ favours: state.favours, });
-const mapDispatchToProps = dispatch => ({})
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default HomePage;

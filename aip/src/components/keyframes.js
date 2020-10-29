@@ -1,4 +1,5 @@
 import{keyframes} from 'styled-components';
+// ----------------------------------------------------------------------------------------------------------------------
 
 export const showUP =keyframes`
     0% {transform: translateY(800px);

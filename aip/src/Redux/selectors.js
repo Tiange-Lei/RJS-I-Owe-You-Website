@@ -1,6 +1,5 @@
 import {createSelector} from 'reselect';
-import { favours } from './reducer';
-
+// ----------------------------------------------------------------------------------------------------------------------
 
 export const getFavours = state=>state.favours.data;
 export const getFavoursLoading = state=>state.favours.isLoading;

@@ -1,12 +1,11 @@
 import React from 'react';
-import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NewFavourForm from '../components/newFavourForm';
-import NewAwardForm from '../components/newAward';
-import Mylist from '../components/myfavourlist';
+import FavourList from '../components/favourList';
 import Sidebar from '../components/sidebar';
 import PartyBoard from '../components/partyBoard';
 import {RightSideBar} from '../components/styledComponents'
 import LeaderBoard from '../components/leaderBoard';
+// ----------------------------------------------------------------------------------------------------------------------
 
 const UserPage = ()=>(
     <div>
@@ -16,7 +15,7 @@ const UserPage = ()=>(
         </RightSideBar>
         <Sidebar />
         <NewFavourForm />
-        <Mylist />
+        <FavourList index={'mypage'}/>
     </div>
 
 )
