@@ -8,7 +8,7 @@ import PartyBoard from '../components/partyBoard';
 import {RightSideBar} from '../components/styledComponents'
 import LeaderBoard from '../components/leaderBoard';
 
-const UserPage = ()=>(
+const UserPage = () =>(
     <div>
         <RightSideBar>
             <LeaderBoard />
