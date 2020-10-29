@@ -10,7 +10,8 @@ import {LoadFavours,
         } from '../Redux/thunks';
 // ----------------------------------------------------------------------------------------------------------------------
 
-const FavourList = ({validFavours,
+const FavourList = ({page, size, options,
+                    validFavours,
                     invalidFavours,
                     isLoading,
                     onRemovePressed,
@@ -21,8 +22,8 @@ const FavourList = ({validFavours,
                     onAddAwardPressed,
                     index})=>{
                                 useEffect(()=>{
-                                    startLoadingFavours();      
-                                },[startLoadingFavours] );
+                                    startLoadingFavours(page, size, options);      
+                                },[startLoadingFavours, page, size] );
                                 const LoadingMessage = <div>Is loading...</div>
                                 return isLoading?LoadingMessage:index==='home'?
                                         <FavourContent 

@@ -20,15 +20,13 @@ import {loadFavoursInProgress,
 
 // ---------------------load favours-------------------------------
 
-export const LoadFavours =(page = 1, size = 5, options) => async(dispatch,getState)=>{
+export const LoadFavours =(page = 1, size = 5, options) => async(dispatch, getState)=>{
 
     try {
         dispatch(loadFavoursInProgress());
         const query = Object.keys(options || {}).map((key) => `${key}=${options[key]}`).join('&')
         const response = await fetch('http://localhost:4000/api/favours?page=' + page + '&size=' + size + '&' + query);
-
         const favours = await response.json();
-    
         dispatch(loadFavoursSuccess(favours));
     } catch (e) {
         dispatch(loadFavoursFailure());
