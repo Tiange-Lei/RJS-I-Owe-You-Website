@@ -17,7 +17,9 @@ npm start
 ```
 ## Contributors
 Tiange Lei / Github: Tiange-Lei
+
 Haichen Yu / Github: fischkoder
+
 Yu Liu / Github: yuliuftd
 
 ## License
