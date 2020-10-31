@@ -15,7 +15,7 @@ const UserPage = ()=>(
         </RightSideBar>
         <Sidebar />
         <NewFavourForm />
-        <FavourList index={'mypage'}/>
+        <FavourList index={'mypage'} size={50}/>
     </div>
 
 )

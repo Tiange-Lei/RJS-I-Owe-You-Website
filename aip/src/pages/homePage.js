@@ -29,9 +29,9 @@ const HomePage=(props)=>{
             <div style={{ display: 'flex', margin: '20px' }}>
                 <div style={{ flex: 1 }}></div>
                 <div>
-                    <Pagination pageSizeOptions={[5, 10, 15, 20, 30, 50]} pageSize = {size} defaultCurrent={1} total={total} onChange={(num, b) => {
+                    <Pagination showSizeChanger pageSizeOptions={[5, 10, 15, 20, 30, 50]} pageSize = {size} defaultCurrent={1} total={total} onChange={(num, b) => {
                         setPage(num);
-                    }} onShowSizeChange={(pageSize) => {
+                    }} onShowSizeChange={(index, pageSize) => {
                         setSize(pageSize)
                     }} />
                 </div>
