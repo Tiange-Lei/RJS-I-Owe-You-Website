@@ -66,7 +66,7 @@ router.get('/api/users/:name',(req,res)=>{
 
 // ------------------------------------Favours Operation--------------------------------------------
 
-// loading favours---------------------------
+// -------------------Loading favours---------------------------
 
 router.get('/api/favours', (req, res) => {
   Favour.find({},(err,Favour)=>{
@@ -75,7 +75,7 @@ router.get('/api/favours', (req, res) => {
   })
 })
 
-// create favour-----------------------------
+// ---------------------Create A Favour-----------------------------
 router.post('/api/favours', async (req, res) => {
   const { favour } = req.body;
   const newFavour = new Favour({
@@ -92,7 +92,7 @@ router.post('/api/favours', async (req, res) => {
   res.status(200).json(newFavour);
 })
 
-//delete favour------------------------------
+//-----------------Delete A Favour------------------------------
 router.delete('/api/favours/:_id', async (req, res) => {
   let id = req.params._id;
   await Favour.deleteOne({_id:id},(err)=>{
@@ -104,7 +104,7 @@ router.delete('/api/favours/:_id', async (req, res) => {
   })
 })
 
-//accept favour--------------------------------
+//-----------------Accept A Favour--------------------------------
 router.post('/api/favours/:_id/:receiver/accepted', async (req, res) => {
   let id = req.params._id;
   const receiver = req.params.receiver;
@@ -113,7 +113,7 @@ router.post('/api/favours/:_id/:receiver/accepted', async (req, res) => {
     res.status(200).json(updatedFavour);
   })
 })
-// //Search Favour--------------------------------
+//-----------Search Favours--------------------------------
 router.get('/api/favours/:keyword',async(req,res)=>{
   let keyword=req.params.keyword;
   await Favour.find({award:keyword},(err,favour)=>{
@@ -123,7 +123,7 @@ router.get('/api/favours/:keyword',async(req,res)=>{
 })
 
 // --------------------------------------Comments Operations-----------------------------------
-// -------add comment-------------------------
+// -------Add Comment-------------------------
 router.post('/api/comment/:favourID',async (req,res)=>{
   let favourid = req.params.favourID;
   const {comment}=req.body;
@@ -147,7 +147,7 @@ router.post('/api/comment/:favourID',async (req,res)=>{
   })
 })
 
-// add award to favour----------------------------
+// --------------Add Award To Favour----------------------------
 router.post('/api/favours/:favourID/awardIncrement',async(req,res)=>{
   let id = req.params.favourID;
   const info=req.body;
@@ -172,9 +172,9 @@ router.post('/api/favours/:favourID/awardIncrement',async(req,res)=>{
 
 
 })
-//Award operations
+//-------------------------------------Award operations------------------------------------
 
-//Load awards--------------------------------------------------
+//--------------------Load Awards--------------------------
 router.get('/api/awards', (req, res) => {
   AwardRelation.find({},(err,awards)=>{
     if(err) throw err;
@@ -182,7 +182,7 @@ router.get('/api/awards', (req, res) => {
   })
 })
 
-//Delete Award
+//-------------------Delete A Award--------------------------
 router.delete('/api/awards/:_id', async (req,res)=>{
   let id = req.params._id;
   await AwardRelation.deleteOne({_id:id},(err)=>{
@@ -195,7 +195,7 @@ router.delete('/api/awards/:_id', async (req,res)=>{
     })
   })
 })
-//Create Award
+//------------------Create A Award and Build The Relationship Among Users--------------------------
 router.post('/api/newAwardRelation/', async (req,res)=>{
   const relation = req.body;
   const newAwardRelation = new AwardRelation({
@@ -241,7 +241,7 @@ router.post('/api/newAwardRelation/', async (req,res)=>{
     }
   });
 })
-//load leaderboard
+//----------------Load Leaderboard Information In Descending Style-------------------------------------
 router.get('/api/leadBoard',async(req,res)=>{
   userInfo.find({},{username:1,numberOfAward:1,_id:0})
           .sort({numberOfAward:-1})
@@ -250,7 +250,7 @@ router.get('/api/leadBoard',async(req,res)=>{
             res.status(200).json(userInfo);
           })
 })
-//party detection
+//-----------------------------Get Result For Party Detection-----------------------------------------
 router.get('/api/party/:_user', async (req,res) => {
     AwardRelation.aggregate([
       {

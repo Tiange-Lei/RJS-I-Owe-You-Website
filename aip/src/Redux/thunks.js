@@ -130,11 +130,11 @@ export const AddAwardRequest = favour =>async dispatch =>{
 
 
 
-// --------------Prove request(picture should be checked before approval)
+// --------------Prove request(picture should be checked before approval)-------------
 export const ProveFavourRequest = favour=>async dispatch=>{
     alert("Proved")
 }
-// ------------------------comments thunk--------------------------
+// ------------------------comments thunk---------------------------------------------
 
 export const AddCommentRequest =comment=>async dispatch=>{
     try {
@@ -176,7 +176,7 @@ export const SubmitProveRequest = awardRelation =>async dispatch=>{
         dispatch(DisplayAlert(e))
     }
 }
-// --------------Submit award record----------------------------------------------------------------
+// ---------------------Submit award record----------------------------
 export const SubmitAwardRecord = awardInfo =>async dispatch=>{
     try {
         const body = JSON.stringify(awardInfo);
@@ -199,7 +199,7 @@ export const SubmitAwardRecord = awardInfo =>async dispatch=>{
     }
 }
 
-// ---------------Load award relation---------------------------------------------
+// -------------------------------Load award relation---------------------------------------------
 export const LoadAwards =()=>async(dispatch,getState)=>{
 
     try {
@@ -215,7 +215,7 @@ export const LoadAwards =()=>async(dispatch,getState)=>{
 
 }
 
-// --------------Delete award relation------------------------------------------------
+// ------------------Delete award relation------------------------------------------------
 export const RemoveAwardRequest = award => async dispatch=>{
     try {
         const response = await fetch(`/api/awards/${award._id}`,{
@@ -227,7 +227,7 @@ export const RemoveAwardRequest = award => async dispatch=>{
         dispatch(DisplayAlert(e))
     }
 }
-//----------------Get Party Members-------------------------------------------------
+//-------------------------Get Party Members-------------------------------------------------
 export const getParty = user => async dispatch =>{
     try {
         const response = await fetch(`/api/party/${user}`);
@@ -237,7 +237,7 @@ export const getParty = user => async dispatch =>{
         dispatch(DisplayAlert(e));
     }
 }
-//----------------Get LeaderBoard---------------------------------------------------
+//------------------------Get LeaderBoard---------------------------------------------------
 export const loadLeadBoard = () => async dispatch =>{
     try{
         const response = await fetch('/api/leadBoard');

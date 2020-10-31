@@ -16,6 +16,7 @@ const dbOptions = {
     useNewUrlParser:true,
     useUnifiedTopology:true
 };
+// --------- for online deployment ------
 let url = process.env.MONGODB_URI || dbString;
 mongoose.connect(url,dbOptions,()=>{console.log("Mongoose is connected!");})
 const connection = mongoose.createConnection(url,dbOptions);

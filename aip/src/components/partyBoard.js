@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { getParty } from '../Redux/thunks';
 import {PBoardContainer,BoardTitle} from '../components/styledComponents';
 // ----------------------------------------------------------------------------------------------------------------------
-
+// -------display the result of partydetection when there is a loop-------
 const PartyBoard = ({getMeeting,people}) => {
   useEffect(()=>{
     if(localStorage.username){
@@ -21,7 +21,7 @@ const PartyBoard = ({getMeeting,people}) => {
       </ul>
     </PBoardContainer>
   )
-
+  //------display this component when loop is formed----------------
   return (unique.includes(localStorage.username)?partyList:null);
 }
 
