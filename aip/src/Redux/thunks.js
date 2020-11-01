@@ -20,10 +20,14 @@ import {loadFavoursInProgress,
 
 // ---------------------load favours-------------------------------
 
-export const LoadFavours =(page = 1, size = 5, options) => async(dispatch, getState)=>{
+export const LoadFavours =(page = 1, size = 5, options, fromRemove = false) => async(dispatch, getState)=>{
 
     try {
+        if (!fromRemove) {
         dispatch(loadFavoursInProgress());
+        };
+        localStorage.setItem('queryInfo_delete', JSON.stringify({ page, size, options }));
+        
         const query = Object.keys(options || {}).map((key) => `${key}=${options[key]}`).join('&')
         const response = await fetch('http://localhost:4000/api/favours?page=' + page + '&size=' + size + '&' + query);
         const favours = await response.json();
@@ -65,6 +69,11 @@ export const RemoveFavoursRequest = favour =>async dispatch=>{
         })
         const restFavour = await response.json();
         dispatch(removeFavour(restFavour));
+        const reloadData = localStorage.getItem('queryInfo_delete');
+        if (reloadData) {
+            const { page, size, options } = JSON.parse(reloadData);
+            dispatch(LoadFavours(page, size, options, true))
+        }
     } catch (e) {
         dispatch(DisplayAlert(e))
     }
