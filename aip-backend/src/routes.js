@@ -114,13 +114,15 @@ router.post('/api/favours', async (req, res) => {
 //delete favour------------------------------
 router.delete('/api/favours/:_id', async (req, res) => {
   let id = req.params._id;
-  await Favour.deleteOne({_id:id},(err)=>{
-    if(err) throw err;
-    Favour.find({},(err,Favour)=>{
-      if(err) throw err;
-      res.status(200).json(Favour);
-    })
-  })
+  // await Favour.deleteOne({_id:id},(err)=>{
+  //   if(err) throw err;
+  //   Favour.find({},(err,Favour)=>{
+  //     if(err) throw err;
+  //     res.status(200).json(Favour);
+  //   })
+  // })
+  await Favour.deleteOne({ _id: id });
+  res.json({ msg: 'ok', id });
 })
 
 //accept favour--------------------------------

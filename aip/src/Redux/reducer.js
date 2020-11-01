@@ -36,9 +36,17 @@ const {type,payload} = action;
     // -----------remove favour---------------------
         case REMOVE_FAVOUR:{
             const {favour}=payload;
+            let deleteIndex = -1;
+            state.data.forEach((item, index) => {
+                if (item._id === favour.id) {
+                    deleteIndex = index;
+                }
+            })
+            state.data.splice(deleteIndex, 1);
+            
             return {
                 ...state,
-                data:favour,
+                // data:favour,
             }
         };
     // -----------accept favour---------------------

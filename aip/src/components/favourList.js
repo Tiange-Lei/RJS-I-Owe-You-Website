@@ -9,6 +9,7 @@ import {
     AddCommentRequest,
     AddAwardRequest,
 } from '../Redux/thunks';
+import { favours } from '../Redux/reducer';
 // ----------------------------------------------------------------------------------------------------------------------
 
 const FavourList = ({ page, size, options,
@@ -47,11 +48,17 @@ const FavourList = ({ page, size, options,
         /> : null
 };
 
+const filterValue = (state, isAccepted) => {
+    const item = state.favours.data.filter(favour => favour.isAccepted === isAccepted);
+    console.log('item', item);
+    return item;
+}
 const mapStateToProps = state => ({
     isLoading: getFavoursLoading(state),
-    validFavours: getValidFavours(state),
-    invalidFavours: getInvalidFavours(state),
+    invalidFavours: filterValue(state, true),
+    validFavours: filterValue(state, false),
 });
+
 const mapDispatchToProps = dispatch => ({
     startLoadingFavours: (page, size, options) => dispatch(LoadFavours(page, size, options)),
     onRemovePressed: favour => dispatch(RemoveFavoursRequest(favour)),
