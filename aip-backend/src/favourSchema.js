@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+// ----------------------------------------------------------------------------------------------------------------------
+
 //-------------Create the Schema To Store Users' Favours
 const favour = new mongoose.Schema({
     publisher: String,

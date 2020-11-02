@@ -6,7 +6,7 @@ const Favour = require('./favourSchema');
 const bcrypt = require('bcryptjs');
 const userInfo = require('./userInfo');
 const AwardRelation = require('./awardRelationSchema');
-
+// ----------------------------------------------------------------------------------------------------------------------
 
 // ------------------------------Authentication APIs-------------------------------------------------
 router.post('/api/login', (req, res, next) => {
