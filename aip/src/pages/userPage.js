@@ -3,11 +3,11 @@ import NewFavourForm from '../components/newFavourForm';
 import FavourList from '../components/favourList';
 import Sidebar from '../components/sidebar';
 import PartyBoard from '../components/partyBoard';
-import {RightSideBar} from '../components/styledComponents'
+import { RightSideBar } from '../components/styledComponents'
 import LeaderBoard from '../components/leaderBoard';
 // ----------------------------------------------------------------------------------------------------------------------
 
-const UserPage = ()=>(
+const UserPage = () => (
     <div>
         <RightSideBar>
             <LeaderBoard />
@@ -15,7 +15,7 @@ const UserPage = ()=>(
         </RightSideBar>
         <Sidebar />
         <NewFavourForm />
-        <FavourList index={'mypage'}/>
+        <FavourList index={'mypage'} size={1000} />
     </div>
 
 )

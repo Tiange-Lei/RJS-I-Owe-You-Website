@@ -8,6 +8,6 @@ const awardsRelationSchema = new Schema({
     award: String
 });
 
-module.exports = mongoose.model('AwardRelation',awardsRelationSchema);
+module.exports = mongoose.model('AwardRelation', awardsRelationSchema);
 
 

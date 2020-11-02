@@ -33,6 +33,6 @@
     "uuid": "^8.3.0"
   },
   "devDependencies": {
-    "loadtest": "*"
+    "loadtest": "^5.1.0"
   }
 }

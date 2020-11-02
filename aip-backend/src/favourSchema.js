@@ -13,4 +13,4 @@ const favour = new mongoose.Schema({
     follower: Array,
     prove: String,
 })
-module.exports = mongoose.model('Favour',favour);
+module.exports = mongoose.model('Favour', favour);

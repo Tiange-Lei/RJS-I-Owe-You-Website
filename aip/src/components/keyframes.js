@@ -1,7 +1,7 @@
-import{keyframes} from 'styled-components';
+import { keyframes } from 'styled-components';
 // ----------------------------------------------------------------------------------------------------------------------
 
-export const showUP =keyframes`
+export const showUP = keyframes`
     0% {transform: translateY(800px);
         animation-timing-function: ease-out;
     }
@@ -14,8 +14,8 @@ export const showUP =keyframes`
     100% {transform: translateY(0);
         animation-timing-function: ease-in;
     }
-` 
-export const fadeIn =keyframes`
+`
+export const fadeIn = keyframes`
     from {
         opacity:0
     }

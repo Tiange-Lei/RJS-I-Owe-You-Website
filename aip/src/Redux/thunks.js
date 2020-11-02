@@ -1,31 +1,37 @@
-import {loadFavoursInProgress,
-        loadFavoursSuccess,
-        loadFavoursFailure, 
-        createFavour,
-        removeFavour,
-        acceptFavour,
-        searchFavour,
-        addComment,
-        endFavour,
-        addAward,
-        loadAwardsFailure,
-        loadAwardsInProgress,
-        loadAwardsSuccess,
-        createAwardRelation,
-        removeAwardRelation,
-        loadLeaderBoard,
-        getPartyDet
-    } from './action';
+import {
+    loadFavoursInProgress,
+    loadFavoursSuccess,
+    loadFavoursFailure,
+    createFavour,
+    removeFavour,
+    acceptFavour,
+    searchFavour,
+    addComment,
+    endFavour,
+    addAward,
+    loadAwardsFailure,
+    loadAwardsInProgress,
+    loadAwardsSuccess,
+    createAwardRelation,
+    removeAwardRelation,
+    loadLeaderBoard,
+    getPartyDet
+} from './action';
 // ----------------------------------------------------------------------------------------------------------------------
 
 // ---------------------load favours-------------------------------
-export const LoadFavours =()=>async(dispatch,getState)=>{
+
+export const LoadFavours = (page = 1, size = 5, options, fromRemove = false) => async (dispatch, getState) => {
 
     try {
-        dispatch(loadFavoursInProgress());
-        const response = await fetch('/api/favours');
+        if (!fromRemove) {
+            dispatch(loadFavoursInProgress());
+        };
+        localStorage.setItem('queryInfo_delete', JSON.stringify({ page, size, options }));
+
+        const query = Object.keys(options || {}).map((key) => `${key}=${options[key]}`).join('&')
+        const response = await fetch('http://localhost:4000/api/favours?page=' + page + '&size=' + size + '&' + query);
         const favours = await response.json();
-    
         dispatch(loadFavoursSuccess(favours));
     } catch (e) {
         dispatch(loadFavoursFailure());
@@ -35,18 +41,18 @@ export const LoadFavours =()=>async(dispatch,getState)=>{
 }
 
 
-export const DisplayAlert=text=>()=>{
+export const DisplayAlert = text => () => {
     alert(text)
 }
 // -------------------creat favour-------------------------------
-export const AddFavoursRequest =favour=>async dispatch=>{
+export const AddFavoursRequest = favour => async dispatch => {
     try {
-        const body = JSON.stringify({favour})
-        const response = await fetch('/api/favours',{
-            headers:{
-            'Content-Type':'Application/json',
+        const body = JSON.stringify({ favour })
+        const response = await fetch('/api/favours', {
+            headers: {
+                'Content-Type': 'Application/json',
             },
-            method:'post',
+            method: 'post',
             body,
         });
         const favourItem = await response.json();
@@ -57,30 +63,35 @@ export const AddFavoursRequest =favour=>async dispatch=>{
 
 }
 // ------------------remove favour-------------------------------
-export const RemoveFavoursRequest = favour =>async dispatch=>{
+export const RemoveFavoursRequest = favour => async dispatch => {
     try {
-        const response = await fetch(`/api/favours/${favour._id}`,{
-            method:'delete',
+        const response = await fetch(`/api/favours/${favour._id}`, {
+            method: 'delete',
         })
         const restFavour = await response.json();
         dispatch(removeFavour(restFavour));
+        const reloadData = localStorage.getItem('queryInfo_delete');
+        if (reloadData) {
+            const { page, size, options } = JSON.parse(reloadData);
+            dispatch(LoadFavours(page, size, options, true))
+        }
     } catch (e) {
         dispatch(DisplayAlert(e))
     }
 }
 // ------------accept favour------------------------------
-export const AcceptFavourRequest = favour =>async dispatch =>{
+export const AcceptFavourRequest = favour => async dispatch => {
     let receiver = localStorage.username;
-    if(receiver===''){
+    if (receiver === '') {
         alert('Please login fisrt')
     }
-    else{
+    else {
         try {
-            const response = await fetch(`/api/favours/${favour._id}/${receiver}/accepted`,{
-                method:'post',
+            const response = await fetch(`/api/favours/${favour._id}/${receiver}/accepted`, {
+                method: 'post',
             })
             const updatedFavour = await response.json();
-            if(!updatedFavour){
+            if (!updatedFavour) {
                 alert('This favour is no longer valid!')
                 return
             }
@@ -91,7 +102,7 @@ export const AcceptFavourRequest = favour =>async dispatch =>{
     }
 }
 // ---------------------Search Favour------------------------------------------------------
-export const SearchFavoursRequest = keyword =>async dispatch=>{
+export const SearchFavoursRequest = keyword => async dispatch => {
     try {
         const response = await fetch(`/api/favours/${keyword}`);
         const matchedFavour = await response.json();
@@ -102,23 +113,23 @@ export const SearchFavoursRequest = keyword =>async dispatch=>{
 }
 
 // -----------------------AddAward Request------------------------------------------------
-export const AddAwardRequest = favour =>async dispatch =>{
+export const AddAwardRequest = favour => async dispatch => {
     let receiver = localStorage.username;
-    if(receiver===''){
+    if (receiver === '') {
         alert('Please login fisrt')
     }
-    else{
+    else {
         try {
             const body = JSON.stringify(favour);
-            const response = await fetch(`/api/favours/${favour.favourID}/awardIncrement`,{
-                headers:{
-                'Content-Type':'Application/json',
+            const response = await fetch(`/api/favours/${favour.favourID}/awardIncrement`, {
+                headers: {
+                    'Content-Type': 'Application/json',
                 },
-                method:'post',
+                method: 'post',
                 body,
             });
             const awardItem = await response.json();
-            if(!awardItem){
+            if (!awardItem) {
                 alert('This favour is no longer valid!')
             }
             dispatch(addAward(awardItem));
@@ -136,18 +147,18 @@ export const ProveFavourRequest = favour=>async dispatch=>{
 }
 // ------------------------comments thunk---------------------------------------------
 
-export const AddCommentRequest =comment=>async dispatch=>{
+export const AddCommentRequest = comment => async dispatch => {
     try {
-        const body = JSON.stringify({comment})
-        const response = await fetch(`/api/comment/${comment.favourID}`,{
-            headers:{
-            'Content-Type':'Application/json',
+        const body = JSON.stringify({ comment })
+        const response = await fetch(`/api/comment/${comment.favourID}`, {
+            headers: {
+                'Content-Type': 'Application/json',
             },
-            method:'post',
+            method: 'post',
             body,
         });
         const commentItem = await response.json();
-        if(commentItem===''){
+        if (commentItem === '') {
             alert("This favour is no longer valid!")
         }
         dispatch(addComment(commentItem));
@@ -157,18 +168,18 @@ export const AddCommentRequest =comment=>async dispatch=>{
 
 }
 // --------------------------submit provement-----------------------------------
-export const SubmitProveRequest = awardRelation =>async dispatch=>{
+export const SubmitProveRequest = awardRelation => async dispatch => {
     try {
         const body = JSON.stringify(awardRelation);
-        const response = await fetch(`/api/newAwardRelation`,{
-            headers:{
-                'Content-Type':'Application/json',
-                },
-                method:'post',
-                body,
+        const response = await fetch(`/api/newAwardRelation`, {
+            headers: {
+                'Content-Type': 'Application/json',
+            },
+            method: 'post',
+            body,
         })
         const result = await response.json();
-        if (result){
+        if (result) {
             alert("Successfully proved")
             dispatch(endFavour(result));
         }
@@ -180,15 +191,15 @@ export const SubmitProveRequest = awardRelation =>async dispatch=>{
 export const SubmitAwardRecord = awardInfo =>async dispatch=>{
     try {
         const body = JSON.stringify(awardInfo);
-        const response = await fetch(`/api/newAwardRelation`,{
-            headers:{
-                'Content-Type':'Application/json',
-                },
-                method:'post',
-                body,
+        const response = await fetch(`/api/newAwardRelation`, {
+            headers: {
+                'Content-Type': 'Application/json',
+            },
+            method: 'post',
+            body,
         })
         const result = await response.json();
-        if (result){
+        if (result) {
             alert("Successfully recorded");
             dispatch(createAwardRelation(result));
         }
@@ -206,7 +217,7 @@ export const LoadAwards =()=>async(dispatch,getState)=>{
         dispatch(loadAwardsInProgress());
         const response = await fetch('/api/awards');
         const awards = await response.json();
-    
+
         dispatch(loadAwardsSuccess(awards));
     } catch (e) {
         dispatch(loadAwardsFailure());
@@ -218,8 +229,8 @@ export const LoadAwards =()=>async(dispatch,getState)=>{
 // ------------------Delete award relation------------------------------------------------
 export const RemoveAwardRequest = award => async dispatch=>{
     try {
-        const response = await fetch(`/api/awards/${award._id}`,{
-            method:'delete',
+        const response = await fetch(`/api/awards/${award._id}`, {
+            method: 'delete',
         })
         const restAwards = await response.json();
         dispatch(removeAwardRelation(restAwards));
@@ -244,7 +255,7 @@ export const loadLeadBoard = () => async dispatch =>{
 
         const user = await response.json();
         dispatch(loadLeaderBoard(user));
-    }catch(e){
+    } catch (e) {
         dispatch(DisplayAlert(e));
     }
 }

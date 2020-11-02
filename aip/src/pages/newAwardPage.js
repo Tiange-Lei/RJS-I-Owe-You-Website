@@ -3,11 +3,11 @@ import NewAwardForm from '../components/newAward';
 import Sidebar from '../components/sidebar';
 import AwardRelationList from '../components/awardRelationList';
 import PartyBoard from '../components/partyBoard';
-import {RightSideBar} from '../components/styledComponents'
+import { RightSideBar } from '../components/styledComponents'
 import LeaderBoard from '../components/leaderBoard';
 // ----------------------------------------------------------------------------------------------------------------------
 
-const NewAwardPage =()=>(
+const NewAwardPage = () => (
     <div>
         <RightSideBar>
             <LeaderBoard />
