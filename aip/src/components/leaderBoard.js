@@ -1,18 +1,18 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loadLeadBoard } from '../Redux/thunks';
-import { BoardContainer,BoardTitle } from '../components/styledComponents';
+import { BoardContainer, BoardTitle } from '../components/styledComponents';
 // ----------------------------------------------------------------------------------------------------------------------
 
-const LeaderBoard = ({loadingLeaders,users}) => {
-    useEffect(()=>{
+const LeaderBoard = ({ loadingLeaders, users }) => {
+    useEffect(() => {
         loadingLeaders();
-    },[loadingLeaders]);
+    }, [loadingLeaders]);
     const list = (
         <BoardContainer>
             <ul>
                 <BoardTitle>LeaderBoard</BoardTitle>
-                {users.slice(0,5).map((item,i)=>(
+                {users.slice(0, 5).map((item, i) => (
                     <li key={i}>{item.username} : {item.numberOfAward}</li>
                 ))}
             </ul>
@@ -22,12 +22,12 @@ const LeaderBoard = ({loadingLeaders,users}) => {
 }
 
 const mapStateToProps = state => ({
-    users:state.leaders.members
+    users: state.leaders.members
 })
-const mapDispatchToProps = dispatch =>({
-    loadingLeaders:()=>dispatch(loadLeadBoard())
+const mapDispatchToProps = dispatch => ({
+    loadingLeaders: () => dispatch(loadLeadBoard())
 })
-    
 
-export default connect(mapStateToProps,mapDispatchToProps)(LeaderBoard);
+
+export default connect(mapStateToProps, mapDispatchToProps)(LeaderBoard);
 

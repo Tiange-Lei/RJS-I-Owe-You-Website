@@ -1,19 +1,19 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import {SideBarContainer,SideUL,SideItem} from '../components/styledComponents'
+import { Link } from 'react-router-dom';
+import { SideBarContainer, SideUL, SideItem } from '../components/styledComponents'
 // ----------------------------------------------------------------------------------------------------------------------
 
-const Sidebar = ()=>(
+const Sidebar = () => (
     <SideBarContainer>
         <SideUL>
             <SideItem>
-                <Link to='/users' style={{textDecoration:'none'}}>Request</Link>
+                <Link to='/users' style={{ textDecoration: 'none' }}>Request</Link>
             </SideItem>
             <SideItem>
-                <Link to='/newAward' style={{textDecoration:'none'}}>Award</Link>
+                <Link to='/newAward' style={{ textDecoration: 'none' }}>Award</Link>
             </SideItem>
         </SideUL>
-        
+
     </SideBarContainer>
 )
 

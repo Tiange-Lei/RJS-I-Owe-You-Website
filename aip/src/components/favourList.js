@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import FavourContent from './favourContent';
-import { getFavoursLoading} from '../Redux/selectors';
+import { getFavoursLoading } from '../Redux/selectors';
 import {
     LoadFavours,
     RemoveFavoursRequest,

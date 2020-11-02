@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {showUP,fadeIn} from './keyframes';
+import { showUP, fadeIn } from './keyframes';
 import 'antd/dist/antd.css';
 // ----------------------------------------------------------------------------------------------------------------------
 
@@ -281,14 +281,14 @@ export const IOUContainer = styled.div`
     width: 400px;
     margin: auto;
     margin-top: 50px;
-    visibility: ${props=>(props.x.value?'hidden':'visible')};
+    visibility: ${props => (props.x.value ? 'hidden' : 'visible')};
 `
 export const UOIContainer = styled.div`
     position:absolute;
     color: blue;
     width: 400px;
     margin: auto;
-    visibility: ${props=>(props.x.value?'visible':'hidden')};
+    visibility: ${props => (props.x.value ? 'visible' : 'hidden')};
 `
 export const AwardSelector = styled.div`
     font-size: 16px;
@@ -327,7 +327,7 @@ export const ProveContainer = styled.div`
     margin-left: 125px;
     width: 500px;
     text-align:center;
-    visibility: ${props=>(props.x.value?'visible':'hidden')};
+    visibility: ${props => (props.x.value ? 'visible' : 'hidden')};
 `
 
 
@@ -445,13 +445,13 @@ export const Greeting = styled.div`
     color:yellow;
     margin-left: -30%;
 `
-export const PictureContainer=styled.div`
+export const PictureContainer = styled.div`
     margin:auto;
     text-align: center;
     margin-left:190px;
     margin-bottom:5px;
 `
-export const ProvePictureContainer=styled.div`
+export const ProvePictureContainer = styled.div`
     margin:auto;
     text-align: center;
     margin-left:100px;

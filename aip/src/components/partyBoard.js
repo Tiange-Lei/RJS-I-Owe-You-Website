@@ -1,36 +1,36 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getParty } from '../Redux/thunks';
-import {PBoardContainer,BoardTitle} from '../components/styledComponents';
+import { PBoardContainer, BoardTitle } from '../components/styledComponents';
 // ----------------------------------------------------------------------------------------------------------------------
 
-const PartyBoard = ({getMeeting,people}) => {
-  useEffect(()=>{
-    if(localStorage.username){
-    getMeeting(localStorage.username)
+const PartyBoard = ({ getMeeting, people }) => {
+  useEffect(() => {
+    if (localStorage.username) {
+      getMeeting(localStorage.username)
     };
-  },[getMeeting]);
-  const unique=people.filter((v,i,a)=>a.indexOf(v)===i);
+  }, [getMeeting]);
+  const unique = people.filter((v, i, a) => a.indexOf(v) === i);
   const partyList = (
     <PBoardContainer>
       <BoardTitle>You Got A Party</BoardTitle>
       <ul>
-        {unique.map((item,i)=>(
+        {unique.map((item, i) => (
           <li key={i}>{item}</li>
         ))}
       </ul>
     </PBoardContainer>
   )
 
-  return (unique.includes(localStorage.username)?partyList:null);
+  return (unique.includes(localStorage.username) ? partyList : null);
 }
 
 const mapStateToProps = state => ({
-  people:state.party.users
+  people: state.party.users
 })
 
 const mapDispatchToProps = dispatch => ({
-    getMeeting:(username) =>dispatch(getParty(username))
+  getMeeting: (username) => dispatch(getParty(username))
 })
 
-export default connect(mapStateToProps,mapDispatchToProps)(PartyBoard);
+export default connect(mapStateToProps, mapDispatchToProps)(PartyBoard);
