@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import FavourContent from './favourContent';
-import { getFavoursLoading, getValidFavours, getInvalidFavours } from '../Redux/selectors';
+import { getFavoursLoading} from '../Redux/selectors';
 import {
     LoadFavours,
     RemoveFavoursRequest,
@@ -9,7 +9,7 @@ import {
     AddCommentRequest,
     AddAwardRequest,
 } from '../Redux/thunks';
-import { favours } from '../Redux/reducer';
+
 // ----------------------------------------------------------------------------------------------------------------------
 
 const FavourList = ({ page, size, options,
@@ -50,7 +50,6 @@ const FavourList = ({ page, size, options,
 
 const filterValue = (state, isAccepted) => {
     const item = state.favours.data.filter(favour => favour.isAccepted === isAccepted);
-    console.log('item', item);
     return item;
 }
 const mapStateToProps = state => ({

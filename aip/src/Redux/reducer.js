@@ -46,7 +46,6 @@ const {type,payload} = action;
             
             return {
                 ...state,
-                // data:favour,
             }
         };
     // -----------accept favour---------------------

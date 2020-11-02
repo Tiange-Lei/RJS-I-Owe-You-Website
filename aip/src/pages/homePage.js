@@ -16,8 +16,6 @@ const HomePage=(props)=>{
     const { __Condition__, } = data[0] || {};
     const { total = 1 } = __Condition__ || {};
     const isAccepted = true;
-    console.log('total:', total);
-    console.log('isAccepted',isAccepted)
     
     return (
     <div>
