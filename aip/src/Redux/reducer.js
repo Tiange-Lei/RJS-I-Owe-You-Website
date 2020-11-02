@@ -51,6 +51,7 @@ const {type,payload} = action;
     // -----------accept favour---------------------
         case ACCEPT_FAVOUR:{
             const {favour}=payload;
+            favour.__Condition__ = state.data[0].__Condition__;
             return {
                 ...state,
                 data:state.data.map(favourItem=>{
