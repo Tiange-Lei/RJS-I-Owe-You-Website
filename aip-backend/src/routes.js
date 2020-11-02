@@ -78,7 +78,6 @@ router.get('/api/favours', async (req, res) => {
     const tmpList = await Favour.find(condition, {}, { sort: {_id: -1}, limit: Number(size), skip: (Number(page) - 1) * Number(size) })
     const total = await Favour.countDocuments(condition);
     const info = { page, size, total, totalPage: Math.ceil(total / Number(size)) };
-
     const list = JSON.parse(JSON.stringify(tmpList));
     if (tmpList.length > 0) {
       list[0].__Condition__ = info;

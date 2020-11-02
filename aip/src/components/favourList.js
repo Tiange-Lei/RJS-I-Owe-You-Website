@@ -25,6 +25,7 @@ const FavourList = ({ page, size, options,
     index }) => {
     useEffect(() => {
         startLoadingFavours(page, size, options);
+        // eslint-disable-next-line
     }, [startLoadingFavours, page, size]);
     const LoadingMessage = <div>Is loading...</div>
     return isLoading ? LoadingMessage : index === 'home' ?
